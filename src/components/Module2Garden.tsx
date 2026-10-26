@@ -15,7 +15,8 @@ import {
   ArrowRight,
   Shirt,
   Award,
-  Crown
+  Crown,
+  Volume2
 } from 'lucide-react';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
@@ -28,7 +29,9 @@ import {
   playCelebrationSound, 
   playPetVoice, 
   playEatingSound, 
-  playDrinkingSound, speakGameEvent
+  playDrinkingSound, 
+  speakGameEvent,
+  speakVietnamese
 } from '../utils/audio';
 
 interface Module2GardenProps {
@@ -745,19 +748,34 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
             {/* Friendly Pet Message (Bong bóng yêu thương từ thú cưng) */}
             <div className="bg-white p-4 rounded-2xl border-2 border-amber-200 shadow-xs my-3 text-sm font-bold text-slate-700 leading-relaxed relative text-left">
-              <div className="flex items-start gap-2">
-                <span className="text-2xl shrink-0">🐾</span>
-                <div>
-                  {statFullModal.type === 'food' ? (
-                    <span>
-                      "Bé ơi, <span className="text-amber-600 font-black">{pet.name}</span> đã ăn no <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-amber-600 font-black">{pet.name}</span> uống nước nhé (Khát nước hiện tại: <span className="text-sky-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
-                    </span>
-                  ) : (
-                    <span>
-                      "Bé ơi, <span className="text-sky-600 font-black">{pet.name}</span> đã uống no nước <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-sky-600 font-black">{pet.name}</span> ăn thức ăn nhé (Độ no hiện tại: <span className="text-amber-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
-                    </span>
-                  )}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start gap-2">
+                  <span className="text-2xl shrink-0">🐾</span>
+                  <div>
+                    {statFullModal.type === 'food' ? (
+                      <span>
+                        "Bé ơi, <span className="text-amber-600 font-black">{pet.name}</span> đã ăn no <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-amber-600 font-black">{pet.name}</span> uống nước nhé (Khát nước hiện tại: <span className="text-sky-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
+                      </span>
+                    ) : (
+                      <span>
+                        "Bé ơi, <span className="text-sky-600 font-black">{pet.name}</span> đã uống no nước <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-sky-600 font-black">{pet.name}</span> ăn thức ăn nhé (Độ no hiện tại: <span className="text-amber-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
+                      </span>
+                    )}
+                  </div>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const msg = statFullModal.type === 'food'
+                      ? `Bé ơi, ${pet.name} đã ăn no rồi! Giờ hãy cho ${pet.name} uống nước nhé!`
+                      : `Bé ơi, ${pet.name} đã uống no nước rồi! Giờ hãy cho ${pet.name} ăn thức ăn nhé!`;
+                    speakVietnamese(msg);
+                  }}
+                  title="Nghe giọng nói của thú cưng"
+                  className="p-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 shrink-0 cursor-pointer transition-transform active:scale-90 shadow-xs border border-amber-200"
+                >
+                  <Volume2 className="w-4 h-4 text-amber-700" />
+                </button>
               </div>
             </div>
 

@@ -13,7 +13,8 @@ import {
   Coins, 
   Star, 
   RotateCcw,
-  Gift
+  Gift,
+  Volume2
 } from 'lucide-react';
 import { PetState, QuestTarget } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
@@ -21,7 +22,9 @@ import {
   playPopSound, 
   playChimeSound, 
   playCelebrationSound, 
-  playEncouragingSound, speakGameEvent
+  playEncouragingSound, 
+  speakGameEvent,
+  speakVietnamese
 } from '../utils/audio';
 
 interface Module3MathQuestProps {
@@ -457,10 +460,19 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
             <div className="w-full flex flex-col items-center">
               
               {/* Question Banner */}
-              <div className="relative mb-4 bg-white px-5 py-3 rounded-2xl border-3 border-amber-300 shadow-sm text-center max-w-lg">
+              <div className="relative mb-4 bg-white px-5 py-3 rounded-2xl border-3 border-amber-300 shadow-sm text-center max-w-lg flex items-center justify-center gap-2.5">
                 <h3 className="text-base sm:text-lg md:text-xl font-black text-slate-800">
                   {question.prompt}
                 </h3>
+                <button
+                  type="button"
+                  onClick={() => speakVietnamese(question.prompt)}
+                  title="Nghe giọng đọc tiếng Việt"
+                  aria-label="Đọc câu hỏi bằng tiếng Việt"
+                  className="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 active:scale-90 transition-transform flex-shrink-0 cursor-pointer shadow-xs border border-amber-200/80"
+                >
+                  <Volume2 className="w-5 h-5 text-amber-700" />
+                </button>
                 <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r-3 border-b-3 border-amber-300 rotate-45" />
               </div>
 

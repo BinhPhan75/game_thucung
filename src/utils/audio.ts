@@ -284,21 +284,174 @@ export const stopBackgroundMusic = () => {
 
 export const isMusicPlaying = () => isBgmPlaying;
 
-// Re-read voices because browsers load their voice list asynchronously.
+// Speech state management
 let speechMuted = false;
+let currentSpeechId = 0;
+let currentAudio: HTMLAudioElement | null = null;
+const ttsBlobCache = new Map<string, string>(); // cleanText -> blobUrl
+
+// Web Speech fallback voice cache
 let vietnameseVoice: SpeechSynthesisVoice | undefined;
 const refreshVoice = () => {
-  vietnameseVoice = selectVietnameseVoice(window.speechSynthesis.getVoices());
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    vietnameseVoice = selectVietnameseVoice(window.speechSynthesis.getVoices());
+  }
 };
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
   refreshVoice();
   window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
 }
+
+/**
+ * Stop any ongoing speech playback immediately
+ */
+export const stopSpeech = () => {
+  currentSpeechId++;
+  if (currentAudio) {
+    try {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    } catch {
+      // ignore
+    }
+    currentAudio = null;
+  }
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch {
+      // ignore
+    }
+  }
+};
+
+/**
+ * Toggle or set speech muting
+ */
 export const setSpeechMuted = (muted: boolean) => {
   speechMuted = muted;
-  if (muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+  if (muted) {
+    stopSpeech();
+  }
 };
-export const speakVietnamese = (text: string) => {
+
+export const isSpeechMuted = () => speechMuted;
+
+/**
+ * Play audio via Google Translate TTS:
+ * 1. Checks memory cache
+ * 2. Tries local proxy endpoint (/api/tts)
+ * 3. Tries direct Google Translate TTS endpoint with no-referrer
+ * 4. Resolves true if playback started successfully, false otherwise
+ */
+async function playGoogleTranslateTTS(text: string, speechId: number): Promise<boolean> {
+  const cleanText = text.trim();
+  if (!cleanText) return false;
+
+  const playAudioUrl = (url: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (speechMuted || currentSpeechId !== speechId) {
+        resolve(false);
+        return;
+      }
+
+      const audio = new Audio();
+      audio.setAttribute('referrerpolicy', 'no-referrer');
+      audio.preload = 'auto';
+
+      let settled = false;
+      const cleanup = () => {
+        audio.removeEventListener('ended', handleEnded);
+        audio.removeEventListener('error', handleError);
+      };
+
+      const handleEnded = () => {
+        cleanup();
+        if (currentAudio === audio) {
+          currentAudio = null;
+        }
+      };
+
+      const handleError = () => {
+        cleanup();
+        if (currentAudio === audio) {
+          currentAudio = null;
+        }
+        if (!settled) {
+          settled = true;
+          resolve(false);
+        }
+      };
+
+      audio.addEventListener('ended', handleEnded);
+      audio.addEventListener('error', handleError);
+
+      audio.src = url;
+      currentAudio = audio;
+
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            if (!settled) {
+              settled = true;
+              resolve(true);
+            }
+          })
+          .catch(() => {
+            handleError();
+          });
+      } else {
+        settled = true;
+        resolve(true);
+      }
+    });
+  };
+
+  // 1. Check in-memory cached Blob URL
+  if (ttsBlobCache.has(cleanText)) {
+    const cachedUrl = ttsBlobCache.get(cleanText)!;
+    const played = await playAudioUrl(cachedUrl);
+    if (played) return true;
+    ttsBlobCache.delete(cleanText);
+  }
+
+  if (speechMuted || currentSpeechId !== speechId) return false;
+
+  // 2. Try proxy endpoint /api/tts?text=...
+  try {
+    const proxyUrl = `/api/tts?text=${encodeURIComponent(cleanText)}`;
+    const res = await fetch(proxyUrl);
+    if (res.ok && res.headers.get('content-type')?.includes('audio')) {
+      const blob = await res.blob();
+      if (speechMuted || currentSpeechId !== speechId) return false;
+      const blobUrl = URL.createObjectURL(blob);
+      ttsBlobCache.set(cleanText, blobUrl);
+      const played = await playAudioUrl(blobUrl);
+      if (played) return true;
+    }
+  } catch (err) {
+    console.debug('TTS Proxy fetch failed, attempting direct endpoint:', err);
+  }
+
+  if (speechMuted || currentSpeechId !== speechId) return false;
+
+  // 3. Try direct Google Translate TTS endpoint
+  try {
+    const directUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=vi&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
+    const playedDirect = await playAudioUrl(directUrl);
+    if (playedDirect) return true;
+  } catch (err) {
+    console.debug('Direct TTS failed, falling back to Web Speech API:', err);
+  }
+
+  return false;
+}
+
+/**
+ * Fallback to browser's native Web Speech API if network TTS is unavailable
+ */
+function playWebSpeechFallback(text: string) {
   if (speechMuted || typeof window === 'undefined' || !('speechSynthesis' in window)
       || !('SpeechSynthesisUtterance' in window)) return;
   try {
@@ -307,13 +460,33 @@ export const speakVietnamese = (text: string) => {
     utterance.lang = 'vi-VN';
     if (vietnameseVoice) utterance.voice = vietnameseVoice;
     utterance.rate = 0.88;
-    utterance.pitch = 1.0; // Preserve the chosen voice’s natural timbre.
+    utterance.pitch = 1.0;
     utterance.volume = 0.9;
-    // Queue guidance after praise, without cancelling the reward.
     window.speechSynthesis.speak(utterance);
   } catch (error) {
-    console.debug('Speech unavailable:', error);
+    console.debug('WebSpeech fallback error:', error);
   }
+}
+
+/**
+ * Main Vietnamese Speech Synthesis function:
+ * Uses Google Translate TTS (free via proxy / public endpoint) with Web Speech fallback
+ */
+export const speakVietnamese = (text: string) => {
+  if (speechMuted || !text || typeof window === 'undefined') return;
+
+  // Stop previous speech to prevent overlapping sounds
+  stopSpeech();
+
+  const speechId = ++currentSpeechId;
+
+  // Play natural Google Translate TTS
+  playGoogleTranslateTTS(text, speechId).then((success) => {
+    // If network TTS failed and wasn't cancelled or muted, fall back to native speech
+    if (!success && !speechMuted && currentSpeechId === speechId) {
+      playWebSpeechFallback(text);
+    }
+  });
 };
 
 // Cute crunchy munching sound for feeding
