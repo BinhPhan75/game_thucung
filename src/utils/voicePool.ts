@@ -1,4 +1,17 @@
-// Templates use the chosen pet's name, rather than assuming every pet is a rabbit.
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export type PetType = 'dog' | 'cat' | 'bunny';
+
+export const PET_DEFAULT_ITEMS: Record<PetType, { food: string; drink: string }> = {
+  bunny: { food: 'cà rốt và táo', drink: 'nước lọc' },
+  dog: { food: 'xương và thịt', drink: 'sữa tươi' },
+  cat: { food: 'cá tươi', drink: 'sữa tươi' },
+};
+
+// Templates use the chosen pet's name, child name, and synchronized food/drink items
 export const VOICE_POOLS = {
   wrong: [
     'Không sao đâu {child} ơi, mình thử đếm lại một lần nữa xem sao nha!',
@@ -21,25 +34,25 @@ export const VOICE_POOLS = {
     'Một câu trả lời thật tuyệt! {pet} và {child} cùng cười thật tươi nào!',
   ],
   foodFull: [
-    '{child} ơi, bụng {pet} đã no căng tròn rồi nè! Giờ cho {pet} uống chút nước mát nha!',
-    '{pet} no bụng rồi {child} ạ, cảm ơn bạn nhiều nha! Giờ mình đi kiếm sữa giải khát thôi nào!',
-    'Ăn no thích quá đi! Nhưng {pet} hơi khát nước rồi, {child} giúp {pet} kiếm nước uống nhé!',
-    '{child} ơi, {pet} đã ăn no căng bụng rồi! Giờ cho {pet} uống nước mát nha.',
-    'Bụng no căng rồi {child} ạ! Mình đi kiếm sữa cho {pet} nhé.',
-    '{pet} ăn ngon và no rồi! {child} cùng làm toán kiếm nước cho {pet} nào!',
-    'Cảm ơn {child} cho ăn thật ngon! Giờ {pet} cần uống thêm nước đó.',
-    'Bữa ăn xong rồi! {child} cùng tìm nước mát cho {pet} nhé!',
-    '{pet} no bụng rồi {child} ơi! Bạn bấm vào phần nước uống để chăm {pet} tiếp nha.',
+    '{child} ơi, bụng {pet} đã no căng tròn {food} rồi nè! Giờ cho {pet} uống chút {drink} nha!',
+    '{pet} no bụng rồi {child} ạ, cảm ơn bạn nhiều nha! Giờ mình đi kiếm {drink} giải khát thôi nào!',
+    'Ăn no thích quá đi! Nhưng {pet} hơi khát rồi, {child} giúp {pet} kiếm {drink} nhé!',
+    '{child} ơi, {pet} đã ăn no căng bụng rồi! Giờ cho {pet} uống {drink} nha.',
+    'Bụng no căng rồi {child} ạ! Mình đi kiếm {drink} cho {pet} nhé.',
+    '{pet} ăn ngon và no rồi! {child} cùng làm toán kiếm {drink} cho {pet} nào!',
+    'Cảm ơn {child} cho ăn thật ngon! Giờ {pet} cần uống thêm {drink} đó.',
+    'Bữa ăn xong rồi! {child} cùng tìm {drink} cho {pet} nhé!',
+    '{pet} no bụng rồi {child} ơi! Bạn bấm vào phần {drink} để chăm {pet} tiếp nha.',
   ],
   waterFull: [
-    'Nước mát quá, {pet} đã hết khát rồi! Nhưng bụng {pet} đang reo đói nè, {child} kiếm táo cho {pet} nhé!',
-    '{pet} uống đủ nước rồi {child} ơi! Giờ mình sang làm toán kiếm đồ ăn ngon cho {pet} nha!',
-    'Uống nước đã quá! Nhưng {pet} còn đói bụng, {child} kiếm thêm táo cho {pet} ăn nha.',
-    'Đã giải khát xong! Giờ {child} cùng {pet} sang làm toán kiếm đồ ăn thôi nào.',
-    '{pet} uống đủ nước rồi! {child} cùng chuẩn bị một bữa ăn ngon cho {pet} nhé!',
-    'Nước mát thật là ngon! Giờ {child} giúp {pet} tìm thức ăn cho {pet} nha.',
-    'Cảm ơn {child}! {pet} hết khát rồi, nhưng chiếc bụng còn đang chờ đồ ăn từ {pet} đó!',
-    'Mình chăm phần nước xong rồi! {child} bấm vào phần thức ăn để giúp {pet} no bụng nhé.',
+    '{drink} ngon quá, {pet} đã hết khát rồi! Nhưng bụng {pet} đang reo đói nè, {child} kiếm {food} cho {pet} nhé!',
+    '{pet} uống đủ {drink} rồi {child} ơi! Giờ mình sang làm toán kiếm {food} ngon cho {pet} nha!',
+    'Uống {drink} đã quá! Nhưng {pet} còn đói bụng, {child} kiếm thêm {food} cho {pet} ăn nha.',
+    'Đã giải khát xong! Giờ {child} cùng {pet} sang làm toán kiếm {food} thôi nào.',
+    '{pet} uống đủ {drink} rồi! {child} cùng chuẩn bị một bữa {food} ngon cho {pet} nhé!',
+    '{drink} thật là ngon! Giờ {child} giúp {pet} tìm {food} cho {pet} nha.',
+    'Cảm ơn {child}! {pet} hết khát rồi, nhưng chiếc bụng còn đang chờ {food} từ {pet} đó!',
+    'Mình chăm phần {drink} xong rồi! {child} bấm vào phần {food} để giúp {pet} no bụng nhé.',
   ],
   levelUp: [
     'Chúc mừng {child} và bạn {pet}! Cả hai đã cùng nhau đạt cấp {level} xuất sắc!',
@@ -62,6 +75,9 @@ export interface VoiceContext {
   name?: string; 
   childName?: string; 
   level?: number; 
+  type?: PetType;
+  foodName?: string;
+  drinkName?: string;
 }
 
 // Each event has its own shuffle bag: use every phrase before repeating any.
@@ -91,9 +107,15 @@ export function createVoicePicker(random: () => number = Math.random) {
       ? (/^bé\b/i.test(rawChild) ? rawChild : `bé ${rawChild}`)
       : 'bé';
 
-    return pool[index].replace(/\{pet\}|\{child\}|\{level\}/g, (token) => {
+    const defaultItems = (context.type && PET_DEFAULT_ITEMS[context.type]) || PET_DEFAULT_ITEMS.bunny;
+    const foodVal = context.foodName || defaultItems.food;
+    const drinkVal = context.drinkName || defaultItems.drink;
+
+    return pool[index].replace(/\{pet\}|\{child\}|\{level\}|\{food\}|\{drink\}/g, (token) => {
       if (token === '{pet}') return context.name?.trim() || 'bạn thú cưng';
       if (token === '{child}') return childReplacement;
+      if (token === '{food}') return foodVal;
+      if (token === '{drink}') return drinkVal;
       return String(context.level ?? 1);
     });
   };

@@ -566,7 +566,7 @@ export const playDrinkingSound = () => {
 
 export const speakGameEvent = (
   event: VoiceEvent, 
-  context: { name?: string; childName?: string; level?: number } = {}
+  context: VoiceContext = {}
 ) => {
   if (speechMuted) return;
   speakVietnamese(pickVoiceLine(event, context));

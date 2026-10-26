@@ -52,3 +52,23 @@ test('childName and petName personalization replaces placeholders seamlessly', (
   assert.ok(lvlLine.includes('cấp 6'));
 });
 
+test('food and drink are synchronized according to pet species', () => {
+  const pick = createVoicePicker(() => 0);
+  // Dog: drink is sữa tươi, food is xương và thịt
+  const dogFood = pick('foodFull', { type: 'dog', name: 'Lu Lu', childName: 'Bảo Nam' });
+  assert.ok(dogFood.includes('sữa tươi'));
+  const dogWater = pick('waterFull', { type: 'dog', name: 'Lu Lu', childName: 'Bảo Nam' });
+  assert.ok(dogWater.includes('xương') || dogWater.includes('thịt'));
+
+  // Cat: drink is sữa tươi, food is cá tươi
+  const catFood = pick('foodFull', { type: 'cat', name: 'Miu Miu', childName: 'Hạnh Trang' });
+  assert.ok(catFood.includes('sữa tươi'));
+  const catWater = pick('waterFull', { type: 'cat', name: 'Miu Miu', childName: 'Hạnh Trang' });
+  assert.ok(catWater.includes('cá tươi'));
+
+  // Bunny: drink is nước lọc, food is cà rốt
+  const bunnyFood = pick('foodFull', { type: 'bunny', name: 'Bông Bông', childName: 'Hoàng My' });
+  assert.ok(bunnyFood.includes('nước lọc'));
+});
+
+
