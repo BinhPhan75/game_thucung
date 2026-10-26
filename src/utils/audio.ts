@@ -1,3 +1,4 @@
+import { selectVietnameseVoice } from './voiceSelection';
 import { pickVoiceLine, type VoiceEvent } from './voicePool';
 
 /**
@@ -287,7 +288,7 @@ export const isMusicPlaying = () => isBgmPlaying;
 let speechMuted = false;
 let vietnameseVoice: SpeechSynthesisVoice | undefined;
 const refreshVoice = () => {
-  vietnameseVoice = window.speechSynthesis.getVoices().find(v => v.lang.toLowerCase().startsWith('vi'));
+  vietnameseVoice = selectVietnameseVoice(window.speechSynthesis.getVoices());
 };
 if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
   refreshVoice();
@@ -305,8 +306,8 @@ export const speakVietnamese = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'vi-VN';
     if (vietnameseVoice) utterance.voice = vietnameseVoice;
-    utterance.rate = 0.85;
-    utterance.pitch = 1.1;
+    utterance.rate = 0.88;
+    utterance.pitch = 1.0; // Preserve the chosen voice’s natural timbre.
     utterance.volume = 0.9;
     // Queue guidance after praise, without cancelling the reward.
     window.speechSynthesis.speak(utterance);
