@@ -16,7 +16,9 @@ import {
   Shirt,
   Award,
   Crown,
-  Volume2
+  Volume2,
+  Edit3,
+  X
 } from 'lucide-react';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
@@ -59,6 +61,32 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     type: 'food' | 'water';
     currentOtherValue: number;
   } | null>(null);
+
+  // Modal đổi tên bé và tên thú cưng tiện lợi
+  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
+  const [editChildName, setEditChildName] = useState(pet.childName || '');
+  const [editPetName, setEditPetName] = useState(pet.name);
+
+  const handleOpenRename = () => {
+    playPopSound();
+    setEditChildName(pet.childName || '');
+    setEditPetName(pet.name);
+    setIsRenameModalOpen(true);
+  };
+
+  const handleSaveRename = () => {
+    const trimmedChild = editChildName.trim();
+    const trimmedPet = editPetName.trim() || pet.name;
+    const updated: PetState = {
+      ...pet,
+      childName: trimmedChild,
+      name: trimmedPet,
+    };
+    onUpdatePet(updated);
+    playCelebrationSound();
+    speakVietnamese(`Xin chào bé ${trimmedChild || 'yêu'} và bạn ${trimmedPet}!`);
+    setIsRenameModalOpen(false);
+  };
 
   const isHungry = pet.hunger < 50;
   const isThirsty = pet.thirst < 50;
@@ -104,7 +132,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     });
 
     const nextLevel = pet.level + 1;
-    speakGameEvent('levelUp', { name: pet.name, level: nextLevel });
+    speakGameEvent('levelUp', { name: pet.name, childName: pet.childName, level: nextLevel });
     let nextStage: PetStage = pet.stage;
 
     // Stage progression: Cấp 1-3 -> baby, Cấp 4-7 -> junior, Cấp 8+ -> master
@@ -149,7 +177,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.thirst < 100) {
           playChimeSound();
           setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
-          speakGameEvent('foodFull', { name: pet.name, level: pet.level });
+          speakGameEvent('foodFull', { name: pet.name, childName: pet.childName, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -164,7 +192,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.hunger < 100) {
           playChimeSound();
           setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
-          speakGameEvent('waterFull', { name: pet.name, level: pet.level });
+          speakGameEvent('waterFull', { name: pet.name, childName: pet.childName, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -189,10 +217,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       triggerEvolution();
     } else if (pet.hunger >= 100 && pet.thirst < 100) {
       setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
-      speakGameEvent('foodFull', { name: pet.name, level: pet.level });
+      speakGameEvent('foodFull', { name: pet.name, childName: pet.childName, level: pet.level });
     } else if (pet.thirst >= 100 && pet.hunger < 100) {
       setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
-      speakGameEvent('waterFull', { name: pet.name, level: pet.level });
+      speakGameEvent('waterFull', { name: pet.name, childName: pet.childName, level: pet.level });
     } else if (isHungry) {
       handleOpenQuest('food');
     } else if (isThirsty) {
@@ -291,14 +319,19 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       {/* TOP HEADER: Pet Status & Navigation & Wardrobe Button */}
       <header className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-3 md:pt-4 flex flex-wrap items-center justify-between gap-2.5">
         
-        {/* Left: Pet Info & Evolution Stage */}
+        {/* Left: Pet Info & Child Name & Evolution Stage */}
         <div className="flex items-center gap-2.5 bg-white/90 backdrop-blur-md px-3.5 py-2 rounded-2xl border-2 border-amber-300 shadow-md">
           <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-xl shadow-inner border border-amber-200">
             {pet.type === 'dog' ? '🐶' : pet.type === 'cat' ? '🐱' : '🐰'}
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <span className="font-black text-slate-800 text-sm md:text-base">{pet.name}</span>
+              {pet.childName && (
+                <span className="text-[10px] md:text-xs bg-pink-100 text-pink-800 font-extrabold px-2 py-0.5 rounded-full border border-pink-200 shadow-2xs">
+                  Bé {pet.childName}
+                </span>
+              )}
               <span className="text-[10px] md:text-xs bg-amber-400 text-amber-950 font-black px-2 py-0.5 rounded-full">
                 Cấp {pet.level} · {pet.stage === 'baby' ? 'Bé Nhỏ' : pet.stage === 'junior' ? 'Bé Lớn' : 'Siêu Sao'}
               </span>
@@ -309,8 +342,8 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
           </div>
         </div>
 
-        {/* Right: Currency & Wardrobe & Change Pet */}
-        <div className="flex items-center gap-2">
+        {/* Right: Currency & Rename & Wardrobe & Change Pet */}
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Coins */}
           <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-2xl border-2 border-amber-300 shadow-sm font-black text-amber-800 text-xs md:text-sm">
             <Coins className="w-4 h-4 text-amber-500 fill-amber-400" />
@@ -322,6 +355,17 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             <Star className="w-4 h-4 text-yellow-500 fill-yellow-400" />
             <span>{pet.stars}</span>
           </div>
+
+          {/* NÚT ĐỔI TÊN TIỆN LỢI */}
+          <button
+            type="button"
+            onClick={handleOpenRename}
+            title="Đổi tên bé và đổi tên thú cưng"
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 bg-amber-300 hover:bg-amber-400 text-amber-950 font-black rounded-2xl border border-amber-400 text-xs md:text-sm shadow-xs active:scale-95 transition-all cursor-pointer"
+          >
+            <Edit3 className="w-3.5 h-3.5 text-amber-900" />
+            <span>Đổi Tên</span>
+          </button>
 
           {/* TỦ ĐỒ THỜI TRANG (MODULE 5) */}
           <button
@@ -763,11 +807,11 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                   <div>
                     {statFullModal.type === 'food' ? (
                       <span>
-                        "Bé ơi, <span className="text-amber-600 font-black">{pet.name}</span> đã ăn no <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-amber-600 font-black">{pet.name}</span> uống nước nhé (Khát nước hiện tại: <span className="text-sky-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
+                        "{pet.childName ? `Bé ${pet.childName} ơi` : 'Bé ơi'}, <span className="text-amber-600 font-black">{pet.name}</span> đã ăn no <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-amber-600 font-black">{pet.name}</span> uống nước nhé (Khát nước hiện tại: <span className="text-sky-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
                       </span>
                     ) : (
                       <span>
-                        "Bé ơi, <span className="text-sky-600 font-black">{pet.name}</span> đã uống no nước <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-sky-600 font-black">{pet.name}</span> ăn thức ăn nhé (Độ no hiện tại: <span className="text-amber-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
+                        "{pet.childName ? `Bé ${pet.childName} ơi` : 'Bé ơi'}, <span className="text-sky-600 font-black">{pet.name}</span> đã uống no nước <span className="text-emerald-600 font-black">(100%)</span> rồi! Giờ hãy cho <span className="text-sky-600 font-black">{pet.name}</span> ăn thức ăn nhé (Độ no hiện tại: <span className="text-amber-600 font-black">{statFullModal.currentOtherValue}%</span>)!"
                       </span>
                     )}
                   </div>
@@ -777,7 +821,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                   onClick={() => {
                     speakGameEvent(
                       statFullModal.type === 'food' ? 'foodFull' : 'waterFull',
-                      { name: pet.name, level: pet.level }
+                      { name: pet.name, childName: pet.childName, level: pet.level }
                     );
                   }}
                   title="Nghe giọng nói của thú cưng"
@@ -863,7 +907,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             </div>
 
             <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-amber-950 leading-tight">
-              BÉ ĐÃ CHĂM SÓC BẠN {pet.name.toUpperCase()} LỚN KHÔN VÀ ĐẦY ĐỦ RỒI!
+              {pet.childName ? `BÉ ${pet.childName.toUpperCase()}` : 'BÉ'} ĐÃ CHĂM SÓC BẠN {pet.name.toUpperCase()} LỚN KHÔN VÀ ĐẦY ĐỦ RỒI!
             </h3>
             
             <p className="text-xs sm:text-sm font-semibold text-slate-600 mt-2">
@@ -901,7 +945,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                   </div>
                   <div>
                     <h4 className="text-xs sm:text-sm font-black text-purple-950 leading-snug">
-                      "Cảm ơn bé đã cho {pet.name} ăn uống đầy đủ! Giờ bé có muốn chuyển sang mua quần áo/phụ kiện mới cho thú không?"
+                      "Cảm ơn {pet.childName ? `bé ${pet.childName}` : 'bé'} đã cho {pet.name} ăn uống đầy đủ! Giờ {pet.childName ? `bé ${pet.childName}` : 'bé'} có muốn chuyển sang mua quần áo/phụ kiện mới cho thú không?"
                     </h4>
                     <p className="text-[11px] text-purple-800 font-semibold mt-1">
                       Bé có thể chọn trang phục yêu thích và giải bài toán đặc biệt để nhận vật phẩm nhé!
@@ -910,7 +954,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 </div>
                 <button
                   type="button"
-                  onClick={() => speakGameEvent('levelUp', { name: pet.name, level: pet.level })}
+                  onClick={() => speakGameEvent('levelUp', { name: pet.name, childName: pet.childName, level: pet.level })}
                   title="Nghe giọng chúc mừng"
                   className="p-2 rounded-xl bg-white hover:bg-purple-200 text-purple-800 shrink-0 cursor-pointer transition-transform active:scale-90 shadow-xs border border-purple-300"
                 >
@@ -952,6 +996,137 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 <span className="text-[10px] text-emerald-100 font-bold">
                   Tiếp tục chơi & Lưu cấp độ mới
                 </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL ĐỔI TÊN BÉ VÀ THÚ CƯNG (TIỆN LỢI TRONG SÂN VƯỜN) */}
+      {isRenameModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
+          <div className="bg-gradient-to-b from-amber-50 via-white to-orange-50 rounded-3xl md:rounded-[36px] max-w-md w-full p-5 sm:p-6 shadow-2xl border-4 border-amber-300 relative text-left">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playPopSound();
+                setIsRenameModalOpen(false);
+              }}
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer"
+              title="Đóng"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Header */}
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-11 h-11 rounded-2xl bg-amber-200 flex items-center justify-center text-2xl shadow-inner border border-amber-300">
+                ✏️
+              </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-amber-950">
+                  Đổi Tên Bé & Thú Cưng
+                </h3>
+                <p className="text-xs text-slate-500 font-semibold">
+                  Cập nhật ngay vào bộ nhớ trò chơi
+                </p>
+              </div>
+            </div>
+
+            {/* Child Name Field */}
+            <div className="mb-4">
+              <label className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+                👶 Tên của bé:
+              </label>
+              <input
+                type="text"
+                value={editChildName}
+                onChange={(e) => setEditChildName(e.target.value)}
+                placeholder="Ví dụ: Hoàng My, Bảo Nam..."
+                maxLength={20}
+                className="w-full px-4 py-2.5 rounded-2xl border-2 border-amber-300 focus:border-amber-500 focus:outline-none text-base font-bold text-slate-800 bg-white shadow-inner"
+              />
+              {/* Quick suggestions for child name */}
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {['Hoàng My', 'Bảo Nam', 'Hạnh Trang', 'Minh Khôi', 'Gia Hân'].map((sample) => (
+                  <button
+                    key={sample}
+                    type="button"
+                    onClick={() => {
+                      playPopSound();
+                      setEditChildName(sample);
+                    }}
+                    className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                      editChildName === sample
+                        ? 'bg-amber-400 text-amber-950 border-amber-500 font-black shadow-xs'
+                        : 'bg-white/90 hover:bg-amber-100 text-slate-600 border-amber-200'
+                    }`}
+                  >
+                    {sample}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Pet Name Field */}
+            <div className="mb-5">
+              <label className="block text-xs font-black text-slate-700 uppercase tracking-wider mb-1.5">
+                🐾 Tên thú cưng:
+              </label>
+              <input
+                type="text"
+                value={editPetName}
+                onChange={(e) => setEditPetName(e.target.value)}
+                placeholder="Ví dụ: Bông Bông, Cún Vàng..."
+                maxLength={20}
+                className="w-full px-4 py-2.5 rounded-2xl border-2 border-amber-300 focus:border-amber-500 focus:outline-none text-base font-bold text-slate-800 bg-white shadow-inner"
+              />
+              {/* Pet Suggestions */}
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {(pet.type === 'dog'
+                  ? ['Cún Vàng', 'Khoai Tây', 'Mực Mực', 'Bé Bự']
+                  : pet.type === 'cat'
+                  ? ['Miu Miu', 'Mèo Mướp', 'Bông Gòn', 'Mun Con']
+                  : ['Thỏ Bông', 'Tai Dài', 'Cà Rốt', 'Bông Bông']
+                ).map((sample) => (
+                  <button
+                    key={sample}
+                    type="button"
+                    onClick={() => {
+                      playPopSound();
+                      setEditPetName(sample);
+                    }}
+                    className={`text-[11px] font-bold px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+                      editPetName === sample
+                        ? 'bg-amber-400 text-amber-950 border-amber-500 font-black shadow-xs'
+                        : 'bg-white/90 hover:bg-amber-100 text-slate-600 border-amber-200'
+                    }`}
+                  >
+                    {sample}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  playPopSound();
+                  setIsRenameModalOpen(false);
+                }}
+                className="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer transition-colors"
+              >
+                Hủy Bỏ
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveRename}
+                className="flex-[2] py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-sm shadow-[0_4px_0_#b45309] active:translate-y-1 active:shadow-none transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>💾 LƯU TÊN MỚI</span>
               </button>
             </div>
           </div>

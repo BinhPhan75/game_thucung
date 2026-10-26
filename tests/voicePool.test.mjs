@@ -37,3 +37,18 @@ test('events have independent bags and names are inserted literally', () => {
   assert.ok(pick('foodFull', { name: '$&' }).includes('$&'));
   assert.ok(pick('waterFull').includes('bạn thú cưng'));
 });
+
+test('childName and petName personalization replaces placeholders seamlessly', () => {
+  const pick = createVoicePicker(() => 0);
+  const line = pick('correct', { childName: 'Bảo Nam', name: 'Bông Bông' });
+  assert.ok(line.includes('Bảo Nam'));
+  assert.ok(line.includes('Bông Bông'));
+  assert.ok(!line.includes('{child}'));
+  assert.ok(!line.includes('{pet}'));
+
+  const lvlLine = pick('levelUp', { childName: 'Hoàng My', name: 'Thỏ xinh', level: 6 });
+  assert.ok(lvlLine.includes('Hoàng My'));
+  assert.ok(lvlLine.includes('Thỏ xinh'));
+  assert.ok(lvlLine.includes('cấp 6'));
+});
+

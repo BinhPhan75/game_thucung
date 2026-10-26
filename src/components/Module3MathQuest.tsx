@@ -180,6 +180,8 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
     const chosenItem = availableItems[Math.floor(Math.random() * availableItems.length)] || pool[0];
     const { emoji: itemEmoji, name: itemName, containerTitle, plateLabel } = chosenItem;
 
+    const childGreeting = pet.childName ? `Bé ${pet.childName}` : 'Bé';
+
     if (currentLvl <= 3) {
       // LEVEL 1 - 3: Đếm số trực quan (1 đến 5)
       const allCounts = [1, 2, 3, 4, 5].filter((n) => n !== prevQ?.count);
@@ -193,7 +195,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
         id: `cnt-${Date.now()}-${Math.random()}`,
         level: currentLvl,
         type: 'counting',
-        prompt: `Bé hãy đếm xem có bao nhiêu ${itemName}?`,
+        prompt: `${childGreeting} hãy đếm xem có bao nhiêu ${itemName}?`,
         itemEmoji,
         itemName,
         containerLabel: plateLabel,
@@ -221,7 +223,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
         id: `cmp-${Date.now()}-${Math.random()}`,
         level: currentLvl,
         type: 'comparison',
-        prompt: `${containerQuestionWord} có ${comparisonText} ${itemName}?`,
+        prompt: `${childGreeting} hãy tìm xem ${containerQuestionWord.toLowerCase()} có ${comparisonText} ${itemName} hơn nhé?`,
         itemEmoji,
         itemName,
         containerLabel: plateLabel,
@@ -252,7 +254,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
         id: `add-${Date.now()}-${Math.random()}`,
         level: currentLvl,
         type: 'addition',
-        prompt: `Có ${addendA} ${itemName} thêm ${addendB} ${itemName}. Có tất cả mấy ${itemName}?`,
+        prompt: `${childGreeting} ơi, có ${addendA} ${itemName} thêm ${addendB} ${itemName}. Có tất cả mấy ${itemName}?`,
         itemEmoji,
         itemName,
         containerLabel: plateLabel,
@@ -743,7 +745,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
             <div className="w-full max-w-md bg-emerald-100/90 border-3 border-emerald-400 rounded-3xl p-4 my-2 text-center animate-fade-in shadow-md">
               <div className="flex items-center justify-center gap-2 text-emerald-900 font-black text-lg md:text-xl">
                 <CheckCircle2 className="w-7 h-7 text-emerald-600 fill-emerald-100" />
-                <span>CHÍNH XÁC RỒI! BÉ GIỎI QUÁ! ⭐</span>
+                <span>CHÍNH XÁC RỒI! {pet.childName ? `BÉ ${pet.childName.toUpperCase()}` : 'BÉ'} GIỎI QUÁ! ⭐</span>
               </div>
               
               {/* Rewards Claimed specifically for target */}
@@ -777,15 +779,15 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
               {/* Special Stat completion notices */}
               {pet.hunger >= 100 && pet.thirst >= 100 ? (
                 <div className="bg-gradient-to-r from-amber-100 via-yellow-100 to-amber-100 border-2 border-amber-400 rounded-2xl p-3 my-2 text-xs sm:text-sm font-black text-amber-950 text-center animate-bounce shadow-xs">
-                  👑 CẢ 2 CHỈ SỐ ĐỀU ĐÃ ĐẠT 100%! BÉ ĐÃ CHĂM SÓC BẠN {pet.name.toUpperCase()} LỚN KHÔN RỒI!
+                  👑 CẢ 2 CHỈ SỐ ĐỀU ĐÃ ĐẠT 100%! {pet.childName ? `BÉ ${pet.childName.toUpperCase()}` : 'BÉ'} ĐÃ CHĂM SÓC BẠN {pet.name.toUpperCase()} LỚN KHÔN RỒI!
                 </div>
               ) : activeTarget === 'food' && pet.hunger >= 100 && pet.thirst < 100 ? (
                 <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-2.5 my-2 text-xs font-bold text-amber-900 text-center shadow-xs">
-                  😋 "Bé ơi, <span className="font-black text-amber-700">{pet.name}</span> đã ăn no (100%) rồi! Giờ hãy cho bạn ấy uống nước nhé (Khát nước hiện tại: <span className="font-black text-sky-700">{pet.thirst}%</span>)!"
+                  😋 "{pet.childName ? `Bé ${pet.childName}` : 'Bé'} ơi, <span className="font-black text-amber-700">{pet.name}</span> đã ăn no (100%) rồi! Giờ hãy cho bạn ấy uống nước nhé (Khát nước hiện tại: <span className="font-black text-sky-700">{pet.thirst}%</span>)!"
                 </div>
               ) : activeTarget === 'water' && pet.thirst >= 100 && pet.hunger < 100 ? (
                 <div className="bg-sky-50 border-2 border-sky-300 rounded-2xl p-2.5 my-2 text-xs font-bold text-sky-900 text-center shadow-xs">
-                  🥤 "Bé ơi, <span className="font-black text-sky-700">{pet.name}</span> đã uống no nước (100%) rồi! Giờ hãy cho bạn ấy ăn thức ăn nhé (Độ no hiện tại: <span className="font-black text-amber-700">{pet.hunger}%</span>)!"
+                  🥤 "{pet.childName ? `Bé ${pet.childName}` : 'Bé'} ơi, <span className="font-black text-sky-700">{pet.name}</span> đã uống no nước (100%) rồi! Giờ hãy cho bạn ấy ăn thức ăn nhé (Độ no hiện tại: <span className="font-black text-amber-700">{pet.hunger}%</span>)!"
                 </div>
               ) : null}
 
@@ -864,7 +866,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
             <div className="w-full max-w-md bg-amber-100/90 border-2 border-amber-300 rounded-2xl p-3 my-2 text-center animate-wiggle">
               <div className="text-amber-900 font-black text-sm md:text-base flex items-center justify-center gap-2">
                 <span className="text-xl">🐾</span>
-                <span>Bé thử đếm lại xem nào! (Cố lên nhé!)</span>
+                <span>{pet.childName ? `Bé ${pet.childName}` : 'Bé'} thử đếm lại xem nào! ({pet.name} tin bạn làm được!)</span>
               </div>
             </div>
           )}

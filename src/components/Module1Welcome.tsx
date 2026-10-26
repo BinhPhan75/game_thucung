@@ -268,18 +268,26 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
                 <span>BẮT ĐẦU CHƠI</span>
               </button>
 
-              {/* If existing pet save exists, show quick continue */}
+              {/* If existing pet save exists, show quick continue with personalized greeting */}
               {existingPet && (
-                <button
-                  onClick={() => {
-                    playChimeSound();
-                    onContinueExisting();
-                  }}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-amber-950 font-black text-base md:text-lg rounded-3xl shadow-[0_6px_0_#c2410c] active:translate-y-1 active:shadow-none transition-all cursor-pointer"
-                >
-                  <UserCheck className="w-5 h-5" />
-                  <span>Vào Nông Trại ({existingPet.name})</span>
-                </button>
+                <div className="w-full sm:w-auto flex flex-col items-center gap-1.5">
+                  <div className="text-xs font-bold text-emerald-900 bg-white/90 py-1 px-3 rounded-full border border-emerald-300 inline-flex items-center gap-1 shadow-xs">
+                    <span>👋 Chào mừng:</span>
+                    <span className="font-black text-pink-700">{existingPet.childName ? `Bé ${existingPet.childName}` : 'Bé yêu'}</span>
+                    <span>&</span>
+                    <span className="font-black text-amber-800">{existingPet.name}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      playChimeSound();
+                      onContinueExisting();
+                    }}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-amber-950 font-black text-base md:text-lg rounded-3xl shadow-[0_6px_0_#c2410c] active:translate-y-1 active:shadow-none transition-all cursor-pointer"
+                  >
+                    <UserCheck className="w-5 h-5" />
+                    <span>Vào Nông Trại ({existingPet.name})</span>
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -352,56 +360,99 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
 
             {/* Naming Section */}
             <div className="w-full max-w-xl bg-white/95 backdrop-blur-md rounded-3xl p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border-3 border-amber-200 flex flex-col items-center">
-              <div className="flex items-center gap-2 mb-2 text-amber-900 font-extrabold text-sm md:text-base">
+              <div className="flex items-center gap-2 mb-3 text-amber-900 font-extrabold text-sm md:text-base">
                 <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
-                <span>BƯỚC 2: ĐẶT TÊN CHO BẠN {selectedPreset.name.toUpperCase()}</span>
+                <span>BƯỚC 2: ĐẶT TÊN CHO BÉ & BẠN {selectedPreset.name.toUpperCase()}</span>
               </div>
 
-              <label className="w-full max-w-md text-sm font-bold text-amber-900">
-                Tên bé
-                <input value={childName} onChange={e => setChildName(e.target.value)} maxLength={30} placeholder="Bé tên là gì?" className="w-full mt-1 mb-3 px-4 py-2 rounded-xl border-2 border-amber-300 bg-amber-50" />
-              </label>
-              {/* Name Input Box */}
-              <div className="flex items-center gap-2 w-full max-w-md my-2">
-                <div className="relative flex-1">
+              {/* 1. Ô nhập: Tên của bé */}
+              <div className="w-full max-w-md bg-pink-50/70 p-3.5 rounded-2xl border-2 border-pink-200 mb-3 text-left">
+                <label className="block text-xs md:text-sm font-black text-pink-900 mb-1 flex items-center gap-1.5">
+                  <span className="text-base">👧👦</span>
+                  <span>Tên của bé (Bé tên là gì nè?):</span>
+                </label>
+                <input
+                  type="text"
+                  value={childName}
+                  onChange={(e) => setChildName(e.target.value)}
+                  maxLength={25}
+                  placeholder="Ví dụ: Hoàng My, Bảo Nam, Hạnh Trang..."
+                  className="w-full px-4 py-2.5 text-base md:text-lg font-black text-pink-950 bg-white border-2 border-pink-300 focus:border-pink-500 rounded-xl outline-none shadow-inner transition-all placeholder:text-slate-400 placeholder:text-sm placeholder:font-normal"
+                />
+                {/* Gợi ý tên bé phổ biến */}
+                <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span className="text-[11px] font-bold text-pink-800">Gợi ý:</span>
+                  {['Hoàng My', 'Bảo Nam', 'Hạnh Trang', 'Minh Khôi', 'Gia Hân'].map((name) => (
+                    <button
+                      key={name}
+                      type="button"
+                      onClick={() => {
+                        playPopSound();
+                        setChildName(name);
+                      }}
+                      className={`px-2.5 py-0.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        childName === name
+                          ? 'bg-pink-500 text-white shadow-xs'
+                          : 'bg-white hover:bg-pink-100 text-pink-900 border border-pink-200'
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. Ô nhập: Tên thú cưng */}
+              <div className="w-full max-w-md bg-amber-50/70 p-3.5 rounded-2xl border-2 border-amber-200 mb-3 text-left">
+                <label className="block text-xs md:text-sm font-black text-amber-900 mb-1 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <span className="text-base">🐾</span>
+                    <span>Tên thú cưng ({selectedPreset.speciesName}):</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleRandomName}
+                    title="Đổi tên ngẫu nhiên"
+                    className="text-xs font-bold text-amber-700 hover:text-amber-900 flex items-center gap-1 cursor-pointer"
+                  >
+                    <Dices className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Đổi ngẫu nhiên</span>
+                  </button>
+                </label>
+                <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={petName}
                     maxLength={15}
                     onChange={(e) => setPetName(e.target.value)}
-                    placeholder="Nhập tên đáng yêu..."
-                    className="w-full px-5 py-3 text-xl md:text-2xl font-black text-center text-amber-950 bg-amber-50/70 border-3 border-amber-300 focus:border-amber-500 focus:bg-white rounded-2xl outline-none shadow-inner transition-all placeholder:text-slate-400 placeholder:text-base placeholder:font-normal"
+                    placeholder="Ví dụ: Thỏ xinh, Cún Vàng, Miu Miu..."
+                    className="w-full px-4 py-2.5 text-base md:text-lg font-black text-amber-950 bg-white border-2 border-amber-300 focus:border-amber-500 rounded-xl outline-none shadow-inner transition-all placeholder:text-slate-400 placeholder:text-sm placeholder:font-normal"
                   />
+                  <button
+                    type="button"
+                    onClick={handleRandomName}
+                    title="Đổi tên ngẫu nhiên"
+                    className="p-2.5 bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold rounded-xl shadow-xs cursor-pointer shrink-0 active:scale-95 transition-transform"
+                  >
+                    <Dices className="w-5 h-5" />
+                  </button>
                 </div>
 
-                {/* Randomize Cute Name Button */}
-                <button
-                  onClick={handleRandomName}
-                  title="Đổi tên ngẫu nhiên"
-                  className="px-4 py-3 bg-amber-400 hover:bg-amber-500 active:scale-90 text-amber-950 font-bold rounded-2xl shadow-[0_4px_0_#b45309] active:translate-y-1 active:shadow-none transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
-                >
-                  <Dices className="w-5 h-5" />
-                  <span className="hidden sm:inline text-sm">Đổi Tên</span>
-                </button>
-              </div>
-
-              {/* Quick-Pick Cute Name Suggestions for 5-Year-Olds */}
-              <div className="w-full mt-2">
-                <div className="text-xs text-slate-500 font-bold mb-1.5 text-center">
-                  Gợi ý tên hay cho bé (Bấm để chọn ngay):
-                </div>
-                <div className="flex flex-wrap items-center justify-center gap-1.5 md:gap-2">
+                {/* Quick-Pick Cute Name Suggestions for 5-Year-Olds */}
+                <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span className="text-[11px] font-bold text-amber-800">Gợi ý:</span>
                   {selectedPreset.sampleNames.map((name) => (
                     <button
                       key={name}
+                      type="button"
                       onClick={() => {
                         playPopSound();
                         setPetName(name);
                       }}
-                      className={`px-3 py-1.5 rounded-xl text-xs md:text-sm font-bold transition-all cursor-pointer ${
+                      className={`px-2.5 py-0.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         petName === name
-                          ? 'bg-amber-500 text-white shadow-sm scale-105'
-                          : 'bg-amber-100 hover:bg-amber-200 text-amber-900'
+                          ? 'bg-amber-500 text-white shadow-xs'
+                          : 'bg-white hover:bg-amber-100 text-amber-900 border border-amber-200'
                       }`}
                     >
                       {name}
@@ -411,9 +462,10 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
               </div>
 
               {/* Confirm & Enter Farm CTA Button */}
-              <div className="flex items-center gap-3 mt-6 w-full max-w-md">
+              <div className="flex items-center gap-3 mt-3 w-full max-w-md">
                 {/* Back to Title Button */}
                 <button
+                  type="button"
                   onClick={() => {
                     playPopSound();
                     setStage('title');
@@ -425,12 +477,13 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
 
                 {/* Primary Confirm Button */}
                 <button
+                  type="button"
                   onClick={handleStartAdventure}
-                  className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-black text-lg md:text-xl rounded-2xl shadow-[0_8px_0_#15803d,0_15px_20px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_0_#15803d] active:translate-y-2 active:shadow-none transition-all cursor-pointer group"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-black text-base md:text-xl rounded-2xl shadow-[0_8px_0_#15803d,0_15px_20px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_0_#15803d] active:translate-y-2 active:shadow-none transition-all cursor-pointer group"
                 >
-                  <Sparkles className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                  <span>XÁC NHẬN & VÀO NÔNG TRẠI</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  <span>LƯU TÊN & VÀO NÔNG TRẠI</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
