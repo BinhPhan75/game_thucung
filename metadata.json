@@ -1,0 +1,6 @@
+{
+  "name": "Nuôi Thú Học Toán - Pet Math Farm",
+  "description": "Game giáo dục toán học mầm non và tiền tiểu học (5 tuổi) chuẩn bị vào lớp 1 với đồ hoạ hoạt hình dễ thương, nuôi thú cưng và bài học trực quan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
