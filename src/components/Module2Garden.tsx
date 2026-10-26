@@ -149,6 +149,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.thirst < 100) {
           playChimeSound();
           setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
+          speakGameEvent('foodFull', { name: pet.name, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -163,6 +164,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.hunger < 100) {
           playChimeSound();
           setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
+          speakGameEvent('waterFull', { name: pet.name, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -187,8 +189,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       triggerEvolution();
     } else if (pet.hunger >= 100 && pet.thirst < 100) {
       setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
+      speakGameEvent('foodFull', { name: pet.name, level: pet.level });
     } else if (pet.thirst >= 100 && pet.hunger < 100) {
       setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
+      speakGameEvent('waterFull', { name: pet.name, level: pet.level });
     } else if (isHungry) {
       handleOpenQuest('food');
     } else if (isThirsty) {
@@ -689,6 +693,11 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         </button>
       </footer>
 
+      {/* Footer Copyright Notice */}
+      <div className="relative z-20 w-full text-center pb-2.5 pt-1 text-[11px] sm:text-xs font-bold text-emerald-950/80 drop-shadow-xs">
+        Bản quyền thuộc về HoangMy@2026
+      </div>
+
       {/* MODULE 3: MATH QUEST POPUP */}
       {isMathQuestOpen && (
         <Module3MathQuest
@@ -766,10 +775,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const msg = statFullModal.type === 'food'
-                      ? `Bé ơi, ${pet.name} đã ăn no rồi! Giờ hãy cho ${pet.name} uống nước nhé!`
-                      : `Bé ơi, ${pet.name} đã uống no nước rồi! Giờ hãy cho ${pet.name} ăn thức ăn nhé!`;
-                    speakVietnamese(msg);
+                    speakGameEvent(
+                      statFullModal.type === 'food' ? 'foodFull' : 'waterFull',
+                      { name: pet.name, level: pet.level }
+                    );
                   }}
                   title="Nghe giọng nói của thú cưng"
                   className="p-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 shrink-0 cursor-pointer transition-transform active:scale-90 shadow-xs border border-amber-200"
@@ -885,18 +894,28 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
             {/* Interactive Question Dialog for Child */}
             <div className="bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 p-4 rounded-3xl border-2 border-purple-300 shadow-sm my-3 text-left">
-              <div className="flex items-start gap-2.5">
-                <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-2xl shadow-inner shrink-0">
-                  👗
+              <div className="flex items-start justify-between gap-2.5">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-2xl shadow-inner shrink-0">
+                    👗
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-black text-purple-950 leading-snug">
+                      "Cảm ơn bé đã cho {pet.name} ăn uống đầy đủ! Giờ bé có muốn chuyển sang mua quần áo/phụ kiện mới cho thú không?"
+                    </h4>
+                    <p className="text-[11px] text-purple-800 font-semibold mt-1">
+                      Bé có thể chọn trang phục yêu thích và giải bài toán đặc biệt để nhận vật phẩm nhé!
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-black text-purple-950 leading-snug">
-                    "Cảm ơn bé đã cho {pet.name} ăn uống đầy đủ! Giờ bé có muốn chuyển sang mua quần áo/phụ kiện mới cho thú không?"
-                  </h4>
-                  <p className="text-[11px] text-purple-800 font-semibold mt-1">
-                    Bé có thể chọn trang phục yêu thích và giải bài toán đặc biệt để nhận vật phẩm nhé!
-                  </p>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => speakGameEvent('levelUp', { name: pet.name, level: pet.level })}
+                  title="Nghe giọng chúc mừng"
+                  className="p-2 rounded-xl bg-white hover:bg-purple-200 text-purple-800 shrink-0 cursor-pointer transition-transform active:scale-90 shadow-xs border border-purple-300"
+                >
+                  <Volume2 className="w-4 h-4 text-purple-900" />
+                </button>
               </div>
             </div>
 

@@ -332,11 +332,12 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
       // WRONG ANSWER: NO PENALTY! Gentle encouraging response
       playEncouragingSound();
       setFeedbackState('wrong');
+      speakGameEvent('wrong', pet);
 
       setTimeout(() => {
         setFeedbackState('idle');
         setSelectedOption(null);
-      }, 1200);
+      }, 1400);
     }
   };
 

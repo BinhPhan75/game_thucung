@@ -439,9 +439,10 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
       </div>
 
       {/* Peaceful Bottom Grass / Footer Notice */}
-      <div className="relative z-10 w-full text-center py-3 text-emerald-950 font-bold text-xs bg-emerald-700/10 backdrop-blur-xs">
-        Nuôi Thú Học Toán · Thiết kế thân thiện cho trẻ 5 tuổi chuẩn bị vào lớp 1 🍀 Không áp lực, vui học mỗi ngày!
-      </div>
+      <footer className="relative z-10 w-full text-center py-2.5 px-4 text-emerald-950 font-bold text-xs bg-emerald-700/10 backdrop-blur-xs flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4">
+        <span>Nuôi Thú Học Toán · Thiết kế thân thiện cho trẻ 5 tuổi chuẩn bị vào lớp 1 🍀</span>
+        <span className="font-extrabold text-emerald-900">Bản quyền thuộc về HoangMy@2026</span>
+      </footer>
     </div>
   );
 };

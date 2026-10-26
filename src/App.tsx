@@ -86,9 +86,12 @@ export default function App() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-sky-200">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sky-200">
         <div className="text-xl font-bold text-sky-800 animate-pulse">
           Đang tải Nông Trại Học Toán...
+        </div>
+        <div className="mt-4 text-xs font-bold text-sky-900/70">
+          Bản quyền thuộc về HoangMy@2026
         </div>
       </div>
     );
