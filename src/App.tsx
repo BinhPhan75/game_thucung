@@ -12,7 +12,10 @@ import { AudioControls } from './components/AudioControls';
 import { 
   startBackgroundMusic, 
   stopBackgroundMusic, 
-  playPopSound, setSpeechMuted
+  playPopSound, 
+  setSpeechMuted,
+  isSpeechMuted,
+  VOICE_MUTED_EVENT
 } from './utils/audio';
 
 const STORAGE_KEY = 'PET_MATH_FARM_DATA';
@@ -20,9 +23,19 @@ const STORAGE_KEY = 'PET_MATH_FARM_DATA';
 export default function App() {
   const [pet, setPet] = useState<PetState | null>(null);
   const [screen, setScreen] = useState<GameScreen>('welcome');
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState<boolean>(() => isSpeechMuted());
   const [isBgmActive, setIsBgmActive] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // Synchronize mute state across components and storage
+  useEffect(() => {
+    const handleMuteChange = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      setIsMuted(custom.detail);
+    };
+    window.addEventListener(VOICE_MUTED_EVENT, handleMuteChange);
+    return () => window.removeEventListener(VOICE_MUTED_EVENT, handleMuteChange);
+  }, []);
 
   // Load saved pet from localStorage on initial load
   useEffect(() => {

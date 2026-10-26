@@ -284,10 +284,11 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-3 bg-purple-50/80 border-t border-purple-200 flex items-center justify-between text-xs font-bold text-purple-900">
-          <span className="flex items-center gap-1.5">
-            <span>👑 Tủ đồ thời trang: Mọi trang phục đều cần bé thể hiện tài năng giải toán để mở khóa!</span>
-          </span>
+        <div className="p-3 bg-purple-50/80 border-t border-purple-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-bold text-purple-900">
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3 text-center sm:text-left">
+            <span>👑 Tủ đồ thời trang · Giải toán mở khóa</span>
+            <span className="text-[11px] font-extrabold text-purple-950/80">Bản quyền thuộc về HoangMy@2026</span>
+          </div>
           <button
             onClick={() => {
               playPopSound();

@@ -14,7 +14,8 @@ import {
   Star, 
   RotateCcw,
   Gift,
-  Volume2
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { PetState, QuestTarget } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
@@ -24,7 +25,11 @@ import {
   playCelebrationSound, 
   playEncouragingSound, 
   speakGameEvent,
-  speakVietnamese
+  speakVietnamese,
+  setSpeechMuted,
+  isSpeechMuted,
+  stopSpeech,
+  VOICE_MUTED_EVENT
 } from '../utils/audio';
 
 interface Module3MathQuestProps {
@@ -110,6 +115,53 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
   const [selectedOption, setSelectedOption] = useState<number | 'A' | 'B' | null>(null);
   const [feedbackState, setFeedbackState] = useState<'idle' | 'correct' | 'wrong'>('idle');
   const [countedIndices, setCountedIndices] = useState<number[]>([]);
+
+  // Voice mute state (persisted across questions and sessions)
+  const [isVoiceMuted, setIsVoiceMuted] = useState<boolean>(() => isSpeechMuted());
+
+  // Keep mute state in sync if changed elsewhere (e.g. top-right AudioControls)
+  useEffect(() => {
+    const handleMuteChange = (e: Event) => {
+      const custom = e as CustomEvent<boolean>;
+      setIsVoiceMuted(custom.detail);
+    };
+    window.addEventListener(VOICE_MUTED_EVENT, handleMuteChange);
+    return () => window.removeEventListener(VOICE_MUTED_EVENT, handleMuteChange);
+  }, []);
+
+  // Stop any active speech when quest modal is closed/unmounted
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, []);
+
+  // TỰ ĐỘNG ĐỌC CÂU HỎI:
+  // Ngay khi popup bài toán hiện lên (hoặc chuyển sang câu hỏi mới), tự động đọc to rõ câu hỏi nếu không tắt tiếng
+  useEffect(() => {
+    if (!question || feedbackState !== 'idle') return;
+
+    if (!isSpeechMuted()) {
+      // Đợi 250ms cho modal/hiệu ứng chuyển cảnh ổn định rồi đọc
+      const timer = window.setTimeout(() => {
+        speakVietnamese(question.prompt);
+      }, 250);
+      return () => {
+        window.clearTimeout(timer);
+      };
+    }
+  }, [question?.id]);
+
+  const handleToggleVoiceMute = () => {
+    playPopSound();
+    const next = !isVoiceMuted;
+    setIsVoiceMuted(next);
+    setSpeechMuted(next);
+    if (!next && question && feedbackState === 'idle') {
+      // Khi bật âm thanh trở lại, đọc ngay câu hỏi hiện tại cho bé nghe!
+      speakVietnamese(question.prompt);
+    }
+  };
 
   // Find target costume info if costume quest
   const costumeInfo = targetCostumeId ? COSTUME_LIST.find((c) => c.id === targetCostumeId) : null;
@@ -360,6 +412,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
   // Return to garden & trigger feeding/drinking animation
   const handleClaimAndReturn = () => {
     playPopSound();
+    stopSpeech();
     onFinishAndFeed(activeTarget);
   };
 
@@ -406,20 +459,47 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
             </div>
           </div>
 
-          {/* Right Header Stats & Close */}
+          {/* Right Header Stats & Controls */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 bg-white/20 px-2.5 py-1 rounded-xl text-xs font-black text-white shadow-xs">
+            <div className="flex items-center gap-1 bg-white/20 px-2.5 py-1.5 rounded-xl text-xs font-black text-white shadow-xs">
               <Coins className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
               <span>{pet.coins}</span>
             </div>
 
+            {/* Bật / Tắt âm thanh giọng đọc (Mute / Unmute) */}
+            <button
+              type="button"
+              onClick={handleToggleVoiceMute}
+              title={isVoiceMuted ? 'Bật âm thanh giọng đọc' : 'Tắt âm thanh giọng đọc'}
+              aria-label={isVoiceMuted ? 'Bật âm thanh giọng đọc' : 'Tắt âm thanh giọng đọc'}
+              className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 font-bold text-xs ${
+                isVoiceMuted
+                  ? 'bg-rose-500 hover:bg-rose-600 text-white shadow-md ring-2 ring-white/70'
+                  : 'bg-white/20 hover:bg-white/30 text-white shadow-xs active:scale-95'
+              }`}
+            >
+              {isVoiceMuted ? (
+                <>
+                  <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <span className="hidden sm:inline text-[11px] font-black">Tắt tiếng</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <span className="hidden sm:inline text-[11px] font-black">Bật tiếng</span>
+                </>
+              )}
+            </button>
+
             <button
               onClick={() => {
                 playPopSound();
+                stopSpeech();
                 onClose();
               }}
-              title="Đóng"
-              className="p-1.5 bg-black/10 hover:bg-black/20 text-white rounded-xl transition-all cursor-pointer"
+              title="Đóng bài toán"
+              aria-label="Đóng bài toán"
+              className="p-1.5 sm:p-2 bg-black/15 hover:bg-black/25 text-white rounded-xl transition-all cursor-pointer active:scale-95"
             >
               <X className="w-5 h-5" />
             </button>
@@ -467,12 +547,32 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
                 </h3>
                 <button
                   type="button"
-                  onClick={() => speakVietnamese(question.prompt)}
-                  title="Nghe giọng đọc tiếng Việt"
-                  aria-label="Đọc câu hỏi bằng tiếng Việt"
-                  className="p-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 active:scale-90 transition-transform flex-shrink-0 cursor-pointer shadow-xs border border-amber-200/80"
+                  onClick={() => {
+                    if (isVoiceMuted) {
+                      handleToggleVoiceMute();
+                    } else {
+                      speakVietnamese(question.prompt);
+                    }
+                  }}
+                  title={isVoiceMuted ? 'Đang tắt tiếng - Bấm để bật và nghe câu hỏi' : 'Bé bấm để nghe đọc lại câu hỏi'}
+                  aria-label={isVoiceMuted ? 'Đang tắt tiếng - Bấm để bật và nghe câu hỏi' : 'Bé bấm để nghe đọc lại câu hỏi'}
+                  className={`p-2 rounded-xl active:scale-90 transition-transform flex-shrink-0 cursor-pointer shadow-xs border flex items-center gap-1.5 ${
+                    isVoiceMuted
+                      ? 'bg-rose-100 hover:bg-rose-200 text-rose-700 border-rose-300'
+                      : 'bg-amber-100 hover:bg-amber-200 text-amber-800 border-amber-200/80'
+                  }`}
                 >
-                  <Volume2 className="w-5 h-5 text-amber-700" />
+                  {isVoiceMuted ? (
+                    <>
+                      <VolumeX className="w-5 h-5 text-rose-600" />
+                      <span className="text-[11px] font-black hidden sm:inline">Bật đọc</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-5 h-5 text-amber-700" />
+                      <span className="text-[11px] font-black hidden sm:inline">Đọc lại</span>
+                    </>
+                  )}
                 </button>
                 <div className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-r-3 border-b-3 border-amber-300 rotate-45" />
               </div>
@@ -771,8 +871,9 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="bg-amber-50/80 px-4 py-2 border-t border-amber-200 text-center text-[11px] font-bold text-amber-950 flex items-center justify-center gap-2">
-          <span>🐾 Nuôi Thú Học Toán · Rèn luyện tư duy số học và chăm sóc thú cưng</span>
+        <div className="bg-amber-50/80 px-4 py-2 border-t border-amber-200 text-center text-[11px] font-bold text-emerald-950 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
+          <span>🐾 Nuôi Thú Học Toán · Rèn luyện tư duy số học</span>
+          <span className="font-extrabold text-emerald-900">Bản quyền thuộc về HoangMy@2026</span>
         </div>
       </div>
     </div>

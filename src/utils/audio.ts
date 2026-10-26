@@ -285,7 +285,19 @@ export const stopBackgroundMusic = () => {
 export const isMusicPlaying = () => isBgmPlaying;
 
 // Speech state management
-let speechMuted = false;
+export const VOICE_MUTED_STORAGE_KEY = 'PET_MATH_VOICE_MUTED';
+export const VOICE_MUTED_EVENT = 'pet-math-speech-mute-change';
+
+let speechMuted = (() => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    try {
+      return localStorage.getItem(VOICE_MUTED_STORAGE_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  }
+  return false;
+})();
 let currentSpeechId = 0;
 let currentAudio: HTMLAudioElement | null = null;
 const ttsBlobCache = new Map<string, string>(); // cleanText -> blobUrl
@@ -326,10 +338,18 @@ export const stopSpeech = () => {
 };
 
 /**
- * Toggle or set speech muting
+ * Toggle or set speech muting (persists to localStorage and notifies listeners)
  */
 export const setSpeechMuted = (muted: boolean) => {
   speechMuted = muted;
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(VOICE_MUTED_STORAGE_KEY, String(muted));
+    } catch {
+      // ignore
+    }
+    window.dispatchEvent(new CustomEvent(VOICE_MUTED_EVENT, { detail: muted }));
+  }
   if (muted) {
     stopSpeech();
   }
