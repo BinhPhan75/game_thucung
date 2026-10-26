@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { restorePet } from './utils/storage';
 import { PetState, GameScreen } from './types/game';
 import { Module1Welcome } from './components/Module1Welcome';
 import { Module2Garden } from './components/Module2Garden';
@@ -11,7 +12,7 @@ import { AudioControls } from './components/AudioControls';
 import { 
   startBackgroundMusic, 
   stopBackgroundMusic, 
-  playPopSound 
+  playPopSound, setSpeechMuted
 } from './utils/audio';
 
 const STORAGE_KEY = 'PET_MATH_FARM_DATA';
@@ -28,10 +29,10 @@ export default function App() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed && parsed.name && parsed.type) {
+        const parsed = restorePet(JSON.parse(saved));
+        if (parsed) {
           setPet(parsed);
-          // If pet exists, screen remains on 'welcome' so user can choose to continue or pick a new pet
+          setScreen('garden');
         }
       }
     } catch (e) {
@@ -74,6 +75,7 @@ export default function App() {
 
   // Toggle Sound Effects
   const handleToggleSound = () => {
+    setSpeechMuted(!isMuted);
     setIsMuted(!isMuted);
   };
 
@@ -93,7 +95,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full font-['Fredoka',sans-serif] select-none">
+    <div className="relative min-h-screen w-full font-sans select-none">
       {/* Floating Audio Controls in Top-Right Corner */}
       <div className="fixed top-3 right-3 z-50">
         <AudioControls

@@ -19,6 +19,7 @@ export interface CostumeItem {
 }
 
 export interface PetState {
+  childName?: string;
   type: PetType;
   name: string;
   stage: PetStage;

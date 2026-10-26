@@ -281,15 +281,35 @@ export const stopBackgroundMusic = () => {
 
 export const isMusicPlaying = () => isBgmPlaying;
 
-// Speech synthesis is completely disabled as per user request to avoid English TTS confusion
-export const speakVietnamese = (_text: string) => {
-  // Disabled by user specification
-  if ('speechSynthesis' in window) {
-    try {
-      window.speechSynthesis.cancel();
-    } catch {
-      // ignore
-    }
+// Re-read voices because browsers load their voice list asynchronously.
+let speechMuted = false;
+let vietnameseVoice: SpeechSynthesisVoice | undefined;
+const refreshVoice = () => {
+  vietnameseVoice = window.speechSynthesis.getVoices().find(v => v.lang.toLowerCase().startsWith('vi'));
+};
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  refreshVoice();
+  window.speechSynthesis.addEventListener('voiceschanged', refreshVoice);
+}
+export const setSpeechMuted = (muted: boolean) => {
+  speechMuted = muted;
+  if (muted && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+};
+export const speakVietnamese = (text: string) => {
+  if (speechMuted || typeof window === 'undefined' || !('speechSynthesis' in window)
+      || !('SpeechSynthesisUtterance' in window)) return;
+  try {
+    refreshVoice();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'vi-VN';
+    if (vietnameseVoice) utterance.voice = vietnameseVoice;
+    utterance.rate = 0.85;
+    utterance.pitch = 1.1;
+    utterance.volume = 0.9;
+    // Queue guidance after praise, without cancelling the reward.
+    window.speechSynthesis.speak(utterance);
+  } catch (error) {
+    console.debug('Speech unavailable:', error);
   }
 };
 

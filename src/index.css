@@ -40,3 +40,6 @@
     animation: bounceSoft 2.5s ease-in-out infinite;
   }
 }
+
+@theme { --font-sans: "Nunito", "Segoe UI", Arial, sans-serif; }
+@layer base { body { font-family: var(--font-sans); line-height: 1.5; } button, input, select, textarea { font-family: inherit; } }

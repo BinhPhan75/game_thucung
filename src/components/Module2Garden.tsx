@@ -28,7 +28,7 @@ import {
   playCelebrationSound, 
   playPetVoice, 
   playEatingSound, 
-  playDrinkingSound 
+  playDrinkingSound, speakVietnamese
 } from '../utils/audio';
 
 interface Module2GardenProps {
@@ -75,6 +75,14 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     return () => clearInterval(timer);
   }, [pet, onUpdatePet]);
 
+  useEffect(() => {
+    if (pet.hunger >= 100 && pet.thirst < 100) {
+      speakVietnamese('Bạn thú cưng đã ăn no rồi! Bé hãy cho bạn uống nước nhé!');
+    } else if (pet.thirst >= 100 && pet.hunger < 100) {
+      speakVietnamese('Bạn thú cưng đã uống đủ nước rồi! Bé hãy cho bạn ăn nhé!');
+    }
+  }, [pet.hunger >= 100, pet.thirst >= 100]);
+
   // Check for 100% hunger & thirst EVOLUTION TRIGGER
   useEffect(() => {
     if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal) {
@@ -93,6 +101,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     });
 
     const nextLevel = pet.level + 1;
+    speakVietnamese(`Chúc mừng bé! Thú cưng đã lên cấp ${nextLevel} rồi! Bé chăm sóc bạn giỏi quá!`);
     let nextStage: PetStage = pet.stage;
 
     // Stage progression: Cấp 1-3 -> baby, Cấp 4-7 -> junior, Cấp 8+ -> master
@@ -193,7 +202,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
     if (target === 'water') {
       playDrinkingSound();
-    } else {
+    } else if (target === 'food') {
       playEatingSound();
     }
 

@@ -243,7 +243,7 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
                               title="Giải đúng toán để mở khóa trang phục"
                             >
                               <Crown className="w-3.5 h-3.5 fill-amber-900 text-amber-950" />
-                              <span>Thử Thách</span>
+                              <span>Giải Toán Để Nhận</span>
                             </button>
                           ) : (
                             /* Bé chưa đủ Xu: Nút khóa, hướng dẫn giải toán kiếm xu */
@@ -269,7 +269,7 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
                                 setNotEnoughCoinsItem(item);
                               }
                             }}
-                            className="text-[9px] font-bold text-purple-700 hover:underline cursor-pointer"
+                            className="text-[9px] font-bold text-purple-700 hover:text-purple-900 cursor-pointer"
                           >
                             {canAfford ? '📝 Cần giải đúng toán' : '💡 Học toán kiếm Xu'}
                           </button>

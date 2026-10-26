@@ -21,7 +21,7 @@ import {
   playPopSound, 
   playChimeSound, 
   playCelebrationSound, 
-  playEncouragingSound 
+  playEncouragingSound, speakVietnamese
 } from '../utils/audio';
 
 interface Module3MathQuestProps {
@@ -246,7 +246,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
 
   // Check Answer Handler
   const handleAnswer = (choice: number | 'A' | 'B') => {
-    if (!question || feedbackState === 'correct') return;
+    if (!question || feedbackState !== 'idle') return;
 
     setSelectedOption(choice);
 
@@ -261,6 +261,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
       // CORRECT ANSWER!
       playCelebrationSound();
       setFeedbackState('correct');
+      speakVietnamese('Chính xác rồi! Bé giỏi quá!');
 
       // Trigger colorful confetti
       confetti({
@@ -316,6 +317,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
         stars: pet.stars + 1,
         exp: newExp >= pet.maxExp ? newExp - pet.maxExp : newExp,
         level: newLevel,
+        stage: newLevel >= 8 ? 'master' : newLevel >= 4 ? 'junior' : 'baby',
         maxExp: newMaxExp,
         unlockedCostumes: newCostumes,
         equippedHat: newEquipped,
@@ -428,10 +430,11 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((lvl) => (
             <button
               key={lvl}
+              disabled={activeTarget === 'costume' && feedbackState === 'correct'}
               onClick={() => {
                 playPopSound();
                 setLevel(lvl);
-                const q = generateQuestion(lvl, question);
+                const q = generateQuestion(lvl, question, activeTarget);
                 setQuestion(q);
                 setCountedIndices([]);
                 setFeedbackState('idle');
@@ -652,7 +655,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
                   <span className="text-2xl">{costumeInfo.icon}</span>
                   <span>
                     🎉 XUẤT SẮC! ĐÃ MỞ KHÓA THÀNH CÔNG:{' '}
-                    <span className="text-purple-700 underline">{costumeInfo.name.toUpperCase()}</span>!
+                    <span className="text-purple-700">{costumeInfo.name.toUpperCase()}</span>!
                     {costumeInfo.price > 0 && ` (Đã dùng ${costumeInfo.price} Xu)`}
                   </span>
                 </div>
@@ -675,7 +678,11 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 mt-2">
-                {pet.hunger >= 100 && pet.thirst >= 100 ? (
+                {activeTarget === 'costume' ? (
+                  <button onClick={handleClaimAndReturn} className="w-full py-4 px-4 bg-purple-600 hover:bg-purple-500 text-white font-black text-base rounded-2xl shadow-md">
+                    🏡 VỀ SÂN VƯỜN NGẮM THÚ CƯNG
+                  </button>
+                ) : pet.hunger >= 100 && pet.thirst >= 100 ? (
                   <button
                     onClick={handleClaimAndReturn}
                     className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_4px_0_#b45309] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer animate-pulse"

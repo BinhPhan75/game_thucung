@@ -30,6 +30,7 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
   // Screen sub-state: 'title' or 'select'
   const [stage, setStage] = useState<'title' | 'select'>(existingPet ? 'title' : 'select');
   const [selectedType, setSelectedType] = useState<PetType>('dog');
+  const [childName, setChildName] = useState(existingPet?.childName ?? '');
   const [petName, setPetName] = useState<string>('Lu Lu');
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -67,6 +68,7 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
 
     const newPet: PetState = {
       type: selectedType,
+      childName: childName.trim(),
       name: petName.trim() || selectedPreset.defaultName,
       stage: 'baby',
       level: 1,
@@ -355,6 +357,10 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
                 <span>BƯỚC 2: ĐẶT TÊN CHO BẠN {selectedPreset.name.toUpperCase()}</span>
               </div>
 
+              <label className="w-full max-w-md text-sm font-bold text-amber-900">
+                Tên bé
+                <input value={childName} onChange={e => setChildName(e.target.value)} maxLength={30} placeholder="Bé tên là gì?" className="w-full mt-1 mb-3 px-4 py-2 rounded-xl border-2 border-amber-300 bg-amber-50" />
+              </label>
               {/* Name Input Box */}
               <div className="flex items-center gap-2 w-full max-w-md my-2">
                 <div className="relative flex-1">
