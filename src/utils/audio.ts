@@ -1,5 +1,5 @@
 import { selectVietnameseVoice } from './voiceSelection';
-import { pickVoiceLine, type VoiceEvent } from './voicePool';
+import { pickVoiceLine, type VoiceEvent, type VoiceContext } from './voicePool';
 
 /**
  * @license
