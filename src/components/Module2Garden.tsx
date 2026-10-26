@@ -28,7 +28,7 @@ import {
   playCelebrationSound, 
   playPetVoice, 
   playEatingSound, 
-  playDrinkingSound, speakVietnamese
+  playDrinkingSound, speakGameEvent
 } from '../utils/audio';
 
 interface Module2GardenProps {
@@ -77,9 +77,9 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
   useEffect(() => {
     if (pet.hunger >= 100 && pet.thirst < 100) {
-      speakVietnamese('Bạn thú cưng đã ăn no rồi! Bé hãy cho bạn uống nước nhé!');
+      speakGameEvent('foodFull', pet);
     } else if (pet.thirst >= 100 && pet.hunger < 100) {
-      speakVietnamese('Bạn thú cưng đã uống đủ nước rồi! Bé hãy cho bạn ăn nhé!');
+      speakGameEvent('waterFull', pet);
     }
   }, [pet.hunger >= 100, pet.thirst >= 100]);
 
@@ -101,7 +101,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     });
 
     const nextLevel = pet.level + 1;
-    speakVietnamese(`Chúc mừng bé! Thú cưng đã lên cấp ${nextLevel} rồi! Bé chăm sóc bạn giỏi quá!`);
+    speakGameEvent('levelUp', { name: pet.name, level: nextLevel });
     let nextStage: PetStage = pet.stage;
 
     // Stage progression: Cấp 1-3 -> baby, Cấp 4-7 -> junior, Cấp 8+ -> master

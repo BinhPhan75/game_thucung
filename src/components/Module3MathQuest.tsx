@@ -21,7 +21,7 @@ import {
   playPopSound, 
   playChimeSound, 
   playCelebrationSound, 
-  playEncouragingSound, speakVietnamese
+  playEncouragingSound, speakGameEvent
 } from '../utils/audio';
 
 interface Module3MathQuestProps {
@@ -261,7 +261,7 @@ export const Module3MathQuest: React.FC<Module3MathQuestProps> = ({
       // CORRECT ANSWER!
       playCelebrationSound();
       setFeedbackState('correct');
-      speakVietnamese('Chính xác rồi! Bé giỏi quá!');
+      speakGameEvent('correct', pet);
 
       // Trigger colorful confetti
       confetti({
