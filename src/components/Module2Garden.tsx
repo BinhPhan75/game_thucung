@@ -256,7 +256,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
+    <div className="garden-screen relative h-screen w-screen p-2 md:p-4 flex flex-col justify-between overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
       
       {/* Cartoon Sky & Garden Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -319,7 +319,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </div>
 
       {/* TOP HEADER: Pet Status & Navigation & Wardrobe Button */}
-      <header className="relative z-20 w-full max-w-5xl mx-auto px-4 pt-3 md:pt-4 flex flex-wrap items-center justify-between gap-2.5">
+      <header className="garden-header relative z-20 w-full max-w-5xl mx-auto px-4 pt-3 md:pt-4 flex flex-wrap items-center justify-between gap-2.5">
         
         {/* Left: Pet Info & Child Name & Evolution Stage */}
         <div className="flex items-center gap-2.5 bg-white/90 backdrop-blur-md px-3.5 py-2 rounded-2xl border-2 border-amber-300 shadow-md">
@@ -398,10 +398,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </header>
 
       {/* CENTER STAGE: Pet in Garden + Status Bars */}
-      <main className="relative z-10 w-full max-w-4xl mx-auto px-4 py-2 flex-1 flex flex-col items-center justify-center">
+      <main className="garden-main relative z-10 w-full max-w-4xl mx-auto px-4 py-2 flex-1 flex flex-col items-center justify-center">
         
         {/* Visual Cue Thought Bubble: Clicking opens specific Math Quest */}
-        <div className="relative mb-2 bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-3xl border-3 border-amber-300 shadow-lg text-center max-w-sm md:max-w-md animate-bounce-soft">
+        <div className="garden-message relative mb-2 bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-3xl border-3 border-amber-300 shadow-lg text-center max-w-sm md:max-w-md animate-bounce-soft">
           <div className="flex items-center justify-center gap-2 text-xs md:text-sm font-extrabold text-amber-950">
             {pet.hunger >= 100 && pet.thirst >= 100 ? (
               <span className="text-lg">👑</span>
@@ -436,7 +436,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         </div>
 
         {/* Center Pet Stage */}
-        <div className="relative my-2 flex items-center justify-center">
+        <div className="garden-pet relative my-2 flex items-center justify-center">
           {/* Thought Bubble over Pet Head */}
           {pet.hunger >= 100 && pet.thirst >= 100 ? (
             <button
@@ -512,9 +512,9 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         </div>
 
         {/* STATUS BARS CONTAINER */}
-        <div className="w-full max-w-md bg-white/95 backdrop-blur-md p-3.5 md:p-4 rounded-3xl border-3 border-amber-300 shadow-lg mt-2">
+        <div className="garden-stats w-full max-w-md bg-white/95 backdrop-blur-md p-3.5 md:p-4 rounded-3xl border-3 border-amber-300 shadow-lg mt-2">
           
-          <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-amber-100">
+          <div className="garden-stats-heading flex items-center justify-between mb-2 pb-1.5 border-b border-amber-100">
             <span className="text-xs md:text-sm font-extrabold text-amber-950 flex items-center gap-1.5">
               <span>📊 CHỈ SỐ NUÔI DƯỠNG CỦA {pet.name.toUpperCase()}</span>
             </span>
@@ -544,7 +544,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             )}
           </div>
 
-          <div className="space-y-3">
+          <div className="garden-stat-bars space-y-3">
             {/* 1. THANH ĐỘ ĐÓI (FOOD) */}
             <div 
               onClick={() => handleOpenQuest('food')}
@@ -560,7 +560,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 <div className="flex items-center gap-1.5">
                   <span className="text-lg">🍲</span>
                   <span className="text-xs md:text-sm font-black text-amber-950">
-                    Độ No Bụng (Thức Ăn)
+                    Độ no
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -608,7 +608,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 <div className="flex items-center gap-1.5">
                   <span className="text-lg">💧</span>
                   <span className="text-xs md:text-sm font-black text-sky-950">
-                    Khát Nước (Nước Uống)
+                    Nước uống
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -643,7 +643,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
           </div>
 
           {/* CÁC NÚT BẮT BUỘC GIẢI TOÁN */}
-          <div className="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-amber-100">
+          <div className="garden-care-actions grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-amber-100">
             {/* Button 1: Solve Math for Food Only */}
             <button
               onClick={() => handleOpenQuest('food')}
@@ -674,7 +674,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </main>
 
       {/* BOTTOM ACTION BAR */}
-      <footer className="relative z-20 w-full max-w-4xl mx-auto px-4 pb-4 pt-1 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <footer className="garden-footer relative z-20 w-full max-w-4xl mx-auto px-4 pb-4 pt-1 flex flex-col sm:flex-row items-center justify-center gap-3">
         <button
           onClick={() => {
             if (pet.hunger >= 100 && pet.thirst >= 100) {
@@ -740,7 +740,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </footer>
 
       {/* Footer Copyright Notice */}
-      <div className="relative z-20 w-full text-center pb-2.5 pt-1 text-[11px] sm:text-xs font-bold text-emerald-950/80 drop-shadow-xs">
+      <div className="garden-copyright relative z-20 w-full text-center pb-2.5 pt-1 text-[11px] sm:text-xs font-bold text-emerald-950/80 drop-shadow-xs">
         Bản quyền thuộc về HoangMy@2026
       </div>
 
