@@ -24,7 +24,7 @@ export function splitSpeech(text: string, limit = 180): string[] {
 }
 
 export function googleSpeechUrl(text: string): string {
-  return `/api/tts?${new URLSearchParams({ q: text })}`;
+  return `https://translate.google.com/translate_tts?${new URLSearchParams({ ie: 'UTF-8', q: text, tl: 'vi', client: 'tw-ob' })}`;
 }
 
 export class GoogleSpeechPlayer {
@@ -94,13 +94,20 @@ export class GoogleSpeechPlayer {
     this.playCurrent();
   }
 
-  private playCurrent() {
+  private playCurrent(useProxy = false) {
     if (!this.current.length || this.muted) return;
     const generation = ++this.generation;
     this.clearTimer();
     const active = () => generation === this.generation && !this.muted;
     const failed = (status: 'blocked' | 'error') => {
       if (!active()) return;
+      // Some browsers/hosts reject cross-origin Google media. Keep the same
+      // Google voice via our endpoint, without falling back to a device voice.
+      if (status === 'error' && !useProxy) {
+        this.audio.pause();
+        this.playCurrent(true);
+        return;
+      }
       this.generation++;
       this.clearTimer();
       this.audio.pause();
@@ -120,8 +127,9 @@ export class GoogleSpeechPlayer {
       this.update('playing');
     };
     this.update('loading');
-    // Same-origin proxy avoids depending on Google's cross-origin media policy.
-    this.audio.src = googleSpeechUrl(this.current[0]);
+    this.audio.src = useProxy
+      ? `/api/tts?${new URLSearchParams({ q: this.current[0] })}`
+      : googleSpeechUrl(this.current[0]);
     this.timer = setTimeout(() => failed('error'), 12000);
     try {
       void this.audio.play().catch((error: unknown) => {

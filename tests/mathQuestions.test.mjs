@@ -3,8 +3,20 @@ import { stripTypeScriptTypes } from 'node:module';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 const load = async path => import(`data:text/javascript;base64,${Buffer.from(stripTypeScriptTypes(readFileSync(new URL(path, import.meta.url),'utf8'))).toString('base64')}`);
-const { makeQuestion, LESSONS } = await load('../src/data/mathQuestions.ts');
+const { makeQuestion, makeRandomQuestion, LESSONS } = await load('../src/data/mathQuestions.ts');
 const { questReward } = await load('../src/utils/questReward.ts');
+
+test('random lessons cover all seven types and never repeat the last type, including reopening', () => {
+  const seen = new Set();
+  let previous;
+  for (let i = 0; i < 700; i++) {
+    const question = makeRandomQuestion(i % 2 ? previous : undefined, () => (i % 97) / 97);
+    assert.notEqual(question.kind, previous?.kind);
+    seen.add(question.kind);
+    previous = question;
+  }
+  assert.equal(seen.size, 7);
+});
 
 for (const { id } of LESSONS) test(`${id}: 300 questions have exactly one correct, visually consistent choice`, () => {
   for (let i = 0; i < 300; i++) {

@@ -18,8 +18,10 @@ test('Vietnamese text is safely encoded and split without dropping characters', 
   assert.equal(chunks.join('').replace(/\s/g, ''), text.replace(/\s/g, ''));
   const url = new URL(googleSpeechUrl('Bé & Miu? #1'), 'https://game.example');
   assert.equal(url.searchParams.get('q'), 'Bé & Miu? #1');
-  assert.equal(url.pathname, '/api/tts');
-  assert.equal(url.hostname, 'game.example');
+  assert.equal(url.pathname, '/translate_tts');
+  assert.equal(url.hostname, 'translate.google.com');
+  assert.equal(url.searchParams.get('tl'), 'vi');
+  assert.equal(url.searchParams.get('client'), 'tw-ob');
   assert.deepEqual(splitSpeech('   '), []);
 });
 test('praise and guidance play sequentially; mute cancels queued speech', () => {
@@ -58,9 +60,12 @@ test('network errors stop playback and retry the failed segment', () => {
   player.speak('Xin chào bé! Bé giỏi lắm!');
   audio.onended();
   audio.onerror();
+  assert.equal(player.getStatus(), 'loading');
+  assert.ok(audio.plays[2].startsWith('/api/tts?'));
+  audio.onerror();
   assert.equal(player.getStatus(), 'error');
   player.retry();
-  assert.equal(audio.plays[1], audio.plays[2]);
+  assert.equal(audio.plays[1], audio.plays[3]);
   player.setMuted(true);
 });
 test('late play rejection cannot stop a newer playback after mute/unmute', async () => {

@@ -25,6 +25,7 @@ import { Module3MathQuest } from './Module3MathQuest';
 import { Module5Wardrobe } from './Module5Wardrobe';
 import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
+import { makeRandomQuestion, type Question } from '../data/mathQuestions';
 import { 
   playPopSound, 
   playChimeSound, 
@@ -33,7 +34,7 @@ import {
   playEatingSound, 
   playDrinkingSound, 
   speakGameEvent,
-  speakVietnamese
+  speakVietnamese, stopSpeech
 } from '../utils/audio';
 
 interface Module2GardenProps {
@@ -52,6 +53,14 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [petMood, setPetMood] = useState<'happy' | 'excited' | 'idle' | 'hungry'>('happy');
   const [showHeartBurst, setShowHeartBurst] = useState(false);
   const [isMathQuestOpen, setIsMathQuestOpen] = useState(false);
+  const [initialQuestion, setInitialQuestion] = useState<Question>();
+  const openMathQuestion = () => {
+    const question = makeRandomQuestion();
+    setInitialQuestion(question);
+    stopSpeech();
+    speakVietnamese(question.prompt);
+    setIsMathQuestOpen(true);
+  };
   const [questTarget, setQuestTarget] = useState<QuestTarget>('food');
   const [targetCostumeId, setTargetCostumeId] = useState<string | undefined>(undefined);
   const [isWardrobeOpen, setIsWardrobeOpen] = useState(false);
@@ -205,7 +214,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
     setQuestTarget(target);
     setTargetCostumeId(costumeId);
-    setIsMathQuestOpen(true);
+    openMathQuestion();
   };
 
   // Handle clicking on pet
@@ -746,7 +755,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
       {/* MODULE 3: MATH QUEST POPUP */}
       {isMathQuestOpen && (
-        <Module3MathQuest
+        <Module3MathQuest initialQuestion={initialQuestion}
           isMuted={isMuted}
           onToggleSound={onToggleSound}
           pet={pet}
@@ -860,7 +869,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                     playPopSound();
                     setStatFullModal(null);
                     setQuestTarget('water');
-                    setIsMathQuestOpen(true);
+                    openMathQuestion();
                   }}
                   className="w-full py-3.5 px-4 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_4px_0_#0284c7] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer animate-pulse"
                 >
@@ -873,7 +882,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                     playPopSound();
                     setStatFullModal(null);
                     setQuestTarget('food');
-                    setIsMathQuestOpen(true);
+                    openMathQuestion();
                   }}
                   className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_4px_0_#b45309] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer animate-pulse"
                 >

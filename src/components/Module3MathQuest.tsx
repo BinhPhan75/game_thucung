@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import confetti from 'canvas-confetti';
 import { PetState, QuestTarget } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
-import { LESSONS, Lesson, makeQuestion, Question } from '../data/mathQuestions';
+import { makeRandomQuestion, Question } from '../data/mathQuestions';
 import { ObjectPicture, CountPictures, SpatialPicture } from './MathVisuals';
 import { PetAvatar } from './PetAvatar';
 import { questReward } from '../utils/questReward';
@@ -15,11 +15,13 @@ interface Props {
   pet: PetState; onUpdatePet: (pet: PetState) => void; onClose: () => void;
   onFinishAndFeed: (target: QuestTarget) => void; questTarget?: QuestTarget; targetCostumeId?: string;
   isMuted: boolean; onToggleSound: () => void;
+  initialQuestion?: Question;
 }
 export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, onFinishAndFeed,
-  questTarget = 'food', targetCostumeId, isMuted, onToggleSound }) => {
+  questTarget = 'food', targetCostumeId, isMuted, onToggleSound, initialQuestion }) => {
   const [target, setTarget] = useState(questTarget);
-  const [question, setQuestion] = useState<Question>(() => makeQuestion('counting'));
+  const [question, setQuestion] = useState<Question>(() => initialQuestion ?? makeRandomQuestion());
+  const spokenQuestion = useRef<Question | null>(initialQuestion ?? null);
   const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
   const [message, setMessage] = useState('');
   const [selected, setSelected] = useState('');
@@ -33,12 +35,18 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = overflow; stopSpeech(); };
   }, []);
-  useEffect(() => { stopSpeech(); speakVietnamese(question.prompt); }, [question]);
-  const changeQuestion = (kind: Lesson = question.kind) => {
+  useEffect(() => {
+    if (spokenQuestion.current === question) return;
+    stopSpeech(); speakVietnamese(question.prompt);
+  }, [question]);
+  const changeQuestion = () => {
     if (target === 'costume' && answered.current) return;
     answered.current = false;
     setFeedback('idle'); setMessage(''); setSelected('');
-    setQuestion(makeQuestion(kind, question));
+    const next = makeRandomQuestion(question);
+    spokenQuestion.current = next;
+    stopSpeech(); speakVietnamese(next.prompt); // play() runs inside the click gesture.
+    setQuestion(next);
   };
   const answer = (id: string) => {
     if (answered.current) return;
@@ -68,7 +76,6 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
         <button onClick={() => { stopSpeech(); onClose(); }} aria-label="Đóng bài học">✕</button>
       </div>
     </header>
-    <nav className="lesson-tabs" aria-label="Chọn dạng bài">{LESSONS.map(lesson => <button key={lesson.id} aria-pressed={question.kind === lesson.id} disabled={target === 'costume' && feedback === 'correct'} onClick={() => changeQuestion(lesson.id)}><span>{lesson.icon}</span> {lesson.label}</button>)}</nav>
     {feedback === 'correct' ? <div className="math-result">
       <div className="result-pet"><PetAvatar type={pet.type} stage={pet.stage} size="md" equippedHat={pet.equippedHat} /></div>
       <h3>{message}</h3><p>{target === 'costume' ? `Đã mở khóa và mặc ${costume?.name ?? 'trang phục'}!` : target === 'food' ? `${items.foodEmoji} +30% độ no bụng` : `${items.drinkEmoji} +30% nước uống`} · 💰 +10 xu</p>

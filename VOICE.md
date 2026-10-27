@@ -1,13 +1,13 @@
 # Giọng đọc Google Translate TTS
 
-Game gọi `/api/tts?q=...` cùng website; máy chủ lấy MP3 tiếng Việt từ Google Translate (`client=tw-ob`, `tl=vi`). Không dùng proxy công cộng của bên thứ ba, không cần API key và không quay về giọng hệ điều hành khi lỗi.
+Game phát MP3 bằng HTMLAudioElement từ Google Translate (`client=tw-ob`, `tl=vi`) trước. Nếu nguồn trực tiếp lỗi, game thử `/api/tts?q=...` cùng website để lấy cùng giọng Google qua máy chủ. Không dùng proxy công cộng của bên thứ ba, không cần API key và không quay về giọng hệ điều hành khi lỗi.
 
 ## Chạy và triển khai
 
 - Phát triển: `npm install`, `npm run dev`.
 - Máy chủ Node.js: `npm run build`, `npm start` (cần cài cả devDependencies để có tsx).
 - Vercel: build Vite như thường; `api/tts.ts` cung cấp Node.js Function dùng chung handler.
-- Hosting chỉ phục vụ tệp tĩnh (ví dụ GitHub Pages) không đủ: cần backend cho `/api/tts`. Không chỉ upload thư mục `dist`.
+- Hosting tĩnh chỉ có đường phát Google trực tiếp; để có đường dự phòng ổn định khi Google chặn tải trực tiếp, cần backend `/api/tts`.
 
 ## Hoạt động
 

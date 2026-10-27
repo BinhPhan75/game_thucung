@@ -18,6 +18,16 @@ export const LESSONS: { id: Lesson; label: string; icon: string }[] = [
   { id: 'color', label: 'Màu sắc', icon: '🎨' },
   { id: 'space', label: 'Vị trí', icon: '📦' },
 ];
+
+// Also remembers the last lesson when the popup is closed and reopened.
+let lastLesson: Lesson | undefined;
+export function makeRandomQuestion(previous?: Question, random: () => number = Math.random): Question {
+  const excluded = previous?.kind ?? lastLesson;
+  const choices = LESSONS.filter(lesson => lesson.id !== excluded);
+  const kind = choices[Math.floor(random() * choices.length)].id;
+  lastLesson = kind;
+  return makeQuestion(kind, previous, random);
+}
 export const PICTURE_POOL = [
   ['🍎', 'quả táo'], ['🍐', 'quả lê'], ['🍊', 'quả cam'], ['🍓', 'quả dâu'],
   ['🍌', 'quả chuối'], ['🍉', 'miếng dưa hấu'], ['🍍', 'quả dứa'], ['🥭', 'quả xoài'],
