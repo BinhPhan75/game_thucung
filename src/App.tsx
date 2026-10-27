@@ -134,6 +134,8 @@ export default function App() {
 
       {screen === 'garden' && pet && (
         <Module2Garden
+          isMuted={isMuted}
+          onToggleSound={handleToggleSound}
           pet={pet}
           onUpdatePet={handleUpdatePet}
           onBackToModule1={handleResetOrChangePet}

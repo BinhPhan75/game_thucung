@@ -37,6 +37,8 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
   onEarnCoinsQuest,
 }) => {
   const [notEnoughCoinsItem, setNotEnoughCoinsItem] = useState<CostumeItem | null>(null);
+  const [category, setCategory] = useState('all');
+  const filteredItems = COSTUME_LIST.filter(item => category === 'all' || (category === 'owned' ? pet.unlockedCostumes.includes(item.id) : item.category === category));
 
   // Equip or un-equip costume
   const handleEquip = (costumeId: string) => {
@@ -160,8 +162,11 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
             </div>
 
             {/* Grid of Items */}
+            <div className="flex flex-wrap gap-1 mb-2" aria-label="Lọc trang phục">
+              {[['all','Tất cả'],['hat','Mũ'],['accessory','Phụ kiện'],['cape','Áo choàng'],['owned','Đã có']].map(([id,label]) => <button key={id} aria-pressed={category === id} onClick={() => setCategory(id)} className={`px-3 py-2 rounded-xl text-xs font-bold ${category === id ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-900'}`}>{label}</button>)}
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[340px] overflow-y-auto pr-1">
-              {COSTUME_LIST.map((item) => {
+              {filteredItems.map((item) => {
                 const isUnlocked = pet.unlockedCostumes.includes(item.id);
                 const isEquipped = pet.equippedHat === item.id;
                 const canAfford = pet.coins >= item.price;

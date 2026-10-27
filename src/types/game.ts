@@ -10,6 +10,8 @@ export type PetStage = 'baby' | 'junior' | 'master'; // Bé nhỏ (Cấp 1-3), B
 export type QuestTarget = 'food' | 'water' | 'costume';
 
 export interface CostumeItem {
+  visual?: 'cap' | 'wizard' | 'scarf' | 'medal' | 'glasses' | 'cape' | 'bow' | 'helmet';
+  color?: string;
   id: string;
   name: string;
   category: 'hat' | 'accessory' | 'cape';

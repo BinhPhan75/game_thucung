@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useSyncExternalStore } from 'react';
+import { getGoogleSpeechPlayer } from '../utils/googleSpeech';
 import { Volume2, VolumeX, Music, RotateCcw } from 'lucide-react';
 import { playPopSound } from '../utils/audio';
 
@@ -22,8 +23,11 @@ export const AudioControls: React.FC<AudioControlsProps> = ({
   onToggleBgm,
   onResetGame,
 }) => {
+  const speech = getGoogleSpeechPlayer();
+  const status = useSyncExternalStore(speech.subscribe, speech.getStatus);
   return (
     <div className="flex items-center gap-2 p-1.5 bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-amber-200/60 z-30">
+      {!isMuted && (status === 'blocked' || status === 'error') && <button onClick={speech.retry} className="text-xs font-bold px-2">🔊 Chạm để nghe lời nhắn</button>}
       {/* Sound FX Toggle */}
       <button
         onClick={() => {

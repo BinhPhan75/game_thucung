@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { COSTUME_LIST } from '../data/costumes';
 import { PetType, PetStage } from '../types/game';
 
 interface PetAvatarProps {
@@ -531,6 +532,18 @@ const BunnyIllustration: React.FC<{
 
 // Hat Overlay for dress up (Module 4 & 5 readiness)
 const HatOverlay: React.FC<{ hatId: string }> = ({ hatId }) => {
+  const item = COSTUME_LIST.find(item => item.id === hatId);
+  const color = item?.color ?? '#8b5cf6';
+  if (item?.visual) return <g strokeLinejoin="round">
+    {item.visual === 'wizard' && <g><path d="M65 45 L100 0 L130 45Z" fill={color} stroke="#312e81" strokeWidth="2"/><ellipse cx="100" cy="45" rx="42" ry="9" fill={color}/><text x="93" y="30" fill="#fde047" fontSize="18">★</text></g>}
+    {item.visual === 'cap' && <g><path d="M65 45 Q65 8 100 8 Q133 8 135 45Z" fill={color}/><ellipse cx="110" cy="45" rx="48" ry="8" fill={color} stroke="#ffffff" strokeWidth="2"/></g>}
+    {item.visual === 'helmet' && <g><ellipse cx="100" cy="73" rx="66" ry="65" fill="#bae6fd" fillOpacity=".15" stroke={color} strokeWidth="8"/><path d="M53 51 Q64 27 81 24" fill="none" stroke="white" strokeWidth="5"/></g>}
+    {item.visual === 'scarf' && <g fill={color}><rect x="62" y="118" width="76" height="15" rx="7"/><path d="M116 128 L132 127 L140 163 L121 160Z"/></g>}
+    {item.visual === 'medal' && <g><path d="M75 119 L100 151 L125 119" fill="none" stroke="#ef4444" strokeWidth="8"/><circle cx="100" cy="151" r="17" fill={color} stroke="#d97706" strokeWidth="2"/><text x="91" y="157" fill="white" fontSize="20">★</text></g>}
+    {item.visual === 'glasses' && <g stroke={color} strokeWidth="5" fill="#c4b5fd" fillOpacity=".4"><circle cx="77" cy="76" r="17"/><circle cx="123" cy="76" r="17"/><path d="M94 76H106"/></g>}
+    {item.visual === 'bow' && <g fill={color} stroke="#a16207" strokeWidth="2"><path d="M70 125L70 100L100 113L130 100L130 125L100 113Z"/><circle cx="100" cy="113" r="7"/></g>}
+    {item.visual === 'cape' && <g><path d="M65 120 Q48 150 37 179 Q100 165 163 179 Q152 150 135 120 L100 136Z" fill={color} stroke="white" strokeWidth="2"/><text x="90" y="161" fill="#fde047" fontSize="23">★</text></g>}
+  </g>;
   if (hatId === 'party_hat') {
     return (
       <g transform="translate(100, 36) rotate(-10)">

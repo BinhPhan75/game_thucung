@@ -37,6 +37,8 @@ import {
 } from '../utils/audio';
 
 interface Module2GardenProps {
+  isMuted: boolean;
+  onToggleSound: () => void;
   pet: PetState;
   onUpdatePet: (pet: PetState) => void;
   onBackToModule1: () => void;
@@ -45,7 +47,7 @@ interface Module2GardenProps {
 export const Module2Garden: React.FC<Module2GardenProps> = ({
   pet,
   onUpdatePet,
-  onBackToModule1,
+  onBackToModule1, isMuted, onToggleSound,
 }) => {
   const [petMood, setPetMood] = useState<'happy' | 'excited' | 'idle' | 'hungry'>('happy');
   const [showHeartBurst, setShowHeartBurst] = useState(false);
@@ -116,10 +118,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
   // Check for 100% hunger & thirst EVOLUTION TRIGGER
   useEffect(() => {
-    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal) {
+    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal && !isMathQuestOpen) {
       triggerEvolution();
     }
-  }, [pet.hunger, pet.thirst]);
+  }, [pet.hunger, pet.thirst, isMathQuestOpen]);
 
   // Trigger Evolution and Level Up
   const triggerEvolution = () => {
@@ -132,7 +134,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     });
 
     const nextLevel = pet.level + 1;
-    speakGameEvent('levelUp', { name: pet.name, childName: pet.childName, level: nextLevel });
+    speakGameEvent('levelUp', { type: pet.type, name: pet.name, childName: pet.childName, level: nextLevel });
     let nextStage: PetStage = pet.stage;
 
     // Stage progression: Cấp 1-3 -> baby, Cấp 4-7 -> junior, Cấp 8+ -> master
@@ -177,7 +179,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.thirst < 100) {
           playChimeSound();
           setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
-          speakGameEvent('foodFull', { name: pet.name, childName: pet.childName, level: pet.level });
+          speakGameEvent('foodFull', { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -192,7 +194,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         if (pet.hunger < 100) {
           playChimeSound();
           setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
-          speakGameEvent('waterFull', { name: pet.name, childName: pet.childName, level: pet.level });
+          speakGameEvent('waterFull', { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level });
           return;
         } else {
           triggerEvolution();
@@ -217,10 +219,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       triggerEvolution();
     } else if (pet.hunger >= 100 && pet.thirst < 100) {
       setStatFullModal({ type: 'food', currentOtherValue: pet.thirst });
-      speakGameEvent('foodFull', { name: pet.name, childName: pet.childName, level: pet.level });
+      speakGameEvent('foodFull', { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level });
     } else if (pet.thirst >= 100 && pet.hunger < 100) {
       setStatFullModal({ type: 'water', currentOtherValue: pet.hunger });
-      speakGameEvent('waterFull', { name: pet.name, childName: pet.childName, level: pet.level });
+      speakGameEvent('waterFull', { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level });
     } else if (isHungry) {
       handleOpenQuest('food');
     } else if (isThirsty) {
@@ -745,6 +747,8 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       {/* MODULE 3: MATH QUEST POPUP */}
       {isMathQuestOpen && (
         <Module3MathQuest
+          isMuted={isMuted}
+          onToggleSound={onToggleSound}
           pet={pet}
           onUpdatePet={onUpdatePet}
           onClose={() => setIsMathQuestOpen(false)}
@@ -821,7 +825,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                   onClick={() => {
                     speakGameEvent(
                       statFullModal.type === 'food' ? 'foodFull' : 'waterFull',
-                      { name: pet.name, childName: pet.childName, level: pet.level }
+                      { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level }
                     );
                   }}
                   title="Nghe giọng nói của thú cưng"
@@ -954,7 +958,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 </div>
                 <button
                   type="button"
-                  onClick={() => speakGameEvent('levelUp', { name: pet.name, childName: pet.childName, level: pet.level })}
+                  onClick={() => speakGameEvent('levelUp', { type: pet.type, name: pet.name, childName: pet.childName, level: pet.level })}
                   title="Nghe giọng chúc mừng"
                   className="p-2 rounded-xl bg-white hover:bg-purple-200 text-purple-800 shrink-0 cursor-pointer transition-transform active:scale-90 shadow-xs border border-purple-300"
                 >

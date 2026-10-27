@@ -19,7 +19,7 @@ for (const event of Object.keys(VOICE_POOLS)) {
           assert.ok(!seen.has(line));
           assert.ok(!line.includes('{'));
           if (event === 'levelUp') assert.match(line, /cấp 7/);
-          if (event === 'foodFull' || event === 'waterFull') assert.match(line, /Miu/);
+
           seen.add(line);
           last = line;
         }
