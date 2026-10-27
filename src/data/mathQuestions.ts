@@ -1,3 +1,4 @@
+import type { BankEntry } from './questionBank';
 export type Lesson = 'counting' | 'comparison' | 'addition' | 'shape' | 'size' | 'color' | 'space';
 export type Shape = 'circle' | 'square' | 'triangle' | 'rectangle';
 export type Position = 'above' | 'below' | 'left' | 'right';
@@ -6,7 +7,7 @@ export interface Choice {
   shape?: Shape; color?: string; size?: number; object?: 'ball' | 'tree' | 'train' | 'shirt';
 }
 export interface Question {
-  kind: Lesson; prompt: string; choices: Choice[]; answer: string;
+  kind: Lesson | 'bank'; prompt: string; choices: Choice[]; answer: string; bank?: BankEntry;
   emoji?: string; count?: number; addends?: [number, number]; position?: Position;
 }
 export const LESSONS: { id: Lesson; label: string; icon: string }[] = [

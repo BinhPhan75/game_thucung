@@ -25,7 +25,8 @@ import { Module3MathQuest } from './Module3MathQuest';
 import { Module5Wardrobe } from './Module5Wardrobe';
 import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
-import { makeRandomQuestion, type Question } from '../data/mathQuestions';
+import { type Question } from '../data/mathQuestions';
+import { makePlayableQuestion } from '../data/questionBank';
 import { 
   playPopSound, 
   playChimeSound, 
@@ -55,7 +56,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [isMathQuestOpen, setIsMathQuestOpen] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState<Question>();
   const openMathQuestion = () => {
-    const question = makeRandomQuestion();
+    const question = makePlayableQuestion();
     setInitialQuestion(question);
     stopSpeech();
     speakVietnamese(question.prompt);

@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import confetti from 'canvas-confetti';
 import { PetState, QuestTarget } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
-import { makeRandomQuestion, Question } from '../data/mathQuestions';
+import { Question } from '../data/mathQuestions';
+import { makePlayableQuestion } from '../data/questionBank';
+import { BankExercise } from './BankExercise';
 import { ObjectPicture, CountPictures, SpatialPicture } from './MathVisuals';
 import { PetAvatar } from './PetAvatar';
 import { questReward } from '../utils/questReward';
@@ -20,7 +22,7 @@ interface Props {
 export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, onFinishAndFeed,
   questTarget = 'food', targetCostumeId, isMuted, onToggleSound, initialQuestion }) => {
   const [target, setTarget] = useState(questTarget);
-  const [question, setQuestion] = useState<Question>(() => initialQuestion ?? makeRandomQuestion());
+  const [question, setQuestion] = useState<Question>(() => initialQuestion ?? makePlayableQuestion());
   const spokenQuestion = useRef<Question | null>(initialQuestion ?? null);
   const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
   const [message, setMessage] = useState('');
@@ -43,7 +45,7 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
     if (target === 'costume' && answered.current) return;
     answered.current = false;
     setFeedback('idle'); setMessage(''); setSelected('');
-    const next = makeRandomQuestion(question);
+    const next = makePlayableQuestion();
     spokenQuestion.current = next;
     stopSpeech(); speakVietnamese(next.prompt); // play() runs inside the click gesture.
     setQuestion(next);
@@ -85,10 +87,10 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
       </div>
     </div> : <>
       <div className="math-prompt"><h3>{question.prompt}</h3><button disabled={isMuted} onClick={() => { stopSpeech(); speakVietnamese(question.prompt); }} aria-label="Nghe lại câu hỏi">🔊</button></div>
-      <div className={`math-workspace ${choicePictures ? 'picture-answers' : ''}`}>
+      {question.bank ? <BankExercise key={question.bank.id} question={question} selected={selected} wrong={feedback === 'wrong'} onAnswer={answer}/> : <div className={`math-workspace ${choicePictures ? 'picture-answers' : ''}`}>
         {!choicePictures && <div className="math-scene">{question.kind === 'space' ? <SpatialPicture question={question} /> : question.kind === 'addition' ? <div className="addition-scene"><CountPictures emoji={question.emoji!} count={question.addends![0]} /><b>+</b><CountPictures emoji={question.emoji!} count={question.addends![1]} /><b>= ?</b></div> : <CountPictures emoji={question.emoji!} count={question.count!} />}</div>}
         <div className={`math-choices choices-${question.choices.length}`}>{question.choices.map((choice, index) => <button key={choice.id} aria-label={choicePictures ? `${choice.label}, lựa chọn ${index+1}` : choice.label} className={feedback === 'wrong' && selected === choice.id ? 'try-again' : ''} onClick={() => answer(choice.id)}>{choicePictures ? <>{choice.count !== undefined ? <CountPictures emoji={choice.emoji!} count={choice.count} /> : <ObjectPicture choice={choice} />}<span className="choice-badge">{index+1}</span></> : choice.label}</button>)}</div>
-      </div><p className="math-feedback" role="status">{feedback === 'wrong' ? message : 'Chạm vào đáp án bé chọn nhé!'}</p>
+      </div>}<p className="math-feedback" role="status">{feedback === 'wrong' ? message : 'Chạm vào đáp án bé chọn nhé!'}</p>
     </>}
     <footer className="math-footer">{(speechStatus === 'blocked' || speechStatus === 'error') && !isMuted ? <button onClick={speech.retry}>🔊 {speechStatus === 'blocked' ? 'Chạm để nghe' : 'Chưa tải được giọng. Thử lại'}</button> : <span>{isMuted ? '🔇 Đã tắt giọng đọc' : speechStatus === 'loading' ? 'Đang tải giọng đọc…' : speechStatus === 'playing' ? '🔊 Đang đọc…' : '🌼 Mỗi lần thử là một lần học thêm!'}</span>}<small className="math-copyright">Bản quyền thuộc về HoangMy@2026</small></footer>
   </section></div>;
