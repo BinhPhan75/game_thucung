@@ -35,6 +35,7 @@ export class GoogleSpeechPlayer {
   private timer: ReturnType<typeof setTimeout> | undefined;
   private listeners = new Set<() => void>();
   private status: SpeechStatus = 'idle';
+  private useProxy = false;
 
   private audio: HTMLAudioElement;
   constructor(audio: HTMLAudioElement) {
@@ -60,6 +61,8 @@ export class GoogleSpeechPlayer {
     if (this.muted) return;
     const chunks = splitSpeech(text);
     if (!chunks.length) return;
+    // A new user request must not sit behind a failed/blocked old utterance.
+    if (this.status === 'error' || this.status === 'blocked') this.stop();
     // Avoid a long backlog of old praise if a child answers faster than the voice.
     if (this.queue.length >= 3) this.queue.shift();
     this.queue.push(chunks);
@@ -94,7 +97,7 @@ export class GoogleSpeechPlayer {
     this.playCurrent();
   }
 
-  private playCurrent(useProxy = false) {
+  private playCurrent(useProxy = this.useProxy) {
     if (!this.current.length || this.muted) return;
     const generation = ++this.generation;
     this.clearTimer();
@@ -123,6 +126,7 @@ export class GoogleSpeechPlayer {
     this.audio.onplaying = () => {
       if (!active()) return;
       this.clearTimer();
+      this.useProxy = useProxy;
       this.timer = setTimeout(() => failed('error'), 45000);
       this.update('playing');
     };
