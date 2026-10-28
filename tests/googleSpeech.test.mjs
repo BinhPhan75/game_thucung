@@ -83,3 +83,27 @@ test('late play rejection cannot stop a newer playback after mute/unmute', async
   assert.equal(player.getStatus(), 'loading');
   player.setMuted(true);
 });
+
+test('a new request recovers from a blocked utterance instead of waiting forever', async () => {
+  const audio = new FakeAudio();
+  audio.result = Promise.reject(new DOMException('Gesture required', 'NotAllowedError'));
+  const player = new GoogleSpeechPlayer(audio);
+  player.speak('Câu cũ');
+  await Promise.resolve();
+  audio.result = Promise.resolve();
+  player.speak('Câu mới');
+  assert.equal(audio.plays.length, 2);
+  assert.equal(new URL(audio.plays[1]).searchParams.get('q'), 'Câu mới');
+  player.stop();
+});
+
+test('after proxy playback succeeds the next sentence uses the working source', () => {
+  const audio = new FakeAudio();
+  const player = new GoogleSpeechPlayer(audio);
+  player.speak('Xin chào! Bé giỏi lắm!');
+  audio.onerror();
+  audio.onplaying();
+  audio.onended();
+  assert.ok(audio.plays[2].startsWith('/api/tts?'));
+  player.stop();
+});
