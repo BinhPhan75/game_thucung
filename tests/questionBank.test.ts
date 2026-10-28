@@ -1,10 +1,22 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { QUESTION_BANK, bankQuestion, createBankPicker } from '../src/data/questionBank';
+import { QUESTION_BANK, EXTRA_QUESTIONS, questionIdentity, bankQuestion, createBankPicker } from '../src/data/questionBank';
+import original from '../src/data/importedQuestions.json';
 
-test('all 500 supplied entries are playable with one unambiguous answer button', () => {
-  assert.equal(QUESTION_BANK.length,500);
-  assert.equal(new Set(QUESTION_BANK.map(e=>e.id)).size,500);
+test('adds ten new questions per category and removes duplicate playable content', () => {
+  assert.equal(original.length,500);
+  assert.equal(EXTRA_QUESTIONS.length,150);
+  for(let i=1;i<=15;i++) {
+    assert.equal(EXTRA_QUESTIONS.filter(e=>e.category===`T${String(i).padStart(2,'0')}`).length,10);
+  }
+  const oldKeys=new Set(original.map(questionIdentity));
+  for(const entry of EXTRA_QUESTIONS) assert.ok(!oldKeys.has(questionIdentity(entry)),entry.id);
+  assert.equal(new Set(EXTRA_QUESTIONS.map(questionIdentity)).size,150);
+  assert.equal(QUESTION_BANK.length,oldKeys.size+150);
+  assert.equal(new Set(QUESTION_BANK.map(questionIdentity)).size,QUESTION_BANK.length);
+});
+test('all playable entries have one unambiguous answer button and correct arithmetic', () => {
+  assert.equal(new Set(QUESTION_BANK.map(e=>e.id)).size,QUESTION_BANK.length);
   assert.equal(new Set(QUESTION_BANK.map(e=>e.category)).size,15);
   for (const entry of QUESTION_BANK) {
     const q=bankQuestion(entry),v=entry.visual;
@@ -29,7 +41,7 @@ test('shuffle consumes all bank IDs before repeating', () => {
   const pick=createBankPicker(()=>.37);
   for(let cycle=0;cycle<2;cycle++) {
     const ids=new Set();
-    for(let i=0;i<500;i++) ids.add(pick().bank!.id);
-    assert.equal(ids.size,500);
+    for(let i=0;i<QUESTION_BANK.length;i++) ids.add(pick().bank!.id);
+    assert.equal(ids.size,QUESTION_BANK.length);
   }
 });

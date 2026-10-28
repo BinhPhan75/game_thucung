@@ -4,6 +4,10 @@ import type { Question } from '../data/mathQuestions';
 import { GamePicture, pictureUrl } from './GamePicture';
 
 const pictures: Record<string, string> = {
+  'quả lê':'🍐','quả dâu':'🍓','quả dứa':'🍍','con rùa':'🐢','con bướm':'🦋',
+  'con ong':'🐝','con ốc sên':'🐌','con cừu':'🐑','bắp ngô':'🌽','quả nho':'🍇',
+  'Bò':'🐮','Bướm':'🦋','Ốc sên':'🐌','Rùa':'🐢','Ong':'🐝','Voi':'🐘',
+  'Cừu':'🐑','Hươu cao cổ':'🦒','Cam':'🍊','Chuối':'🍌','Dâu':'🍓','Cà rốt':'🥕','Nho':'🍇','Xe':'🚗',
   'quả táo':'🍎','quả cam':'🍊','quả chuối':'🍌','con thỏ':'🐰','con vịt':'🦆','con cá':'🐟',
   'bông hoa':'🌸','chiếc lá':'🍃','củ cà rốt':'🥕','quả bóng':'⚽','chiếc ô':'☂️','chiếc xe':'🚗',
   'voi':'🐘','chuột':'🐭','hươu cao cổ':'🦒','thỏ':'🐰','cây cao':'🌳','cây thấp':'🌳',
@@ -13,7 +17,7 @@ const pictures: Record<string, string> = {
   'Đồ chơi':'🧸','Đôi dép':'🩴','Gối':'🛏️','Kính bơi':'🥽','Mũ':'🧢','Quạt':'🪭',
   'Dừng lại':'🛑','Chạy nhanh':'🏃','Nhảy lên':'🦘','Không biết':'❓',
 };
-const colors: Record<string,string> = {'đỏ':'#ef4444','xanh dương':'#2563eb','vàng':'#facc15','xanh lá':'#16a34a','tím':'#9333ea'};
+const colors: Record<string,string> = {'đỏ':'#ef4444','xanh dương':'#2563eb','vàng':'#facc15','xanh lá':'#16a34a','tím':'#9333ea','hồng':'#f472b6','cam':'#f97316'};
 const emoji = (name: string) => pictures[name] ?? name;
 
 function ColoredObject({ name, color }: { name: string; color: string }) {
@@ -51,7 +55,7 @@ function PositionScene({ visual }: { visual: BankEntry['visual'] }) {
 }
 function SizeScene({ items }: { items: string[] }) {
   return <div className="bank-size">{items.map(name=><div key={name}>
-    {name.startsWith('dây') ? <svg viewBox="0 0 120 80"><path d={name === 'dây dài' ? 'M5 40Q30 10 60 40T115 40' : 'M40 40Q60 20 80 40'} stroke="#f97316" strokeWidth="7" fill="none"/></svg> : <span style={{fontSize: /nhỏ|thấp|chuột|^thỏ$/.test(name) ? '32px' : '70px'}}><GamePicture symbol={emoji(name)}/></span>}
+    {name.startsWith('dây') ? <svg viewBox="0 0 120 80"><path d={name === 'dây dài' ? 'M5 40Q30 10 60 40T115 40' : 'M40 40Q60 20 80 40'} stroke="#f97316" strokeWidth="7" fill="none"/></svg> : <span style={{fontSize: /nhỏ|thấp|chuột|^thỏ$/.test(name) ? '32px' : '70px'}}><GamePicture symbol={emoji(pictures[name] ? name : name.replace(/ (lớn|nhỏ)$/,''))}/></span>}
     <small>{name}</small></div>)}</div>;
 }
 
@@ -77,7 +81,7 @@ export function BankExercise({ question, selected, wrong, onAnswer }: { question
       {v.type === 'position' && <PositionScene visual={v}/>}
       {v.type === 'size' && <SizeScene items={v.items!}/>}
       {(v.type === 'pattern' || v.type === 'odd_or_match') && <div className="bank-sequence">{(v.sequence ?? v.items)!.map((name,i)=><span key={i}><GamePicture symbol={emoji(name)}/></span>)}{v.type === 'pattern' && <span><GamePicture symbol="❓"/></span>}</div>}
-      {v.type === 'logic' && <span className="bank-logic"><GamePicture symbol={['🌅','🌧️','🌱','🌊','🚦','⏰','💧','🌧️'][v.scene!]}/></span>}
+      {v.type === 'logic' && <span className="bank-logic"><GamePicture symbol={v.symbol ?? ['🌅','🌧️','🌱','🌊','🚦','⏰','💧','🌧️'][v.scene!]}/></span>}
       {memory && <div><div className="bank-sequence">{v.sequence!.map((name,i)=><div key={i}><span><GamePicture symbol={remembering ? emoji(name) : '❓'}/></span><small>{i+1}</small></div>)}</div><button className="bank-remember" disabled={remembering} onClick={()=>setRemembering(true)}>{remembering ? 'Nhìn và nhớ trong 5 giây nhé!' : '👀 Xem lại hình'}</button></div>}
     </div>}
     <div className={`bank-answers ${pictureAnswers ? 'bank-picture-answers' : ''}`}>

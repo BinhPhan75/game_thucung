@@ -1,4 +1,5 @@
 import source from './importedQuestions.json';
+import extra from './extraQuestions.json';
 import type { Question } from './mathQuestions';
 
 export interface BankEntry {
@@ -9,12 +10,21 @@ export interface BankEntry {
     start?: number; removed?: number; target?: string; choices?: string[];
     color?: string; sequence?: string[]; items?: string[]; relation?: string;
     position?: string; reference?: string; scene?: number; operation?: string;
-    targetIndex?: number; displaySeconds?: number;
+    targetIndex?: number; displaySeconds?: number; symbol?: string;
   };
 }
 
 // Preserve the supplied JSON; normalize only the playable representation.
-export const QUESTION_BANK = source as BankEntry[];
+export const EXTRA_QUESTIONS = extra as BankEntry[];
+// IDs and distractor order do not make a repeated exercise a new question.
+export function questionIdentity(entry: BankEntry): string {
+  const { choices, ...visual } = entry.visual;
+  return JSON.stringify([entry.question.trim().toLocaleLowerCase('vi'),
+    Object.entries(visual).sort(([a],[b])=>a.localeCompare(b)), String(entry.correctAnswer)]);
+}
+export const QUESTION_BANK = [...new Map(
+  [...source as BankEntry[], ...EXTRA_QUESTIONS].map(entry=>[questionIdentity(entry),entry]),
+).values()];
 export function bankQuestion(entry: BankEntry): Question {
   const options = [...new Set(entry.options.map(String))];
   let prompt = entry.question;

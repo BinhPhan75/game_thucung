@@ -1,0 +1,2982 @@
+[
+  {
+    "id": "T01_EXTRA_001",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy quả lê?",
+    "options": [
+      0,
+      1,
+      2
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "count",
+      "object": "quả lê",
+      "count": 1
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_001",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm quả lê này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      5,
+      6,
+      7
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "count",
+      "object": "quả lê",
+      "count": 6
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_001",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 1 quả lê, nhóm sau có 2 quả lê. Gộp lại được mấy quả lê?",
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "add",
+      "object": "quả lê",
+      "groups": [
+        1,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_001",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 3 quả lê, bé bớt đi 2. Còn lại bao nhiêu quả lê?",
+    "options": [
+      0,
+      1,
+      2
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "subtract",
+      "object": "quả lê",
+      "start": 3,
+      "removed": 2
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_001",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm quả lê nào nhiều hơn?",
+    "options": [
+      "Nhóm A",
+      "Nhóm B",
+      "Hai nhóm bằng nhau"
+    ],
+    "correctAnswer": "Nhóm B",
+    "visual": {
+      "type": "compare",
+      "object": "quả lê",
+      "groups": [
+        1,
+        3
+      ]
+    },
+    "explanation": "Đáp án là Nhóm B. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_001",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Quả lê nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trên",
+      "dưới",
+      "trong"
+    ],
+    "correctAnswer": "trên",
+    "visual": {
+      "type": "position",
+      "object": "quả lê",
+      "reference": "chiếc hộp",
+      "position": "trên"
+    },
+    "explanation": "Đáp án là trên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_001",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, quả lê xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "quả lê",
+      "con rùa",
+      "con ong"
+    ],
+    "correctAnswer": "con rùa",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "quả lê",
+        "con rùa",
+        "quả lê"
+      ]
+    },
+    "explanation": "Đáp án là con rùa. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_001",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Hai rổ có 1 và 2 quả lê. Cho chung một rổ thì có bao nhiêu?",
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "grouping",
+      "object": "quả lê",
+      "groups": [
+        1,
+        2
+      ],
+      "operation": "add"
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_001",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm quả lê, quả dứa và con ốc sên: hình thứ 1 là gì?",
+    "options": [
+      "quả lê",
+      "quả dứa",
+      "con ốc sên"
+    ],
+    "correctAnswer": "quả lê",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "quả lê",
+        "quả dứa",
+        "con ốc sên"
+      ],
+      "targetIndex": 0,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là quả lê. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_002",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy quả dâu?",
+    "options": [
+      2,
+      3,
+      1
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "count",
+      "object": "quả dâu",
+      "count": 2
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_002",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm quả dâu này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      7,
+      8,
+      6
+    ],
+    "correctAnswer": 7,
+    "visual": {
+      "type": "count",
+      "object": "quả dâu",
+      "count": 7
+    },
+    "explanation": "Đáp án là 7. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_002",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 2 quả dâu, nhóm sau có 3 quả dâu. Gộp lại được mấy quả dâu?",
+    "options": [
+      5,
+      6,
+      4
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "add",
+      "object": "quả dâu",
+      "groups": [
+        2,
+        3
+      ]
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_002",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 5 quả dâu, bé bớt đi 3. Còn lại bao nhiêu quả dâu?",
+    "options": [
+      2,
+      3,
+      1
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "subtract",
+      "object": "quả dâu",
+      "start": 5,
+      "removed": 3
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_002",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm quả dâu nào ít hơn?",
+    "options": [
+      "Nhóm B",
+      "Hai nhóm bằng nhau",
+      "Nhóm A"
+    ],
+    "correctAnswer": "Nhóm A",
+    "visual": {
+      "type": "compare",
+      "object": "quả dâu",
+      "groups": [
+        2,
+        4
+      ]
+    },
+    "explanation": "Đáp án là Nhóm A. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_002",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Quả dâu nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "dưới",
+      "trong",
+      "trên"
+    ],
+    "correctAnswer": "dưới",
+    "visual": {
+      "type": "position",
+      "object": "quả dâu",
+      "reference": "chiếc hộp",
+      "position": "dưới"
+    },
+    "explanation": "Đáp án là dưới. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_002",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, quả dâu xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con bướm",
+      "con ốc sên",
+      "quả dâu"
+    ],
+    "correctAnswer": "con bướm",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "quả dâu",
+        "con bướm",
+        "quả dâu"
+      ]
+    },
+    "explanation": "Đáp án là con bướm. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_002",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Bé có 5 quả dâu, chia cho bạn 2. Phần của bé còn mấy quả dâu?",
+    "options": [
+      3,
+      4,
+      2
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "grouping",
+      "object": "quả dâu",
+      "groups": [
+        5,
+        2
+      ],
+      "operation": "subtract"
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_002",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm quả dâu, con rùa và con cừu: hình thứ 2 là gì?",
+    "options": [
+      "con rùa",
+      "con cừu",
+      "quả dâu"
+    ],
+    "correctAnswer": "con rùa",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "quả dâu",
+        "con rùa",
+        "con cừu"
+      ],
+      "targetIndex": 1,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là con rùa. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_003",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy quả dứa?",
+    "options": [
+      4,
+      2,
+      3
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "count",
+      "object": "quả dứa",
+      "count": 3
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_003",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm quả dứa này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      9,
+      7,
+      8
+    ],
+    "correctAnswer": 8,
+    "visual": {
+      "type": "count",
+      "object": "quả dứa",
+      "count": 8
+    },
+    "explanation": "Đáp án là 8. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_003",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 3 quả dứa, nhóm sau có 1 quả dứa. Gộp lại được mấy quả dứa?",
+    "options": [
+      5,
+      3,
+      4
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "add",
+      "object": "quả dứa",
+      "groups": [
+        3,
+        1
+      ]
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_003",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 4 quả dứa, bé bớt đi 1. Còn lại bao nhiêu quả dứa?",
+    "options": [
+      4,
+      2,
+      3
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "subtract",
+      "object": "quả dứa",
+      "start": 4,
+      "removed": 1
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_003",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm quả dứa nào nhiều hơn?",
+    "options": [
+      "Hai nhóm bằng nhau",
+      "Nhóm A",
+      "Nhóm B"
+    ],
+    "correctAnswer": "Nhóm B",
+    "visual": {
+      "type": "compare",
+      "object": "quả dứa",
+      "groups": [
+        3,
+        5
+      ]
+    },
+    "explanation": "Đáp án là Nhóm B. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_003",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Quả dứa nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trong",
+      "trái",
+      "phải"
+    ],
+    "correctAnswer": "trái",
+    "visual": {
+      "type": "position",
+      "object": "quả dứa",
+      "reference": "chiếc hộp",
+      "position": "trái"
+    },
+    "explanation": "Đáp án là trái. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_003",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, quả dứa xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con cừu",
+      "quả dứa",
+      "con ong"
+    ],
+    "correctAnswer": "con ong",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "quả dứa",
+        "con ong",
+        "quả dứa"
+      ]
+    },
+    "explanation": "Đáp án là con ong. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_003",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Hai rổ có 3 và 1 quả dứa. Cho chung một rổ thì có bao nhiêu?",
+    "options": [
+      5,
+      3,
+      4
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "grouping",
+      "object": "quả dứa",
+      "groups": [
+        3,
+        1
+      ],
+      "operation": "add"
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_003",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm quả dứa, con bướm và bắp ngô: hình thứ 3 là gì?",
+    "options": [
+      "bắp ngô",
+      "quả dứa",
+      "con bướm"
+    ],
+    "correctAnswer": "bắp ngô",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "quả dứa",
+        "con bướm",
+        "bắp ngô"
+      ],
+      "targetIndex": 2,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là bắp ngô. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_004",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy con rùa?",
+    "options": [
+      3,
+      4,
+      5
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "count",
+      "object": "con rùa",
+      "count": 4
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_004",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm con rùa này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      8,
+      9,
+      10
+    ],
+    "correctAnswer": 9,
+    "visual": {
+      "type": "count",
+      "object": "con rùa",
+      "count": 9
+    },
+    "explanation": "Đáp án là 9. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_004",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 4 con rùa, nhóm sau có 2 con rùa. Gộp lại được mấy con rùa?",
+    "options": [
+      5,
+      6,
+      7
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "add",
+      "object": "con rùa",
+      "groups": [
+        4,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_004",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 6 con rùa, bé bớt đi 2. Còn lại bao nhiêu con rùa?",
+    "options": [
+      3,
+      4,
+      5
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "subtract",
+      "object": "con rùa",
+      "start": 6,
+      "removed": 2
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_004",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm con rùa nào ít hơn?",
+    "options": [
+      "Nhóm A",
+      "Nhóm B",
+      "Hai nhóm bằng nhau"
+    ],
+    "correctAnswer": "Nhóm B",
+    "visual": {
+      "type": "compare",
+      "object": "con rùa",
+      "groups": [
+        4,
+        1
+      ]
+    },
+    "explanation": "Đáp án là Nhóm B. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_004",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Con rùa nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trái",
+      "phải",
+      "trong"
+    ],
+    "correctAnswer": "phải",
+    "visual": {
+      "type": "position",
+      "object": "con rùa",
+      "reference": "chiếc hộp",
+      "position": "phải"
+    },
+    "explanation": "Đáp án là phải. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_004",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, con rùa xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con rùa",
+      "con ốc sên",
+      "bắp ngô"
+    ],
+    "correctAnswer": "con ốc sên",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "con rùa",
+        "con ốc sên",
+        "con rùa"
+      ]
+    },
+    "explanation": "Đáp án là con ốc sên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_004",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Bé có 6 con rùa, chia cho bạn 4. Phần của bé còn mấy con rùa?",
+    "options": [
+      1,
+      2,
+      3
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "grouping",
+      "object": "con rùa",
+      "groups": [
+        6,
+        4
+      ],
+      "operation": "subtract"
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_004",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm con rùa, con ong và quả nho: hình thứ 1 là gì?",
+    "options": [
+      "con rùa",
+      "con ong",
+      "quả nho"
+    ],
+    "correctAnswer": "con rùa",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "con rùa",
+        "con ong",
+        "quả nho"
+      ],
+      "targetIndex": 0,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là con rùa. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_005",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy con bướm?",
+    "options": [
+      5,
+      6,
+      4
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "count",
+      "object": "con bướm",
+      "count": 5
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_005",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm con bướm này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      10,
+      11,
+      9
+    ],
+    "correctAnswer": 10,
+    "visual": {
+      "type": "count",
+      "object": "con bướm",
+      "count": 10
+    },
+    "explanation": "Đáp án là 10. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_005",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 1 con bướm, nhóm sau có 3 con bướm. Gộp lại được mấy con bướm?",
+    "options": [
+      4,
+      5,
+      3
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "add",
+      "object": "con bướm",
+      "groups": [
+        1,
+        3
+      ]
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_005",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 4 con bướm, bé bớt đi 3. Còn lại bao nhiêu con bướm?",
+    "options": [
+      1,
+      2,
+      0
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "subtract",
+      "object": "con bướm",
+      "start": 4,
+      "removed": 3
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_005",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm con bướm nào nhiều hơn?",
+    "options": [
+      "Nhóm B",
+      "Hai nhóm bằng nhau",
+      "Nhóm A"
+    ],
+    "correctAnswer": "Nhóm A",
+    "visual": {
+      "type": "compare",
+      "object": "con bướm",
+      "groups": [
+        5,
+        2
+      ]
+    },
+    "explanation": "Đáp án là Nhóm A. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_005",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Con bướm nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "dưới",
+      "trong",
+      "trên"
+    ],
+    "correctAnswer": "trên",
+    "visual": {
+      "type": "position",
+      "object": "con bướm",
+      "reference": "chiếc hộp",
+      "position": "trên"
+    },
+    "explanation": "Đáp án là trên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_005",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, con bướm xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con cừu",
+      "quả nho",
+      "con bướm"
+    ],
+    "correctAnswer": "con cừu",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "con bướm",
+        "con cừu",
+        "con bướm"
+      ]
+    },
+    "explanation": "Đáp án là con cừu. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_005",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Hai rổ có 1 và 3 con bướm. Cho chung một rổ thì có bao nhiêu?",
+    "options": [
+      4,
+      5,
+      3
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "grouping",
+      "object": "con bướm",
+      "groups": [
+        1,
+        3
+      ],
+      "operation": "add"
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_005",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm con bướm, con ốc sên và quả lê: hình thứ 2 là gì?",
+    "options": [
+      "con ốc sên",
+      "quả lê",
+      "con bướm"
+    ],
+    "correctAnswer": "con ốc sên",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "con bướm",
+        "con ốc sên",
+        "quả lê"
+      ],
+      "targetIndex": 1,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là con ốc sên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_006",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy con ong?",
+    "options": [
+      2,
+      0,
+      1
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "count",
+      "object": "con ong",
+      "count": 1
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_006",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm con ong này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      7,
+      5,
+      6
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "count",
+      "object": "con ong",
+      "count": 6
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_006",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 2 con ong, nhóm sau có 1 con ong. Gộp lại được mấy con ong?",
+    "options": [
+      4,
+      2,
+      3
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "add",
+      "object": "con ong",
+      "groups": [
+        2,
+        1
+      ]
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_006",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 3 con ong, bé bớt đi 1. Còn lại bao nhiêu con ong?",
+    "options": [
+      3,
+      1,
+      2
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "subtract",
+      "object": "con ong",
+      "start": 3,
+      "removed": 1
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_006",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm con ong nào ít hơn?",
+    "options": [
+      "Hai nhóm bằng nhau",
+      "Nhóm A",
+      "Nhóm B"
+    ],
+    "correctAnswer": "Nhóm A",
+    "visual": {
+      "type": "compare",
+      "object": "con ong",
+      "groups": [
+        1,
+        3
+      ]
+    },
+    "explanation": "Đáp án là Nhóm A. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_006",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Con ong nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trong",
+      "trên",
+      "dưới"
+    ],
+    "correctAnswer": "dưới",
+    "visual": {
+      "type": "position",
+      "object": "con ong",
+      "reference": "chiếc hộp",
+      "position": "dưới"
+    },
+    "explanation": "Đáp án là dưới. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_006",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, con ong xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "quả lê",
+      "con ong",
+      "bắp ngô"
+    ],
+    "correctAnswer": "bắp ngô",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "con ong",
+        "bắp ngô",
+        "con ong"
+      ]
+    },
+    "explanation": "Đáp án là bắp ngô. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_006",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Bé có 3 con ong, chia cho bạn 2. Phần của bé còn mấy con ong?",
+    "options": [
+      2,
+      0,
+      1
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "grouping",
+      "object": "con ong",
+      "groups": [
+        3,
+        2
+      ],
+      "operation": "subtract"
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_006",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm con ong, con cừu và quả dâu: hình thứ 3 là gì?",
+    "options": [
+      "quả dâu",
+      "con ong",
+      "con cừu"
+    ],
+    "correctAnswer": "quả dâu",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "con ong",
+        "con cừu",
+        "quả dâu"
+      ],
+      "targetIndex": 2,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là quả dâu. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_007",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy con ốc sên?",
+    "options": [
+      1,
+      2,
+      3
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "count",
+      "object": "con ốc sên",
+      "count": 2
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_007",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm con ốc sên này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      6,
+      7,
+      8
+    ],
+    "correctAnswer": 7,
+    "visual": {
+      "type": "count",
+      "object": "con ốc sên",
+      "count": 7
+    },
+    "explanation": "Đáp án là 7. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_007",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 3 con ốc sên, nhóm sau có 2 con ốc sên. Gộp lại được mấy con ốc sên?",
+    "options": [
+      4,
+      5,
+      6
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "add",
+      "object": "con ốc sên",
+      "groups": [
+        3,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_007",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 5 con ốc sên, bé bớt đi 2. Còn lại bao nhiêu con ốc sên?",
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "subtract",
+      "object": "con ốc sên",
+      "start": 5,
+      "removed": 2
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_007",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm con ốc sên nào nhiều hơn?",
+    "options": [
+      "Nhóm A",
+      "Nhóm B",
+      "Hai nhóm bằng nhau"
+    ],
+    "correctAnswer": "Nhóm B",
+    "visual": {
+      "type": "compare",
+      "object": "con ốc sên",
+      "groups": [
+        2,
+        4
+      ]
+    },
+    "explanation": "Đáp án là Nhóm B. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_007",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Con ốc sên nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trái",
+      "phải",
+      "trong"
+    ],
+    "correctAnswer": "trái",
+    "visual": {
+      "type": "position",
+      "object": "con ốc sên",
+      "reference": "chiếc hộp",
+      "position": "trái"
+    },
+    "explanation": "Đáp án là trái. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_007",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, con ốc sên xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con ốc sên",
+      "quả nho",
+      "quả dâu"
+    ],
+    "correctAnswer": "quả nho",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "con ốc sên",
+        "quả nho",
+        "con ốc sên"
+      ]
+    },
+    "explanation": "Đáp án là quả nho. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_007",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Hai rổ có 3 và 2 con ốc sên. Cho chung một rổ thì có bao nhiêu?",
+    "options": [
+      4,
+      5,
+      6
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "grouping",
+      "object": "con ốc sên",
+      "groups": [
+        3,
+        2
+      ],
+      "operation": "add"
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_007",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm con ốc sên, bắp ngô và quả dứa: hình thứ 1 là gì?",
+    "options": [
+      "con ốc sên",
+      "bắp ngô",
+      "quả dứa"
+    ],
+    "correctAnswer": "con ốc sên",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "con ốc sên",
+        "bắp ngô",
+        "quả dứa"
+      ],
+      "targetIndex": 0,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là con ốc sên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_008",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy con cừu?",
+    "options": [
+      3,
+      4,
+      2
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "count",
+      "object": "con cừu",
+      "count": 3
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_008",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm con cừu này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      8,
+      9,
+      7
+    ],
+    "correctAnswer": 8,
+    "visual": {
+      "type": "count",
+      "object": "con cừu",
+      "count": 8
+    },
+    "explanation": "Đáp án là 8. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_008",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 4 con cừu, nhóm sau có 3 con cừu. Gộp lại được mấy con cừu?",
+    "options": [
+      7,
+      8,
+      6
+    ],
+    "correctAnswer": 7,
+    "visual": {
+      "type": "add",
+      "object": "con cừu",
+      "groups": [
+        4,
+        3
+      ]
+    },
+    "explanation": "Đáp án là 7. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_008",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 7 con cừu, bé bớt đi 3. Còn lại bao nhiêu con cừu?",
+    "options": [
+      4,
+      5,
+      3
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "subtract",
+      "object": "con cừu",
+      "start": 7,
+      "removed": 3
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_008",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm con cừu nào ít hơn?",
+    "options": [
+      "Nhóm B",
+      "Hai nhóm bằng nhau",
+      "Nhóm A"
+    ],
+    "correctAnswer": "Nhóm A",
+    "visual": {
+      "type": "compare",
+      "object": "con cừu",
+      "groups": [
+        3,
+        5
+      ]
+    },
+    "explanation": "Đáp án là Nhóm A. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_008",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Con cừu nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "phải",
+      "trong",
+      "trái"
+    ],
+    "correctAnswer": "phải",
+    "visual": {
+      "type": "position",
+      "object": "con cừu",
+      "reference": "chiếc hộp",
+      "position": "phải"
+    },
+    "explanation": "Đáp án là phải. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_008",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, con cừu xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "quả lê",
+      "quả dứa",
+      "con cừu"
+    ],
+    "correctAnswer": "quả lê",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "con cừu",
+        "quả lê",
+        "con cừu"
+      ]
+    },
+    "explanation": "Đáp án là quả lê. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_008",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Bé có 7 con cừu, chia cho bạn 4. Phần của bé còn mấy con cừu?",
+    "options": [
+      3,
+      4,
+      2
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "grouping",
+      "object": "con cừu",
+      "groups": [
+        7,
+        4
+      ],
+      "operation": "subtract"
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_008",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm con cừu, quả nho và con rùa: hình thứ 2 là gì?",
+    "options": [
+      "quả nho",
+      "con rùa",
+      "con cừu"
+    ],
+    "correctAnswer": "quả nho",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "con cừu",
+        "quả nho",
+        "con rùa"
+      ],
+      "targetIndex": 1,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là quả nho. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_009",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy bắp ngô?",
+    "options": [
+      5,
+      3,
+      4
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "count",
+      "object": "bắp ngô",
+      "count": 4
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_009",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm bắp ngô này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      10,
+      8,
+      9
+    ],
+    "correctAnswer": 9,
+    "visual": {
+      "type": "count",
+      "object": "bắp ngô",
+      "count": 9
+    },
+    "explanation": "Đáp án là 9. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_009",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 1 bắp ngô, nhóm sau có 1 bắp ngô. Gộp lại được mấy bắp ngô?",
+    "options": [
+      3,
+      1,
+      2
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "add",
+      "object": "bắp ngô",
+      "groups": [
+        1,
+        1
+      ]
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_009",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 2 bắp ngô, bé bớt đi 1. Còn lại bao nhiêu bắp ngô?",
+    "options": [
+      2,
+      0,
+      1
+    ],
+    "correctAnswer": 1,
+    "visual": {
+      "type": "subtract",
+      "object": "bắp ngô",
+      "start": 2,
+      "removed": 1
+    },
+    "explanation": "Đáp án là 1. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_009",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm bắp ngô nào nhiều hơn?",
+    "options": [
+      "Hai nhóm bằng nhau",
+      "Nhóm A",
+      "Nhóm B"
+    ],
+    "correctAnswer": "Nhóm A",
+    "visual": {
+      "type": "compare",
+      "object": "bắp ngô",
+      "groups": [
+        4,
+        1
+      ]
+    },
+    "explanation": "Đáp án là Nhóm A. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_009",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Bắp ngô nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trong",
+      "trên",
+      "dưới"
+    ],
+    "correctAnswer": "trên",
+    "visual": {
+      "type": "position",
+      "object": "bắp ngô",
+      "reference": "chiếc hộp",
+      "position": "trên"
+    },
+    "explanation": "Đáp án là trên. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_009",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, bắp ngô xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "con rùa",
+      "bắp ngô",
+      "quả dâu"
+    ],
+    "correctAnswer": "quả dâu",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "bắp ngô",
+        "quả dâu",
+        "bắp ngô"
+      ]
+    },
+    "explanation": "Đáp án là quả dâu. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_009",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Hai rổ có 1 và 1 bắp ngô. Cho chung một rổ thì có bao nhiêu?",
+    "options": [
+      3,
+      1,
+      2
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "grouping",
+      "object": "bắp ngô",
+      "groups": [
+        1,
+        1
+      ],
+      "operation": "add"
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_009",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm bắp ngô, quả lê và con bướm: hình thứ 3 là gì?",
+    "options": [
+      "con bướm",
+      "bắp ngô",
+      "quả lê"
+    ],
+    "correctAnswer": "con bướm",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "bắp ngô",
+        "quả lê",
+        "con bướm"
+      ],
+      "targetIndex": 2,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là con bướm. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T01_EXTRA_010",
+    "category": "T01",
+    "difficulty": 1,
+    "question": "Bé đếm thật chậm: trong hình có mấy quả nho?",
+    "options": [
+      4,
+      5,
+      6
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "count",
+      "object": "quả nho",
+      "count": 5
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T02_EXTRA_010",
+    "category": "T02",
+    "difficulty": 2,
+    "question": "Cùng đếm nhóm quả nho này nhé! Có tất cả bao nhiêu?",
+    "options": [
+      9,
+      10,
+      11
+    ],
+    "correctAnswer": 10,
+    "visual": {
+      "type": "count",
+      "object": "quả nho",
+      "count": 10
+    },
+    "explanation": "Đáp án là 10. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T03_EXTRA_010",
+    "category": "T03",
+    "difficulty": 1,
+    "question": "Nhóm đầu có 2 quả nho, nhóm sau có 2 quả nho. Gộp lại được mấy quả nho?",
+    "options": [
+      3,
+      4,
+      5
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "add",
+      "object": "quả nho",
+      "groups": [
+        2,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T04_EXTRA_010",
+    "category": "T04",
+    "difficulty": 1,
+    "question": "Có 4 quả nho, bé bớt đi 2. Còn lại bao nhiêu quả nho?",
+    "options": [
+      1,
+      2,
+      3
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "subtract",
+      "object": "quả nho",
+      "start": 4,
+      "removed": 2
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T05_EXTRA_010",
+    "category": "T05",
+    "difficulty": 1,
+    "question": "Nhóm quả nho nào ít hơn?",
+    "options": [
+      "Nhóm A",
+      "Nhóm B",
+      "Hai nhóm bằng nhau"
+    ],
+    "correctAnswer": "Nhóm B",
+    "visual": {
+      "type": "compare",
+      "object": "quả nho",
+      "groups": [
+        5,
+        2
+      ]
+    },
+    "explanation": "Đáp án là Nhóm B. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T10_EXTRA_010",
+    "category": "T10",
+    "difficulty": 1,
+    "question": "Quả nho nằm ở phía nào của chiếc hộp?",
+    "options": [
+      "trên",
+      "dưới",
+      "trong"
+    ],
+    "correctAnswer": "dưới",
+    "visual": {
+      "type": "position",
+      "object": "quả nho",
+      "reference": "chiếc hộp",
+      "position": "dưới"
+    },
+    "explanation": "Đáp án là dưới. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T11_EXTRA_010",
+    "category": "T11",
+    "difficulty": 1,
+    "question": "Trong ba hình, quả nho xuất hiện hai lần. Bé tìm hình khác loại nhé!",
+    "options": [
+      "quả nho",
+      "quả dứa",
+      "con bướm"
+    ],
+    "correctAnswer": "quả dứa",
+    "visual": {
+      "type": "odd_or_match",
+      "items": [
+        "quả nho",
+        "quả dứa",
+        "quả nho"
+      ]
+    },
+    "explanation": "Đáp án là quả dứa. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T13_EXTRA_010",
+    "category": "T13",
+    "difficulty": 1,
+    "question": "Bé có 4 quả nho, chia cho bạn 2. Phần của bé còn mấy quả nho?",
+    "options": [
+      1,
+      2,
+      3
+    ],
+    "correctAnswer": 2,
+    "visual": {
+      "type": "grouping",
+      "object": "quả nho",
+      "groups": [
+        4,
+        2
+      ],
+      "operation": "subtract"
+    },
+    "explanation": "Đáp án là 2. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T14_EXTRA_010",
+    "category": "T14",
+    "difficulty": 1,
+    "question": "Nhớ nhóm quả nho, quả dâu và con ong: hình thứ 1 là gì?",
+    "options": [
+      "quả nho",
+      "quả dâu",
+      "con ong"
+    ],
+    "correctAnswer": "quả nho",
+    "visual": {
+      "type": "memory",
+      "sequence": [
+        "quả nho",
+        "quả dâu",
+        "con ong"
+      ],
+      "targetIndex": 0,
+      "displaySeconds": 5
+    },
+    "explanation": "Đáp án là quả nho. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_001",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Bé chọn hình tròn giống mặt đồng hồ nhé!",
+    "options": [
+      "hình tròn",
+      "hình vuông",
+      "hình tam giác"
+    ],
+    "correctAnswer": "hình tròn",
+    "visual": {
+      "type": "shape",
+      "target": "hình tròn"
+    },
+    "explanation": "Đáp án là hình tròn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_002",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Khăn tay có bốn cạnh bằng nhau giống hình nào?",
+    "options": [
+      "hình tam giác",
+      "hình chữ nhật",
+      "hình vuông"
+    ],
+    "correctAnswer": "hình vuông",
+    "visual": {
+      "type": "shape",
+      "target": "hình vuông"
+    },
+    "explanation": "Đáp án là hình vuông. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_003",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Mái nhà có ba cạnh giống hình nào?",
+    "options": [
+      "hình ngôi sao",
+      "hình tam giác",
+      "hình chữ nhật"
+    ],
+    "correctAnswer": "hình tam giác",
+    "visual": {
+      "type": "shape",
+      "target": "hình tam giác"
+    },
+    "explanation": "Đáp án là hình tam giác. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_004",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Cánh cửa dài có bốn góc vuông giống hình nào?",
+    "options": [
+      "hình chữ nhật",
+      "hình ngôi sao",
+      "hình tròn"
+    ],
+    "correctAnswer": "hình chữ nhật",
+    "visual": {
+      "type": "shape",
+      "target": "hình chữ nhật"
+    },
+    "explanation": "Đáp án là hình chữ nhật. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_005",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Hình nào có năm cánh nhọn như ngôi sao trên trời?",
+    "options": [
+      "hình tròn",
+      "hình vuông",
+      "hình ngôi sao"
+    ],
+    "correctAnswer": "hình ngôi sao",
+    "visual": {
+      "type": "shape",
+      "target": "hình ngôi sao"
+    },
+    "explanation": "Đáp án là hình ngôi sao. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_006",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Hình nào không có góc và không có cạnh thẳng?",
+    "options": [
+      "hình tam giác",
+      "hình tròn",
+      "hình vuông"
+    ],
+    "correctAnswer": "hình tròn",
+    "visual": {
+      "type": "shape",
+      "target": "hình tròn"
+    },
+    "explanation": "Đáp án là hình tròn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_007",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Hình nào có bốn cạnh bằng nhau và bốn góc vuông?",
+    "options": [
+      "hình vuông",
+      "hình tam giác",
+      "hình chữ nhật"
+    ],
+    "correctAnswer": "hình vuông",
+    "visual": {
+      "type": "shape",
+      "target": "hình vuông"
+    },
+    "explanation": "Đáp án là hình vuông. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_008",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Hình nào có đúng ba góc?",
+    "options": [
+      "hình chữ nhật",
+      "hình ngôi sao",
+      "hình tam giác"
+    ],
+    "correctAnswer": "hình tam giác",
+    "visual": {
+      "type": "shape",
+      "target": "hình tam giác"
+    },
+    "explanation": "Đáp án là hình tam giác. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_009",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Hình nào có hai cạnh dài, hai cạnh ngắn và bốn góc vuông?",
+    "options": [
+      "hình tròn",
+      "hình chữ nhật",
+      "hình ngôi sao"
+    ],
+    "correctAnswer": "hình chữ nhật",
+    "visual": {
+      "type": "shape",
+      "target": "hình chữ nhật"
+    },
+    "explanation": "Đáp án là hình chữ nhật. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T06_EXTRA_010",
+    "category": "T06",
+    "difficulty": 1,
+    "question": "Bé tìm hình giống ngôi sao trên lá cờ nhé!",
+    "options": [
+      "hình ngôi sao",
+      "hình tròn",
+      "hình vuông"
+    ],
+    "correctAnswer": "hình ngôi sao",
+    "visual": {
+      "type": "shape",
+      "target": "hình ngôi sao"
+    },
+    "explanation": "Đáp án là hình ngôi sao. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_001",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm quả bóng màu hồng nhé!",
+    "options": [
+      "hồng",
+      "xanh lá",
+      "xanh dương"
+    ],
+    "correctAnswer": "hồng",
+    "visual": {
+      "type": "color",
+      "object": "quả bóng",
+      "color": "hồng"
+    },
+    "explanation": "Đáp án là hồng. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_001",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy quả lê và quả dâu lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🍐",
+      "🍓",
+      "🐢"
+    ],
+    "correctAnswer": "🍓",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🍐",
+        "🍓",
+        "🍓",
+        "🍐",
+        "🍓"
+      ]
+    },
+    "explanation": "Đáp án là 🍓. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_002",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm bông hoa màu hồng nhé!",
+    "options": [
+      "xanh lá",
+      "xanh dương",
+      "hồng"
+    ],
+    "correctAnswer": "hồng",
+    "visual": {
+      "type": "color",
+      "object": "bông hoa",
+      "color": "hồng"
+    },
+    "explanation": "Đáp án là hồng. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_002",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy quả dâu và quả dứa lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🍍",
+      "🦋",
+      "🍓"
+    ],
+    "correctAnswer": "🍍",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🍓",
+        "🍓",
+        "🍍",
+        "🍓",
+        "🍓"
+      ]
+    },
+    "explanation": "Đáp án là 🍍. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_003",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm chiếc ô màu hồng nhé!",
+    "options": [
+      "xanh dương",
+      "hồng",
+      "xanh lá"
+    ],
+    "correctAnswer": "hồng",
+    "visual": {
+      "type": "color",
+      "object": "chiếc ô",
+      "color": "hồng"
+    },
+    "explanation": "Đáp án là hồng. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_003",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy quả dứa và con rùa lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🐝",
+      "🍍",
+      "🐢"
+    ],
+    "correctAnswer": "🐢",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🍍",
+        "🐢",
+        "🐢",
+        "🍍",
+        "🐢"
+      ]
+    },
+    "explanation": "Đáp án là 🐢. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_004",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm chiếc xe màu hồng nhé!",
+    "options": [
+      "hồng",
+      "xanh lá",
+      "xanh dương"
+    ],
+    "correctAnswer": "hồng",
+    "visual": {
+      "type": "color",
+      "object": "chiếc xe",
+      "color": "hồng"
+    },
+    "explanation": "Đáp án là hồng. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_004",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy con rùa và con bướm lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🐢",
+      "🦋",
+      "🐌"
+    ],
+    "correctAnswer": "🦋",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🐢",
+        "🐢",
+        "🦋",
+        "🐢",
+        "🐢"
+      ]
+    },
+    "explanation": "Đáp án là 🦋. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_005",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm con cá màu hồng nhé!",
+    "options": [
+      "xanh lá",
+      "xanh dương",
+      "hồng"
+    ],
+    "correctAnswer": "hồng",
+    "visual": {
+      "type": "color",
+      "object": "con cá",
+      "color": "hồng"
+    },
+    "explanation": "Đáp án là hồng. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_005",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy con bướm và con ong lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🐝",
+      "🐑",
+      "🦋"
+    ],
+    "correctAnswer": "🐝",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🦋",
+        "🐝",
+        "🐝",
+        "🦋",
+        "🐝"
+      ]
+    },
+    "explanation": "Đáp án là 🐝. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_006",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm quả bóng màu cam nhé!",
+    "options": [
+      "xanh dương",
+      "cam",
+      "xanh lá"
+    ],
+    "correctAnswer": "cam",
+    "visual": {
+      "type": "color",
+      "object": "quả bóng",
+      "color": "cam"
+    },
+    "explanation": "Đáp án là cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_006",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy con ong và con ốc sên lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🌽",
+      "🐝",
+      "🐌"
+    ],
+    "correctAnswer": "🐌",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🐝",
+        "🐝",
+        "🐌",
+        "🐝",
+        "🐝"
+      ]
+    },
+    "explanation": "Đáp án là 🐌. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_007",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm bông hoa màu cam nhé!",
+    "options": [
+      "cam",
+      "xanh lá",
+      "xanh dương"
+    ],
+    "correctAnswer": "cam",
+    "visual": {
+      "type": "color",
+      "object": "bông hoa",
+      "color": "cam"
+    },
+    "explanation": "Đáp án là cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_007",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy con ốc sên và con cừu lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🐌",
+      "🐑",
+      "🍇"
+    ],
+    "correctAnswer": "🐑",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🐌",
+        "🐑",
+        "🐑",
+        "🐌",
+        "🐑"
+      ]
+    },
+    "explanation": "Đáp án là 🐑. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_008",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm chiếc ô màu cam nhé!",
+    "options": [
+      "xanh lá",
+      "xanh dương",
+      "cam"
+    ],
+    "correctAnswer": "cam",
+    "visual": {
+      "type": "color",
+      "object": "chiếc ô",
+      "color": "cam"
+    },
+    "explanation": "Đáp án là cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_008",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy con cừu và bắp ngô lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🌽",
+      "🍐",
+      "🐑"
+    ],
+    "correctAnswer": "🌽",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🐑",
+        "🐑",
+        "🌽",
+        "🐑",
+        "🐑"
+      ]
+    },
+    "explanation": "Đáp án là 🌽. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_009",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm chiếc xe màu cam nhé!",
+    "options": [
+      "xanh dương",
+      "cam",
+      "xanh lá"
+    ],
+    "correctAnswer": "cam",
+    "visual": {
+      "type": "color",
+      "object": "chiếc xe",
+      "color": "cam"
+    },
+    "explanation": "Đáp án là cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_009",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy bắp ngô và quả nho lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🍓",
+      "🌽",
+      "🍇"
+    ],
+    "correctAnswer": "🍇",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🌽",
+        "🍇",
+        "🍇",
+        "🌽",
+        "🍇"
+      ]
+    },
+    "explanation": "Đáp án là 🍇. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T07_EXTRA_010",
+    "category": "T07",
+    "difficulty": 1,
+    "question": "Bé tìm con cá màu cam nhé!",
+    "options": [
+      "cam",
+      "xanh lá",
+      "xanh dương"
+    ],
+    "correctAnswer": "cam",
+    "visual": {
+      "type": "color",
+      "object": "con cá",
+      "color": "cam"
+    },
+    "explanation": "Đáp án là cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T08_EXTRA_010",
+    "category": "T08",
+    "difficulty": 1,
+    "question": "Dãy quả nho và quả lê lặp lại như thế nào? Bé chọn hình tiếp theo nhé!",
+    "options": [
+      "🍇",
+      "🍐",
+      "🍍"
+    ],
+    "correctAnswer": "🍐",
+    "visual": {
+      "type": "pattern",
+      "sequence": [
+        "🍇",
+        "🍇",
+        "🍐",
+        "🍇",
+        "🍇"
+      ]
+    },
+    "explanation": "Đáp án là 🍐. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_001",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả lê, bé chọn hình to hơn nhé!",
+    "options": [
+      "quả lê lớn",
+      "quả lê nhỏ"
+    ],
+    "correctAnswer": "quả lê lớn",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả lê lớn",
+        "quả lê nhỏ"
+      ],
+      "relation": "to hơn"
+    },
+    "explanation": "Đáp án là quả lê lớn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_002",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả lê, bé chọn hình nhỏ hơn nhé!",
+    "options": [
+      "quả lê nhỏ",
+      "quả lê lớn"
+    ],
+    "correctAnswer": "quả lê nhỏ",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả lê lớn",
+        "quả lê nhỏ"
+      ],
+      "relation": "nhỏ hơn"
+    },
+    "explanation": "Đáp án là quả lê nhỏ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_003",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả dâu, bé chọn hình to hơn nhé!",
+    "options": [
+      "quả dâu lớn",
+      "quả dâu nhỏ"
+    ],
+    "correctAnswer": "quả dâu lớn",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả dâu lớn",
+        "quả dâu nhỏ"
+      ],
+      "relation": "to hơn"
+    },
+    "explanation": "Đáp án là quả dâu lớn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_004",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả dâu, bé chọn hình nhỏ hơn nhé!",
+    "options": [
+      "quả dâu nhỏ",
+      "quả dâu lớn"
+    ],
+    "correctAnswer": "quả dâu nhỏ",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả dâu lớn",
+        "quả dâu nhỏ"
+      ],
+      "relation": "nhỏ hơn"
+    },
+    "explanation": "Đáp án là quả dâu nhỏ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_005",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả dứa, bé chọn hình to hơn nhé!",
+    "options": [
+      "quả dứa lớn",
+      "quả dứa nhỏ"
+    ],
+    "correctAnswer": "quả dứa lớn",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả dứa lớn",
+        "quả dứa nhỏ"
+      ],
+      "relation": "to hơn"
+    },
+    "explanation": "Đáp án là quả dứa lớn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_006",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai quả dứa, bé chọn hình nhỏ hơn nhé!",
+    "options": [
+      "quả dứa nhỏ",
+      "quả dứa lớn"
+    ],
+    "correctAnswer": "quả dứa nhỏ",
+    "visual": {
+      "type": "size",
+      "items": [
+        "quả dứa lớn",
+        "quả dứa nhỏ"
+      ],
+      "relation": "nhỏ hơn"
+    },
+    "explanation": "Đáp án là quả dứa nhỏ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_007",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai con rùa, bé chọn hình to hơn nhé!",
+    "options": [
+      "con rùa lớn",
+      "con rùa nhỏ"
+    ],
+    "correctAnswer": "con rùa lớn",
+    "visual": {
+      "type": "size",
+      "items": [
+        "con rùa lớn",
+        "con rùa nhỏ"
+      ],
+      "relation": "to hơn"
+    },
+    "explanation": "Đáp án là con rùa lớn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_008",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai con rùa, bé chọn hình nhỏ hơn nhé!",
+    "options": [
+      "con rùa nhỏ",
+      "con rùa lớn"
+    ],
+    "correctAnswer": "con rùa nhỏ",
+    "visual": {
+      "type": "size",
+      "items": [
+        "con rùa lớn",
+        "con rùa nhỏ"
+      ],
+      "relation": "nhỏ hơn"
+    },
+    "explanation": "Đáp án là con rùa nhỏ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_009",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai con bướm, bé chọn hình to hơn nhé!",
+    "options": [
+      "con bướm lớn",
+      "con bướm nhỏ"
+    ],
+    "correctAnswer": "con bướm lớn",
+    "visual": {
+      "type": "size",
+      "items": [
+        "con bướm lớn",
+        "con bướm nhỏ"
+      ],
+      "relation": "to hơn"
+    },
+    "explanation": "Đáp án là con bướm lớn. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T09_EXTRA_010",
+    "category": "T09",
+    "difficulty": 1,
+    "question": "Trong hai con bướm, bé chọn hình nhỏ hơn nhé!",
+    "options": [
+      "con bướm nhỏ",
+      "con bướm lớn"
+    ],
+    "correctAnswer": "con bướm nhỏ",
+    "visual": {
+      "type": "size",
+      "items": [
+        "con bướm lớn",
+        "con bướm nhỏ"
+      ],
+      "relation": "nhỏ hơn"
+    },
+    "explanation": "Đáp án là con bướm nhỏ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_001",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Con nào cho chúng mình sữa?",
+    "options": [
+      "Bò",
+      "Bướm",
+      "Ốc sên"
+    ],
+    "correctAnswer": "Bò",
+    "visual": {
+      "type": "logic",
+      "symbol": "🐄"
+    },
+    "explanation": "Đáp án là Bò. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_002",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Con nào có chiếc mai cứng trên lưng?",
+    "options": [
+      "Mèo",
+      "Ong",
+      "Rùa"
+    ],
+    "correctAnswer": "Rùa",
+    "visual": {
+      "type": "logic",
+      "symbol": "🐢"
+    },
+    "explanation": "Đáp án là Rùa. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_003",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Con nào có chiếc vòi dài?",
+    "options": [
+      "Cá",
+      "Voi",
+      "Gà"
+    ],
+    "correctAnswer": "Voi",
+    "visual": {
+      "type": "logic",
+      "symbol": "🐘"
+    },
+    "explanation": "Đáp án là Voi. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_004",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Con nào có chiếc cổ rất dài?",
+    "options": [
+      "Hươu cao cổ",
+      "Rùa",
+      "Mèo"
+    ],
+    "correctAnswer": "Hươu cao cổ",
+    "visual": {
+      "type": "logic",
+      "symbol": "🦒"
+    },
+    "explanation": "Đáp án là Hươu cao cổ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_005",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Con nào làm ra mật ngọt?",
+    "options": [
+      "Cá",
+      "Cừu",
+      "Ong"
+    ],
+    "correctAnswer": "Ong",
+    "visual": {
+      "type": "logic",
+      "symbol": "🐝"
+    },
+    "explanation": "Đáp án là Ong. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_006",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Quả nào có nhiều múi bên trong?",
+    "options": [
+      "Dâu",
+      "Cam",
+      "Chuối"
+    ],
+    "correctAnswer": "Cam",
+    "visual": {
+      "type": "logic",
+      "symbol": "🍊"
+    },
+    "explanation": "Đáp án là Cam. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_007",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Củ nào thường có màu cam và mọc dưới đất?",
+    "options": [
+      "Cà rốt",
+      "Nho",
+      "Chuối"
+    ],
+    "correctAnswer": "Cà rốt",
+    "visual": {
+      "type": "logic",
+      "symbol": "🥕"
+    },
+    "explanation": "Đáp án là Cà rốt. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_008",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Đồ vật nào có bánh xe để đi trên đường?",
+    "options": [
+      "Ô",
+      "Gối",
+      "Xe"
+    ],
+    "correctAnswer": "Xe",
+    "visual": {
+      "type": "logic",
+      "symbol": "🚗"
+    },
+    "explanation": "Đáp án là Xe. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_009",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Khi vẽ lên giấy, bé dùng đồ vật nào?",
+    "options": [
+      "Đôi dép",
+      "Bút",
+      "Cốc"
+    ],
+    "correctAnswer": "Bút",
+    "visual": {
+      "type": "logic",
+      "symbol": "✏️"
+    },
+    "explanation": "Đáp án là Bút. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T12_EXTRA_010",
+    "category": "T12",
+    "difficulty": 1,
+    "question": "Đồ vật nào giúp bé che nắng khi đội lên đầu?",
+    "options": [
+      "Mũ",
+      "Chiếc thìa",
+      "Đồng hồ"
+    ],
+    "correctAnswer": "Mũ",
+    "visual": {
+      "type": "logic",
+      "symbol": "🧢"
+    },
+    "explanation": "Đáp án là Mũ. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_001",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Lan đặt 2 quả lê vào rổ. Mẹ đặt thêm 3 quả lê. Rổ có mấy quả lê?",
+    "options": [
+      4,
+      5,
+      6
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "story",
+      "object": "quả lê",
+      "groups": [
+        2,
+        3
+      ]
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_002",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Bé hái 3 quả dâu, chị hái thêm 3 quả dâu. Hai chị em có mấy quả dâu?",
+    "options": [
+      6,
+      7,
+      5
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "story",
+      "object": "quả dâu",
+      "groups": [
+        3,
+        3
+      ]
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_003",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Cửa hàng có 1 quả dứa, cô mang thêm 4 quả dứa. Có tất cả mấy quả dứa?",
+    "options": [
+      6,
+      4,
+      5
+    ],
+    "correctAnswer": 5,
+    "visual": {
+      "type": "story",
+      "object": "quả dứa",
+      "groups": [
+        1,
+        4
+      ]
+    },
+    "explanation": "Đáp án là 5. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_004",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Có 2 con rùa bên hồ, 2 con rùa bò tới. Bên hồ có mấy con rùa?",
+    "options": [
+      3,
+      4,
+      5
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "story",
+      "object": "con rùa",
+      "groups": [
+        2,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_005",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Có 3 con bướm đậu trên hoa, thêm 1 con bướm bay đến. Có mấy con bướm?",
+    "options": [
+      4,
+      5,
+      3
+    ],
+    "correctAnswer": 4,
+    "visual": {
+      "type": "story",
+      "object": "con bướm",
+      "groups": [
+        3,
+        1
+      ]
+    },
+    "explanation": "Đáp án là 4. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_006",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Có 4 con ong tìm mật, thêm 2 con ong tới cùng. Có tất cả mấy con ong?",
+    "options": [
+      7,
+      5,
+      6
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "story",
+      "object": "con ong",
+      "groups": [
+        4,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_007",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Dưới lá có 1 con ốc sên, thêm 2 con ốc sên bò đến. Có mấy con ốc sên?",
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "correctAnswer": 3,
+    "visual": {
+      "type": "story",
+      "object": "con ốc sên",
+      "groups": [
+        1,
+        2
+      ]
+    },
+    "explanation": "Đáp án là 3. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_008",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Có 3 con cừu trong chuồng, thêm 4 con cừu đi vào. Có mấy con cừu?",
+    "options": [
+      7,
+      8,
+      6
+    ],
+    "correctAnswer": 7,
+    "visual": {
+      "type": "story",
+      "object": "con cừu",
+      "groups": [
+        3,
+        4
+      ]
+    },
+    "explanation": "Đáp án là 7. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_009",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Bà luộc 2 bắp ngô rồi luộc thêm 4 bắp ngô. Bà có mấy bắp ngô?",
+    "options": [
+      7,
+      5,
+      6
+    ],
+    "correctAnswer": 6,
+    "visual": {
+      "type": "story",
+      "object": "bắp ngô",
+      "groups": [
+        2,
+        4
+      ]
+    },
+    "explanation": "Đáp án là 6. Mình cùng quan sát lại hình nhé!"
+  },
+  {
+    "id": "T15_EXTRA_010",
+    "category": "T15",
+    "difficulty": 1,
+    "question": "Bé xếp 4 quả nho lên đĩa rồi thêm 4 quả nho nữa. Đĩa có mấy quả nho?",
+    "options": [
+      7,
+      8,
+      9
+    ],
+    "correctAnswer": 8,
+    "visual": {
+      "type": "story",
+      "object": "quả nho",
+      "groups": [
+        4,
+        4
+      ]
+    },
+    "explanation": "Đáp án là 8. Mình cùng quan sát lại hình nhé!"
+  }
+]

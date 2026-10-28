@@ -4,8 +4,19 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { BankExercise } from '../src/components/BankExercise';
-import { QUESTION_BANK, bankQuestion } from '../src/data/questionBank';
+import { QUESTION_BANK, EXTRA_QUESTIONS, bankQuestion } from '../src/data/questionBank';
 import assets from '../src/data/pictureAssets.json';
+
+test('all 150 new exercises render illustrations and valid answer buttons',()=>{
+  for(const entry of EXTRA_QUESTIONS) {
+    const html=renderToStaticMarkup(<BankExercise question={bankQuestion(entry)} selected="" wrong={false} onAnswer={()=>{}}/>);
+    assert.match(html,/<img|<svg/,entry.id);
+    assert.doesNotMatch(html,/undefined|NaN/,entry.id);
+    for(const match of html.matchAll(/src="\/pictures\/([^"]+)"/g)) {
+      assert.ok(existsSync(new URL(`../public/pictures/${match[1]}`,import.meta.url)),entry.id);
+    }
+  }
+});
 
 test('all bundled illustrations exist as vector images',()=>{
   for(const file of Object.values(assets)) {
