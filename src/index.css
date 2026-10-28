@@ -134,8 +134,8 @@
 
 .bank-exercise { flex:1; min-height:0; display:flex; flex-direction:column; gap:8px; padding:8px 12px; }
 .bank-scene { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; border-radius:18px; background:white; overflow:hidden; text-align:center; padding:6px; }
-.bank-items { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:4px; }
-.bank-items > span,.bank-sequence span { font-size:clamp(22px,5vh,48px); line-height:1.2; }
+.bank-items { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:clamp(6px,1vw,14px); }
+.bank-items > span,.bank-sequence span { font-size:clamp(48px,9vh,96px); line-height:1.15; }
 .bank-removed { opacity:.4; position:relative; }
 .bank-removed::after { content:''; position:absolute; inset:45% 0; height:3px; background:#b91c1c; transform:rotate(-35deg); }
 .bank-groups { display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); align-items:center; gap:10px; width:100%; }
@@ -149,14 +149,14 @@
 .bank-picture-answers button { min-height:0; }
 .bank-object { width:100%; height:100%; max-height:180px; }
 .bank-option-icon { font-size:28px; }
-.bank-position { height:100%; width:100%; max-width:460px; }
+.bank-position { height:100%; width:100%; max-width:680px; }
 .bank-color-count { display:flex; flex-wrap:wrap; justify-content:center; width:100%; }
-.bank-color-count .bank-object { width:18%; max-height:95px; }
+.bank-color-count .bank-object { width:18%; max-height:160px; }
 .bank-sequence { display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; }
 .bank-size { display:flex; align-items:flex-end; justify-content:space-evenly; width:100%; gap:10px; }
 .bank-size > div { flex:1; min-width:0; }
 .bank-size svg { width:100%; max-height:100px; }
-.bank-logic { font-size:clamp(40px,12vh,100px); }
+.bank-logic { font-size:clamp(64px,19vh,170px); }
 .bank-remember { min-height:36px; margin-top:8px; padding:4px 12px; background:#e0f2fe; border-radius:12px; font-weight:800; font-size:12px; }
 @media(max-height:450px) { .bank-exercise { gap:4px; padding:3px 10px; } .bank-answers button { min-height:42px; font-size:13px; } .bank-items > span,.bank-sequence span { font-size:24px; } .bank-option-icon { font-size:20px; } .bank-size > div > span { font-size:36px!important; } }
 
@@ -196,3 +196,25 @@
 .bank-answers button { gap:5px; }
 .bank-answers button > span:last-child > .game-picture { width:1.8em; height:1.8em; }
 @media(max-height:450px) { .bank-option-icon { font-size:28px; } }
+
+/* Larger question illustrations; dense groups stay reachable on small screens. */
+.bank-scene { overflow:auto; }
+.bank-scene > div { max-width:100%; max-height:100%; }
+.bank-sequence { gap:clamp(8px,1.2vw,18px); }
+.bank-size > div > span { font-size:clamp(80px,14vh,140px)!important; }
+.bank-size > div > span[style*="32px"] { font-size:clamp(40px,7vh,70px)!important; }
+@media(max-width:600px) {
+  .bank-items > span,.bank-sequence span { font-size:clamp(40px,12vw,60px); }
+  .bank-items { gap:6px; }
+  .bank-groups { gap:6px; }
+  .bank-size > div > span { font-size:80px!important; }
+  .bank-size > div > span[style*="32px"] { font-size:40px!important; }
+}
+@media(max-height:450px) {
+  .bank-items > span,.bank-sequence span { font-size:32px; }
+  .bank-items { gap:5px; }
+  .bank-logic { font-size:70px; }
+  .bank-color-count .bank-object { max-height:75px; }
+  .bank-size > div > span { font-size:56px!important; }
+  .bank-size > div > span[style*="32px"] { font-size:28px!important; }
+}
