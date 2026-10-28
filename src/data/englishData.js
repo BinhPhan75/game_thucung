@@ -3,7 +3,12 @@ export const englishTopics = [
   { id: 'animals', label: 'Động vật', english: 'Animals' },
   { id: 'fruits', label: 'Trái cây & Nông sản', english: 'Fruits & Crops' },
   { id: 'colors', label: 'Màu sắc & Hình khối', english: 'Colors & Shapes' },
+  { id: 'numbers', label: 'Số đếm 1–10', english: 'Numbers' },
+  { id: 'alphabet', label: 'Bảng chữ cái A–Z', english: 'Alphabet' },
 ];
+
+const numberNames = ['One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'];
+const numberMeanings = ['Một','Hai','Ba','Bốn','Năm','Sáu','Bảy','Tám','Chín','Mười'];
 
 export const englishWords = [
   { id: 'cat', topic: 'animals', word: 'Cat', meaning: 'Mèo', symbol: '🐱' },
@@ -22,7 +27,16 @@ export const englishWords = [
   { id: 'circle', topic: 'colors', word: 'Circle', meaning: 'Hình tròn', color: '#a855f7', shape: 'circle' },
   { id: 'square', topic: 'colors', word: 'Square', meaning: 'Hình vuông', color: '#a855f7', shape: 'square' },
   { id: 'triangle', topic: 'colors', word: 'Triangle', meaning: 'Hình tam giác', color: '#a855f7', shape: 'triangle' },
+  ...numberNames.map((word,index)=>({ id: `number-${index+1}`, topic: 'numbers', word,
+    meaning: numberMeanings[index], count: index+1 })),
+  ...Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ',letter=>({ id: `letter-${letter}`, topic: 'alphabet',
+    word: letter, meaning: `Chữ ${letter} · ${letter.toLowerCase()}`, letter })),
 ];
+
+export function englishPronunciation(word) {
+  // A sentence makes the TTS read the letter name, rather than the article “a”.
+  return word.topic==='alphabet' ? `The letter ${word.word}.` : word.word;
+}
 
 function shuffle(items, random) {
   const result = [...items];
@@ -33,12 +47,14 @@ function shuffle(items, random) {
   return result;
 }
 // Cycle through every word before repeating, with visually distinct distractors.
-export function createEnglishPicker(random = Math.random) {
+export function createEnglishPicker(random = Math.random, topic = 'all') {
+  const vocabulary=englishWords.filter(word=>topic==='all' || word.topic===topic);
+  if (vocabulary.length<3) throw new Error('English practice requires at least three words');
   let remaining = [];
   let last = '';
   return () => {
     if (!remaining.length) {
-      remaining=shuffle(englishWords,random);
+      remaining=shuffle(vocabulary,random);
       if (remaining[0].id===last) [remaining[0],remaining[1]]=[remaining[1],remaining[0]];
     }
     const target=remaining.shift();

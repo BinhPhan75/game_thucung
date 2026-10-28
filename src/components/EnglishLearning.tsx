@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import { createEnglishPicker, englishTopics, englishWords } from '../data/englishData.js';
+import { createEnglishPicker, englishTopics, englishWords, englishPronunciation } from '../data/englishData.js';
 import { GamePicture } from './GamePicture';
 import { getGoogleSpeechPlayer } from '../utils/googleSpeech';
 import { speakEnglish, stopSpeech, playCelebrationSound, speakVietnamese } from '../utils/audio';
@@ -8,6 +8,10 @@ import type { PetState } from '../types/game';
 
 type Word = typeof englishWords[number];
 function WordPicture({ word }: { word: Word }) {
+  if ('count' in word) return <span className="english-number-picture" aria-hidden="true">
+    <b>{word.count}</b><span className="english-count-dots">{Array.from({length:word.count},(_,i)=><i key={i}/>)}</span>
+  </span>;
+  if ('letter' in word) return <span className="english-letter-picture" aria-hidden="true">{word.letter}<small>{word.letter.toLowerCase()}</small></span>;
   if (word.symbol) return <GamePicture symbol={word.symbol}/>;
   return <svg viewBox="0 0 100 100" aria-hidden="true" className="english-vector">
     <g fill={word.color} stroke="#334155" strokeWidth="2">
@@ -30,7 +34,9 @@ export function EnglishLearning({ pet, onUpdatePet, onClose, isMuted, onToggleSo
   const dialog = useRef<HTMLDialogElement>(null);
   const [mode, setMode] = useState<'menu'|'learn'|'quiz'>('menu');
   const [topic, setTopic] = useState('animals');
-  const [pick] = useState(() => createEnglishPicker());
+  const [pickers] = useState(() => Object.fromEntries(['all',...englishTopics.map(t=>t.id)].map(id=>[id,createEnglishPicker(Math.random,id)])));
+  const practiceTopic = useRef('all');
+  const pick=pickers[practiceTopic.current];
   const [question, setQuestion] = useState<ReturnType<typeof pick> | null>(null);
   const [feedback, setFeedback] = useState('');
   const [solved, setSolved] = useState(false);
@@ -56,7 +62,14 @@ export function EnglishLearning({ pet, onUpdatePet, onClose, isMuted, onToggleSo
     const nextQuestion=pick();
     rewarded.current=false;
     setSolved(false); setFeedback(''); setQuestion(nextQuestion); setMode('quiz');
-    read(nextQuestion.target.word); // Start media directly in the user's click gesture.
+    read(englishPronunciation(nextQuestion.target)); // Start media directly in the user's click gesture.
+  };
+  const startPractice = (selectedTopic: string) => {
+    practiceTopic.current=selectedTopic;
+    const nextQuestion=pickers[selectedTopic]();
+    rewarded.current=false;
+    setSolved(false); setFeedback(''); setQuestion(nextQuestion); setMode('quiz');
+    read(englishPronunciation(nextQuestion.target));
   };
   const answer = (word: Word) => {
     if (!question || rewarded.current) return;
@@ -64,7 +77,7 @@ export function EnglishLearning({ pet, onUpdatePet, onClose, isMuted, onToggleSo
     if (word.id!==question.target.id) {
       setFeedback('Gần đúng rồi! Bé nghe lại và thử thêm lần nữa nhé.');
       speakVietnamese('Bé nghe lại rồi thử thêm lần nữa nhé!');
-      speakEnglish(question.target.word);
+      speakEnglish(englishPronunciation(question.target));
       return;
     }
     rewarded.current=true; // Prevent rapid taps from awarding the same question twice.
@@ -91,19 +104,20 @@ export function EnglishLearning({ pet, onUpdatePet, onClose, isMuted, onToggleSo
           <h3>Cùng nghe, cùng nói, cùng chơi!</h3>
           <p>Bé chọn một cách học nhé.</p>
           <button onClick={()=>{setMode('learn');stopSpeech();}}>📖 1. Phần Tự Học<small>Chạm thẻ để nghe và đọc theo</small></button>
-          <button onClick={next}>⭐ 2. Phần Bài Tập<small>Nghe từ, chọn hình và chăm thú cưng</small></button>
+          <button onClick={()=>startPractice('all')}>⭐ 2. Phần Bài Tập<small>Nghe từ, chọn hình và chăm thú cưng</small></button>
         </div>}
         {mode==='learn' && <>
           <nav className="english-topics" aria-label="Chủ đề tiếng Anh">{englishTopics.map(item=><button key={item.id} aria-pressed={topic===item.id} onClick={()=>{stopSpeech();setActiveWord('');setTopic(item.id);}}>{item.label}</button>)}</nav>
           <p className="english-hint">Chạm một thẻ rồi đọc theo giọng tiếng Anh nhé!</p>
-          <div className="english-cards">{englishWords.filter(word=>word.topic===topic).map(word=><button key={word.id} className={activeWord===word.id?'is-active':''} onClick={()=>{setActiveWord(word.id);read(word.word);}} aria-label={`Nghe ${word.word}, ${word.meaning}`}>
+          <button className="english-listen" onClick={()=>startPractice(topic)}>⭐ Luyện tập chủ đề này</button>
+          <div className="english-cards">{englishWords.filter(word=>word.topic===topic).map(word=><button key={word.id} className={activeWord===word.id?'is-active':''} onClick={()=>{setActiveWord(word.id);read(englishPronunciation(word));}} aria-label={`Nghe ${word.word}, ${word.meaning}`}>
             <span className="english-picture"><WordPicture word={word}/></span>
             <strong lang="en">{word.word}</strong><small>{word.meaning}</small>
           </button>)}</div>
         </>}
         {mode==='quiz' && question && <div className="english-quiz">
           <h3>Bé nghe và chọn hình đúng nhé!</h3>
-          <button className="english-listen" disabled={isMuted} onClick={()=>read(question.target.word)}>🔊 Nghe lại từ</button>
+          <button className="english-listen" disabled={isMuted} onClick={()=>read(englishPronunciation(question.target))}>🔊 Nghe lại từ</button>
           <p className="english-target">Bé hãy tìm: <strong lang="en">{question.target.word}</strong></p>
           <div className="english-options">{question.options.map(word=><button key={word.id} disabled={solved} className={solved && word.id===question.target.id?'is-correct':''} onClick={()=>answer(word)} aria-label={word.word}>
             <span className="english-picture"><WordPicture word={word}/></span><strong lang="en">{word.word}</strong>
