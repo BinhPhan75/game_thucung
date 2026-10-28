@@ -28,3 +28,18 @@ test('upstream errors, HTML and oversized audio are not served as speech', async
     assert.equal(result.status,502); assert.equal(result.headers.get('cache-control'),'no-store');
   }
 });
+
+test('English uses tl=en and caches separately from Vietnamese',async()=>{
+  const languages=[];
+  const handler=createTtsHandler(async url=>{
+    languages.push(url.searchParams.get('tl'));
+    return new Response(new Uint8Array([1,2,3]),{headers:{'content-type':'audio/mpeg'}});
+  });
+  const english=new Request('http://local/api/tts?q=Orange&tl=en');
+  assert.equal((await handler(english)).status,200);
+  await handler(english);
+  await handler(request('Orange'));
+  assert.deepEqual(languages,['en','vi']);
+  assert.equal((await handler(new Request('http://local/api/tts?q=Orange&tl=xx'))).status,400);
+  assert.equal(languages.length,2);
+});

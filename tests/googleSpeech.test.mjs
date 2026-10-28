@@ -107,3 +107,17 @@ test('after proxy playback succeeds the next sentence uses the working source', 
   assert.ok(audio.plays[2].startsWith('/api/tts?'));
   player.stop();
 });
+
+test('language stays attached to queued chunks and English proxy retries', () => {
+  const audio=new FakeAudio();
+  const player=new GoogleSpeechPlayer(audio);
+  player.speak('Apple','en');
+  assert.equal(new URL(audio.src).searchParams.get('tl'),'en');
+  audio.onerror();
+  assert.equal(new URL(audio.src,'http://local').searchParams.get('tl'),'en');
+  player.speak('Bé giỏi quá!');
+  audio.onplaying();
+  audio.onended();
+  assert.equal(new URL(audio.src,'http://local').searchParams.get('tl'),'vi');
+  player.stop();
+});

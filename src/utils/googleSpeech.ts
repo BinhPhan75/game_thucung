@@ -23,13 +23,13 @@ export function splitSpeech(text: string, limit = 180): string[] {
   return chunks;
 }
 
-export function googleSpeechUrl(text: string): string {
-  return `https://translate.google.com/translate_tts?${new URLSearchParams({ ie: 'UTF-8', q: text, tl: 'vi', client: 'tw-ob' })}`;
+export function googleSpeechUrl(text: string, language: 'vi' | 'en' = 'vi'): string {
+  return `https://translate.google.com/translate_tts?${new URLSearchParams({ ie: 'UTF-8', q: text, tl: language, client: 'tw-ob' })}`;
 }
 
 export class GoogleSpeechPlayer {
-  private queue: string[][] = [];
-  private current: string[] = [];
+  private queue: { text: string; language: 'vi' | 'en' }[][] = [];
+  private current: { text: string; language: 'vi' | 'en' }[] = [];
   private muted = false;
   private generation = 0;
   private timer: ReturnType<typeof setTimeout> | undefined;
@@ -57,9 +57,9 @@ export class GoogleSpeechPlayer {
   }
   private clearTimer() { clearTimeout(this.timer); }
 
-  speak(text: string) {
+  speak(text: string, language: 'vi' | 'en' = 'vi') {
     if (this.muted) return;
-    const chunks = splitSpeech(text);
+    const chunks = splitSpeech(text).map(text => ({ text, language }));
     if (!chunks.length) return;
     // A new user request must not sit behind a failed/blocked old utterance.
     if (this.status === 'error' || this.status === 'blocked') this.stop();
@@ -132,8 +132,8 @@ export class GoogleSpeechPlayer {
     };
     this.update('loading');
     this.audio.src = useProxy
-      ? `/api/tts?${new URLSearchParams({ q: this.current[0] })}`
-      : googleSpeechUrl(this.current[0]);
+      ? `/api/tts?${new URLSearchParams({ q: this.current[0].text, tl: this.current[0].language })}`
+      : googleSpeechUrl(this.current[0].text, this.current[0].language);
     this.timer = setTimeout(() => failed('error'), 12000);
     try {
       void this.audio.play().catch((error: unknown) => {

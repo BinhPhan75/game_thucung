@@ -24,6 +24,7 @@ import { GamePicture } from './GamePicture';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
 import { Module5Wardrobe } from './Module5Wardrobe';
+import { EnglishLearning } from './EnglishLearning';
 import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
 import { type Question } from '../data/mathQuestions';
@@ -55,6 +56,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [petMood, setPetMood] = useState<'happy' | 'excited' | 'idle' | 'hungry'>('happy');
   const [showHeartBurst, setShowHeartBurst] = useState(false);
   const [isMathQuestOpen, setIsMathQuestOpen] = useState(false);
+  const [isEnglishOpen, setIsEnglishOpen] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState<Question>();
   const openMathQuestion = () => {
     const question = makePlayableQuestion();
@@ -129,10 +131,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
   // Check for 100% hunger & thirst EVOLUTION TRIGGER
   useEffect(() => {
-    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal && !isMathQuestOpen) {
+    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal && !isMathQuestOpen && !isEnglishOpen) {
       triggerEvolution();
     }
-  }, [pet.hunger, pet.thirst, isMathQuestOpen]);
+  }, [pet.hunger, pet.thirst, isMathQuestOpen, isEnglishOpen]);
 
   // Trigger Evolution and Level Up
   const triggerEvolution = () => {
@@ -375,6 +377,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
           </button>
 
           {/* TỦ ĐỒ THỜI TRANG (MODULE 5) */}
+          <button className="garden-english-button" onClick={()=>{stopSpeech();setIsEnglishOpen(true);}}>ABC Học Tiếng Anh</button>
           <button
             onClick={() => {
               playPopSound();
@@ -750,6 +753,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </div>
 
       {/* MODULE 3: MATH QUEST POPUP */}
+      {isEnglishOpen && <EnglishLearning pet={pet} onUpdatePet={onUpdatePet} isMuted={isMuted} onToggleSound={onToggleSound} onClose={()=>setIsEnglishOpen(false)}/>}
       {isMathQuestOpen && (
         <Module3MathQuest initialQuestion={initialQuestion}
           isMuted={isMuted}

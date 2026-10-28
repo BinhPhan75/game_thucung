@@ -301,6 +301,10 @@ export const speakVietnamese = (text: string) => {
   if (speechMuted || typeof window === 'undefined') return;
   getGoogleSpeechPlayer().speak(text);
 };
+export const speakEnglish = (text: string) => {
+  if (speechMuted || typeof window === 'undefined') return;
+  getGoogleSpeechPlayer().speak(text, 'en');
+};
 export const stopSpeech = () => { if (typeof window !== 'undefined') getGoogleSpeechPlayer().stop(); };
 
 // Cute crunchy munching sound for feeding
