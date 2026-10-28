@@ -1,4 +1,5 @@
 import React from 'react';
+import { GamePicture, pictureUrl } from '../components/GamePicture';
 import { Choice, Question } from '../data/mathQuestions';
 
 export function ObjectPicture({ choice }: { choice: Choice }) {
@@ -42,12 +43,12 @@ export function SpatialPicture({ question }: { question: Question }) {
     <path d="M135 95 151 78H209L225 95Z" fill="#fcd34d" stroke="#92400e" strokeWidth="3" />
     <rect x="173" y="79" width="14" height="49" fill="#fef3c7" />
     <text x="180" y="152" textAnchor="middle" fontSize="16" fill="#fff7ed" fontWeight="800">HỘP</text>
-    <text x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize="57">{question.emoji}</text>
+    <image href={pictureUrl(question.emoji!)} x={x-28} y={y-28} width="56" height="56"/>
   </svg>;
 }
 
 export function CountPictures({ emoji, count }: { emoji: string; count: number }) {
   return <div className="count-pictures" aria-label={`${count} hình minh họa`}>
-    {Array.from({length: count}, (_, i) => <span key={i} aria-hidden="true">{emoji}</span>)}
+    {Array.from({length: count}, (_, i) => <span key={i} aria-hidden="true"><GamePicture symbol={emoji}/></span>)}
   </div>;
 }

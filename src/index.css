@@ -190,3 +190,9 @@
 /* Keep the action label visible; only the secondary badge is optional. */
 .garden-footer > button > div:nth-child(2) > div:first-child > span { display:inline; }
 @media(max-width:600px) { .garden-footer > button > div:nth-child(2) > div:first-child > span:last-child:not(:first-child) { display:none; } }
+
+.game-picture { display:inline-block; width:1em; height:1em; object-fit:contain; vertical-align:-.12em; flex-shrink:0; }
+.bank-option-icon { font-size:clamp(38px,5vw,64px); line-height:1.1; }
+.bank-answers button { gap:5px; }
+.bank-answers button > span:last-child > .game-picture { width:1.8em; height:1.8em; }
+@media(max-height:450px) { .bank-option-icon { font-size:28px; } }

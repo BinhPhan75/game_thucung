@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+const files=['src/components/BankExercise.tsx','src/components/Module2Garden.tsx','src/data/mathQuestions.ts','src/data/importedQuestions.json'];
+const text=files.map(p=>fs.readFileSync(p,'utf8')).join('\n');
+const symbols=[...new Set([...new Intl.Segmenter('en',{granularity:'grapheme'}).segment(text)].map(x=>x.segment).filter(s=>/\p{Extended_Pictographic}/u.test(s)))];
+const assets={};
+const base='https://raw.githubusercontent.com/jdecked/twemoji/v16.0.1/';
+for(let i=0;i<symbols.length;i+=8) await Promise.all(symbols.slice(i,i+8).map(async symbol=>{
+  const file=[...symbol.replace(/\ufe0f/g,'')].map(c=>c.codePointAt(0).toString(16)).join('-');
+  const res=await fetch(`${base}assets/svg/${file}.svg`);
+  if(!res.ok) throw Error(`${symbol}: ${res.status}`);
+  const svg=await res.text();
+  if(!svg.includes('<svg') || /<script|<foreignObject|https?:/i.test(svg.replace(/xmlns="[^"]*"/g,''))) throw Error(`Unexpected SVG: ${file}`);
+  fs.writeFileSync(`public/pictures/${file}.svg`,svg);
+  assets[symbol]=file;
+}));
+fs.writeFileSync('src/data/pictureAssets.json',JSON.stringify(assets,null,2)+'\n');
+const license=await fetch(`${base}LICENSE-GRAPHICS`);
+if(!license.ok) throw Error('Missing graphics license');
+fs.writeFileSync('public/pictures/LICENSE-GRAPHICS.txt',await license.text());
+fs.writeFileSync('public/pictures/ATTRIBUTION.txt','Twemoji v16.0.1 — Twitter, Inc. and other contributors. Graphics licensed under CC BY 4.0.\nhttps://github.com/jdecked/twemoji/tree/v16.0.1\nhttps://creativecommons.org/licenses/by/4.0/\nSVG artwork redistributed without changes.\n');
+console.log(`Downloaded ${Object.keys(assets).length} local SVG illustrations.`);

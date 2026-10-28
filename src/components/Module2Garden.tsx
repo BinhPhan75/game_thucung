@@ -20,6 +20,7 @@ import {
   Edit3,
   X
 } from 'lucide-react';
+import { GamePicture } from './GamePicture';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
 import { Module5Wardrobe } from './Module5Wardrobe';
@@ -296,23 +297,17 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
               onClick={() => handleOpenQuest('food')}
               title="Quả táo đỏ - Bấm để giải toán"
               className="absolute top-8 left-10 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            >
-              🍎
-            </button>
+            ><GamePicture symbol="🍎"/></button>
             <button
               onClick={() => handleOpenQuest('food')}
               title="Quả táo đỏ - Bấm để giải toán"
               className="absolute top-16 right-10 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            >
-              🍎
-            </button>
+            ><GamePicture symbol="🍎"/></button>
             <button
               onClick={() => handleOpenQuest('food')}
               title="Quả táo đỏ - Bấm để giải toán"
               className="absolute bottom-10 left-16 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            >
-              🍎
-            </button>
+            ><GamePicture symbol="🍎"/></button>
           </div>
         </div>
 
@@ -322,10 +317,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-emerald-600 rounded-[50%_50%_0_0/30%_30%_0_0]" />
 
         {/* Flowers & Butterflies */}
-        <div className="absolute bottom-8 left-[30%] text-2xl animate-[float_4s_ease-in-out_infinite]">🦋</div>
-        <div className="absolute bottom-6 left-[45%] text-2xl">🌼</div>
-        <div className="absolute bottom-10 right-[35%] text-2xl">🌻</div>
-        <div className="absolute bottom-5 right-[10%] text-2xl">🌸</div>
+        <div className="absolute bottom-8 left-[30%] text-2xl animate-[float_4s_ease-in-out_infinite]"><GamePicture symbol="🦋"/></div>
+        <div className="absolute bottom-6 left-[45%] text-2xl"><GamePicture symbol="🌼"/></div>
+        <div className="absolute bottom-10 right-[35%] text-2xl"><GamePicture symbol="🌻"/></div>
+        <div className="absolute bottom-5 right-[10%] text-2xl"><GamePicture symbol="🌸"/></div>
       </div>
 
       {/* TOP HEADER: Pet Status & Navigation & Wardrobe Button */}
@@ -418,7 +413,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             ) : pet.hunger >= 100 ? (
               <span className="text-lg">🥛</span>
             ) : pet.thirst >= 100 ? (
-              <span className="text-lg">🍎</span>
+              <span className="text-lg"><GamePicture symbol="🍎"/></span>
             ) : isHungry ? (
               <span className="text-lg">🍲</span>
             ) : isThirsty ? (
@@ -474,7 +469,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
               title="Bấm để giải toán kiếm thức ăn!"
             >
               <span className="text-xs font-black text-amber-800">Cần Ăn</span>
-              <span className="text-lg">🍎</span>
+              <span className="text-lg"><GamePicture symbol="🍎"/></span>
               <span className="text-[10px] bg-amber-400 text-amber-950 font-black px-1.5 py-0.5 rounded-full">Toán 📝</span>
             </button>
           ) : (isHungry || isThirsty) ? (
@@ -887,7 +882,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                   }}
                   className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-sm sm:text-base rounded-2xl shadow-[0_4px_0_#b45309] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer animate-pulse"
                 >
-                  <span className="text-xl">🍎</span>
+                  <span className="text-xl"><GamePicture symbol="🍎"/></span>
                   <span>GIẢI TOÁN KIẾM TÁO NGAY</span>
                 </button>
               )}
