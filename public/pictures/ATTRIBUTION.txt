@@ -2,3 +2,7 @@ Twemoji v16.0.1 — Twitter, Inc. and other contributors. Graphics licensed unde
 https://github.com/jdecked/twemoji/tree/v16.0.1
 https://creativecommons.org/licenses/by/4.0/
 SVG artwork redistributed without changes.
+
+whole-*.svg: adapted from Twemoji heads with added bodies, limbs and feet. CC BY 4.0. flower-*.svg: original stem-and-leaf illustrations created for this game.
+
+whole-*.svg: adapted from Twemoji heads with added bodies, limbs and feet. CC BY 4.0. flower-*.svg: original stem-and-leaf illustrations created for this game.

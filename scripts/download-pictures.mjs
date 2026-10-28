@@ -19,3 +19,4 @@ if(!license.ok) throw Error('Missing graphics license');
 fs.writeFileSync('public/pictures/LICENSE-GRAPHICS.txt',await license.text());
 fs.writeFileSync('public/pictures/ATTRIBUTION.txt','Twemoji v16.0.1 — Twitter, Inc. and other contributors. Graphics licensed under CC BY 4.0.\nhttps://github.com/jdecked/twemoji/tree/v16.0.1\nhttps://creativecommons.org/licenses/by/4.0/\nSVG artwork redistributed without changes.\n');
 console.log(`Downloaded ${Object.keys(assets).length} local SVG illustrations.`);
+await import('./complete-illustrations.mjs');

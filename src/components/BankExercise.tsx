@@ -19,7 +19,7 @@ const emoji = (name: string) => pictures[name] ?? name;
 function ColoredObject({ name, color }: { name: string; color: string }) {
   return <svg viewBox="0 0 100 100" className="bank-object" aria-hidden="true"><g fill={colors[color] ?? '#ef4444'} stroke="#334155" strokeWidth="2">
     {name === 'quả bóng' && <circle cx="50" cy="50" r="36" />}
-    {name === 'bông hoa' && <><path d="M50 55V94" fill="none" stroke="#16a34a" strokeWidth="7"/>{[0,60,120,180,240,300].map(angle=><ellipse key={angle} cx="50" cy="25" rx="13" ry="21" transform={`rotate(${angle} 50 45)`}/>)}<circle cx="50" cy="45" r="12" fill="#fff7ed"/></>}
+    {name === 'bông hoa' && <><path d="M50 42V96" fill="none" stroke="#16a34a" strokeWidth="6"/><path d="M48 88Q17 87 17 65Q42 65 48 88ZM52 80Q81 79 84 58Q59 59 52 80Z" fill="#22c55e" stroke="#15803d"/>{[0,60,120,180,240,300].map(angle=><ellipse key={angle} cx="50" cy="18" rx="11" ry="15" transform={`rotate(${angle} 50 33)`}/>)}<circle cx="50" cy="33" r="10" fill="#fff7ed"/></>}
     {name === 'chiếc ô' && <><path d="M12 50A38 38 0 0 1 88 50Z"/><path d="M50 50V83Q50 99 35 86" fill="none" strokeWidth="5"/></>}
     {name === 'chiếc xe' && <><path d="M10 45H24L36 24H64L78 45H90V73H10Z"/><circle cx="28" cy="75" r="12" fill="#334155"/><circle cx="73" cy="75" r="12" fill="#334155"/><path d="M40 30H60L69 45H31Z" fill="#e0f2fe"/></>}
     {name === 'con cá' && <><ellipse cx="43" cy="50" rx="30" ry="23"/><path d="M70 50 94 26V74Z"/><circle cx="28" cy="44" r="4" fill="#fff"/></>}

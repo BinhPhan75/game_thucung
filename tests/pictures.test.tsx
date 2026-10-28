@@ -17,7 +17,7 @@ test('all bundled illustrations exist as vector images',()=>{
 test('all three swimming question answers have matching pictures',()=>{
   const entry=QUESTION_BANK.find(e=>e.question==='Con gì biết bơi?')!;
   const html=renderToStaticMarkup(<BankExercise question={bankQuestion(entry)} selected="" wrong={false} onAnswer={()=>{}}/>);
-  for(const [label,file] of [['Cá','1f41f'],['Mèo','1f431'],['Gà','1f414']]) {
+  for(const [label,file] of [['Cá','1f41f'],['Mèo','1f408'],['Gà','1f414']]) {
     assert.match(html,new RegExp(`aria-label="${label}"[^>]*>[\\s\\S]*?pictures/${file}\\.svg`));
   }
 });
