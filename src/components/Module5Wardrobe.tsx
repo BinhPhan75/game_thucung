@@ -64,8 +64,8 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
-      <div className="relative w-full max-w-3xl bg-gradient-to-b from-purple-50 via-white to-pink-50 rounded-3xl md:rounded-[36px] shadow-2xl border-4 border-purple-300 overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="wardrobe-overlay fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
+      <div className="wardrobe-panel relative w-full max-w-3xl bg-gradient-to-b from-purple-50 via-white to-pink-50 rounded-3xl md:rounded-[36px] shadow-2xl border-4 border-purple-300 overflow-hidden flex flex-col max-h-[92vh]">
         
         {/* Header Bar */}
         <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-rose-400 px-5 py-3.5 flex items-center justify-between text-white shadow-md">
@@ -108,7 +108,7 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
         </div>
 
         {/* Content Body: Left Pet Preview, Right Item Grid */}
-        <div className="p-4 md:p-6 flex-1 flex flex-col md:flex-row items-center gap-6 overflow-y-auto">
+        <div className="wardrobe-body p-4 md:p-6 flex-1 flex flex-col md:flex-row items-center gap-6 overflow-y-auto">
           
           {/* Left Column: Pet Fitting Room */}
           <div className="w-full md:w-5/12 flex flex-col items-center bg-purple-100/60 rounded-3xl p-4 border-2 border-purple-200 shadow-inner">
@@ -165,7 +165,7 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
             <div className="flex flex-wrap gap-1 mb-2" aria-label="Lọc trang phục">
               {[['all','Tất cả'],['hat','Mũ'],['accessory','Phụ kiện'],['cape','Áo choàng'],['owned','Đã có']].map(([id,label]) => <button key={id} aria-pressed={category === id} onClick={() => setCategory(id)} className={`px-3 py-2 rounded-xl text-xs font-bold ${category === id ? 'bg-purple-600 text-white' : 'bg-purple-100 text-purple-900'}`}>{label}</button>)}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[340px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pr-1">
               {filteredItems.map((item) => {
                 const isUnlocked = pet.unlockedCostumes.includes(item.id);
                 const isEquipped = pet.equippedHat === item.id;
@@ -308,7 +308,7 @@ export const Module5Wardrobe: React.FC<Module5WardrobeProps> = ({
 
       {/* POPUP HƯỚNG DẪN KHI BÉ CHƯA ĐỦ XU */}
       {notEnoughCoinsItem && (
-        <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in select-none">
+        <div className="garden-dialog-overlay fixed inset-0 z-60 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in select-none">
           <div className="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border-4 border-amber-400 text-center relative">
             <div className="w-16 h-16 bg-amber-100 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner border border-amber-300 mb-2">
               🪙

@@ -266,7 +266,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   };
 
   return (
-    <div className="garden-screen relative h-screen w-screen p-2 md:p-4 flex flex-col justify-between overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
+    <div className="garden-screen relative min-h-screen w-full p-2 md:p-4 flex flex-col justify-between bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
       
       {/* Cartoon Sky & Garden Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -787,8 +787,8 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
       {/* POPUP THÔNG BÁO TỪ THÚ CƯNG KHI 1 CHỈ SỐ ĐẠT 100% */}
       {statFullModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
-          <div className="bg-gradient-to-b from-amber-50 via-white to-pink-50 rounded-3xl md:rounded-[36px] max-w-md w-full p-6 shadow-2xl border-4 border-amber-400 text-center relative overflow-hidden">
+        <div className="garden-dialog-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
+          <div className="bg-gradient-to-b from-amber-50 via-white to-pink-50 rounded-3xl md:rounded-[36px] max-w-md w-full p-6 shadow-2xl border-4 border-amber-400 text-center relative garden-dialog-card">
             
             {/* Header Icon */}
             <div className={`w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner border-2 mb-3 animate-bounce ${
@@ -814,7 +814,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             </h3>
 
             {/* Friendly Pet Message (Bong bóng yêu thương từ thú cưng) */}
-            <div className="bg-white p-4 rounded-2xl border-2 border-amber-200 shadow-xs my-3 text-sm font-bold text-slate-700 leading-relaxed relative text-left">
+            <div className="bg-white p-4 rounded-2xl border-2 border-amber-200 shadow-xs my-3 text-sm font-bold text-slate-700 leading-relaxed relative text-left garden-dialog-card">
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-start gap-2">
                   <span className="text-2xl shrink-0">🐾</span>
@@ -908,8 +908,8 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
       {/* MODULE 4: EVOLUTION & LEVEL UP CELEBRATION MODAL */}
       {showEvolutionModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
-          <div className="bg-gradient-to-b from-amber-50 via-white to-purple-50 rounded-3xl md:rounded-[36px] max-w-lg w-full p-5 sm:p-6 shadow-2xl border-4 border-amber-400 text-center relative overflow-hidden">
+        <div className="garden-dialog-overlay fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
+          <div className="bg-gradient-to-b from-amber-50 via-white to-purple-50 rounded-3xl md:rounded-[36px] max-w-lg w-full p-5 sm:p-6 shadow-2xl border-4 border-amber-400 text-center relative garden-dialog-card">
             
             {/* Top Confetti / Trophy Icon */}
             <div className="w-20 h-20 bg-gradient-to-b from-amber-200 to-amber-300 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner border-2 border-amber-400 mb-2 animate-bounce">
@@ -1018,8 +1018,8 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
       {/* MODAL ĐỔI TÊN BÉ VÀ THÚ CƯNG (TIỆN LỢI TRONG SÂN VƯỜN) */}
       {isRenameModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
-          <div className="bg-gradient-to-b from-amber-50 via-white to-orange-50 rounded-3xl md:rounded-[36px] max-w-md w-full p-5 sm:p-6 shadow-2xl border-4 border-amber-300 relative text-left">
+        <div className="garden-dialog-overlay fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in select-none">
+          <div className="bg-gradient-to-b from-amber-50 via-white to-orange-50 rounded-3xl md:rounded-[36px] max-w-md w-full p-5 sm:p-6 shadow-2xl border-4 border-amber-300 relative text-left garden-dialog-card">
             {/* Close Button */}
             <button
               type="button"

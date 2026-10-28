@@ -44,11 +44,9 @@
 @theme { --font-sans: "Nunito", "Segoe UI", Arial, sans-serif; }
 @layer base { 
   html, body, #root { 
-    height: 100%; 
-    max-height: 100vh;
-    max-height: 100dvh;
+    min-height: 100%;
     width: 100%; 
-    overflow: hidden; 
+    overflow-x: clip;
     margin: 0;
     padding: 0;
   }
@@ -161,3 +159,34 @@
 .bank-logic { font-size:clamp(40px,12vh,100px); }
 .bank-remember { min-height:36px; margin-top:8px; padding:4px 12px; background:#e0f2fe; border-radius:12px; font-weight:800; font-size:12px; }
 @media(max-height:450px) { .bank-exercise { gap:4px; padding:3px 10px; } .bank-answers button { min-height:42px; font-size:13px; } .bank-items > span,.bank-sequence span { font-size:24px; } .bank-option-icon { font-size:20px; } .bank-size > div > span { font-size:36px!important; } }
+
+/* Long garden screens flow naturally; no controls are clipped by the viewport. */
+.garden-screen { height:auto; min-height:100vh; min-height:100dvh; overflow:visible; gap:8px; }
+.garden-main { display:flex; flex-direction:column; flex:1 0 auto; min-height:auto; gap:8px; }
+.garden-pet { flex:0 0 auto; height:clamp(135px,25dvh,270px); min-height:135px; }
+.garden-pet > div[title] { max-height:270px; }
+.garden-footer { margin-top:4px; }
+/* Auto margins center short dialogs and collapse to zero for tall dialogs.
+   The overlay itself scrolls, so both the top and final action stay reachable. */
+.garden-dialog-overlay { height:100vh; height:100dvh; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; padding: max(12px,env(safe-area-inset-top)) 12px max(20px,env(safe-area-inset-bottom)); z-index:60; }
+.garden-dialog-overlay > div { flex-shrink:0; margin-block:auto; overflow:visible; }
+.garden-dialog-overlay button { min-height:44px; }
+.wardrobe-overlay { height:100vh; height:100dvh; padding: max(8px,env(safe-area-inset-top)) 8px max(12px,env(safe-area-inset-bottom)); z-index:60; }
+.wardrobe-panel { max-height:100%; min-height:0; }
+.wardrobe-panel > :not(.wardrobe-body) { flex-shrink:0; }
+.wardrobe-body { min-height:0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; scroll-behavior:smooth; align-items:flex-start; }
+.wardrobe-body > div { flex-shrink:0; }
+.wardrobe-panel > div:last-child button { min-height:44px; }
+@media(max-width:600px) {
+  .garden-dialog-overlay > div { padding:14px; border-radius:24px; }
+  .garden-dialog-card > div:first-child:not(.absolute) { margin-bottom:6px; }
+  .garden-dialog-card .my-3 { margin-block:8px; }
+  .garden-dialog-card .mt-4 { margin-top:10px; }
+  .garden-dialog-card h3 { font-size:20px; line-height:1.25; overflow-wrap:anywhere; }
+  .wardrobe-body { padding:10px; gap:12px; }
+  .wardrobe-panel > div:last-child { padding:8px; gap:4px; }
+}
+@media(prefers-reduced-motion:reduce) { .garden-dialog-overlay,.wardrobe-body { scroll-behavior:auto; } }
+/* Keep the action label visible; only the secondary badge is optional. */
+.garden-footer > button > div:nth-child(2) > div:first-child > span { display:inline; }
+@media(max-width:600px) { .garden-footer > button > div:nth-child(2) > div:first-child > span:last-child:not(:first-child) { display:none; } }
