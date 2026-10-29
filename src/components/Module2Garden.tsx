@@ -634,15 +634,16 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             </button>
           </div>
         </div>
+
+      </main>
+
+      {/* BOTTOM ACTION BAR */}
+      <footer className="garden-footer relative z-20 w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
         <nav className="thinking-shortcuts" aria-label="Toán tư duy tương tác">
           {[['T16','✏️ Nối số'],['T17','🧩 Ghép tranh'],['T18','🧺 Phân loại']].map(([category,label])=><button key={category} onClick={()=>{
             setQuestTarget(pet.hunger<=pet.thirst?'food':'water');setTargetCostumeId(undefined);openMathQuestion(category);
           }}>{label}</button>)}
         </nav>
-      </main>
-
-      {/* BOTTOM ACTION BAR */}
-      <footer className="garden-footer relative z-20 w-full max-w-4xl mx-auto px-4 pb-4 pt-1 flex flex-col sm:flex-row items-center justify-center gap-3">
         <button
           onClick={() => {
             if (pet.hunger >= 100 && pet.thirst >= 100) {
