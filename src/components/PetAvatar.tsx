@@ -208,6 +208,7 @@ const DogIllustration: React.FC<{
       <ellipse cx="100" cy="98" rx="25" ry="18" fill="#FFF8EB" stroke="#B46E1B" strokeWidth="2" />
 
       {/* Big Sparkling Cartoon Eyes */}
+      <g className="fairy-pet-eyes">
       {/* Left Eye */}
       <ellipse cx="76" cy="80" rx="9" ry="11" fill="#2E1B0F" />
       <circle cx="73" cy="76" r="3.5" fill="#FFFFFF" />
@@ -218,6 +219,7 @@ const DogIllustration: React.FC<{
       <circle cx="121" cy="76" r="3.5" fill="#FFFFFF" />
       <circle cx="126" cy="84" r="1.5" fill="#FFFFFF" />
 
+      </g>
       {/* Rosy Cheeks Blush */}
       <ellipse cx="62" cy="96" rx="8" ry="5" fill="#FDA4AF" opacity="0.8" />
       <ellipse cx="138" cy="96" rx="8" ry="5" fill="#FDA4AF" opacity="0.8" />
@@ -353,6 +355,7 @@ const CatIllustration: React.FC<{
       <path d="M 106 52 L 106 62" stroke="#C2410C" strokeWidth="3" strokeLinecap="round" />
 
       {/* Cat Huge Sparkling Emerald Eyes */}
+      <g className="fairy-pet-eyes">
       <ellipse cx="77" cy="82" rx="9.5" ry="12" fill="#047857" />
       <ellipse cx="77" cy="82" rx="6" ry="11" fill="#064E3B" />
       <circle cx="74" cy="78" r="4" fill="#FFFFFF" />
@@ -363,6 +366,7 @@ const CatIllustration: React.FC<{
       <circle cx="120" cy="78" r="4" fill="#FFFFFF" />
       <circle cx="125" cy="86" r="1.8" fill="#FFFFFF" />
 
+      </g>
       {/* Rosy Cheeks */}
       <ellipse cx="63" cy="98" rx="8" ry="5" fill="#FDA4AF" opacity="0.85" />
       <ellipse cx="137" cy="98" rx="8" ry="5" fill="#FDA4AF" opacity="0.85" />
@@ -487,6 +491,7 @@ const BunnyIllustration: React.FC<{
       />
 
       {/* Big Sparkling Purple/Blue Anime Eyes */}
+      <g className="fairy-pet-eyes">
       <ellipse cx="76" cy="80" rx="9" ry="11.5" fill="#6366F1" />
       <ellipse cx="76" cy="80" rx="6" ry="10.5" fill="#312E81" />
       <circle cx="73" cy="76" r="3.8" fill="#FFFFFF" />
@@ -497,6 +502,7 @@ const BunnyIllustration: React.FC<{
       <circle cx="121" cy="76" r="3.8" fill="#FFFFFF" />
       <circle cx="126" cy="84" r="1.8" fill="#FFFFFF" />
 
+      </g>
       {/* Very Rosy Cheeks */}
       <ellipse cx="61" cy="95" rx="9" ry="6" fill="#F472B6" opacity="0.8" />
       <ellipse cx="139" cy="95" rx="9" ry="6" fill="#F472B6" opacity="0.8" />

@@ -96,7 +96,7 @@ export const Module1Welcome: React.FC<Module1WelcomeProps> = ({
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-200 text-slate-800">
+    <div className="fairy-welcome relative min-h-screen w-full flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-200 text-slate-800">
       {/* Cartoon Background Elements: Animated Clouds, Sun, Rainbow */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Sun with rotating rays */}

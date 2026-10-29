@@ -1,3 +1,4 @@
+import { celebrateStars } from '../utils/celebrate';
 import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createEnglishPicker, englishTopics, englishWords, englishPronunciation } from '../data/englishData.js';
 import { GamePicture } from './GamePicture';
@@ -82,6 +83,7 @@ export function EnglishLearning({ pet, onUpdatePet, onClose, isMuted, onToggleSo
     }
     rewarded.current=true; // Prevent rapid taps from awarding the same question twice.
     setSolved(true);
+    celebrateStars(dialog.current);
     const target=pet.hunger<=pet.thirst?'food':'water';
     onUpdatePet(questReward(pet,target));
     setFeedback(`Chính xác! +10 xu · +25 EXP · +30 ${target==='food'?'độ no':'nước uống'}`);

@@ -1,0 +1,112 @@
+/* Storybook art direction. All scenery is decorative except the apple shortcuts. */
+:root { --fairy-ink:#354563; --fairy-purple:#7154bb; }
+button { touch-action:manipulation; }
+button:focus-visible { outline:3px solid #5534a5; outline-offset:4px; }
+.garden-screen { isolation:isolate; background:linear-gradient(#81d7ef 0%,#d6f5f3 50%,#bce4a0 72%,#6ec48c 100%); padding-inline:clamp(10px,2vw,28px); gap:12px; }
+.fairy-scenery { position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; }
+.fairy-sky { position:absolute; inset:0; }
+.fairy-sun { position:absolute; top:45px; left:3%; width:clamp(100px,15vw,205px); filter:drop-shadow(0 0 24px #ffe79c); animation:fairy-glow 6s ease-in-out infinite; }
+.fairy-sun-rays { transform-origin:90px 90px; animation:fairy-turn 90s linear infinite; }
+.fairy-cloud { position:absolute; width:clamp(130px,19vw,280px); filter:drop-shadow(0 7px 0 #b5e3ed55); animation:fairy-drift 18s ease-in-out infinite alternate; }
+.fairy-cloud-0 { top:7%; left:20%; }
+.fairy-cloud-1 { top:18%; right:2%; animation-delay:-9s; width:23%; }
+.fairy-cloud-2 { top:32%; left:-4%; animation-delay:-5s; }
+.fairy-rainbow { position:absolute; right:-40px; top:15%; width:340px; height:340px; border:15px solid #ffabc080; border-radius:50%; box-shadow:inset 0 0 0 14px #ffdb8c70,inset 0 0 0 28px #b4e2b680,inset 0 0 0 42px #b0c7ee70; mask-image:linear-gradient(black,transparent 65%); transform:rotate(-25deg); }
+.fairy-landscape { position:absolute; bottom:0; width:100%; height:55%; min-height:330px; }
+.fairy-tree { position:absolute; left:-32px; bottom:11%; width:clamp(150px,20vw,300px); }
+.fairy-tree>svg { width:100%; }
+.fairy-apple { position:absolute; pointer-events:auto; font-size:clamp(23px,3vw,38px); width:44px; height:44px; transition:transform .2s; }
+.fairy-apple:hover { transform:rotate(-12deg) scale(1.15); }
+.fairy-apple-0 { top:25%; left:26%; }.fairy-apple-1 { top:35%; left:62%; }.fairy-apple-2 { top:49%; left:38%; }
+.fairy-flowerbeds { position:absolute; inset:0; }
+.fairy-flowerbeds>span { position:absolute; font-size:clamp(35px,5vw,70px); transform-origin:bottom; animation:fairy-sway 5s ease-in-out infinite alternate; }
+.fairy-mushroom { position:absolute; width:clamp(45px,7vw,100px); bottom:80px; right:4%; filter:drop-shadow(0 5px 0 #26775525); }
+.fairy-mushroom-1 { right:10%; bottom:65px; width:55px; transform:rotate(-12deg); }.fairy-mushroom-2 { left:13%; bottom:25px; width:60px; }
+.fairy-butterfly { position:absolute; font-size:32px; animation:fairy-flutter 11s ease-in-out infinite; }
+.fairy-butterfly-0 { left:12%; top:47%; }.fairy-butterfly-1 { right:12%; top:38%; animation-delay:-4s; font-size:25px; }.fairy-butterfly-2 { right:23%; bottom:8%; animation-delay:-7s; }
+.garden-header { max-width:1120px; align-items:center; gap:12px; }
+.garden-header>div:first-child { flex:0 1 auto; background:#fffaf0; border:3px solid white; border-radius:24px; box-shadow:0 5px 0 #81b9bb66,0 10px 25px #3b717b12; padding:10px 14px; }
+.garden-header>div:last-child { flex-wrap:wrap; gap:9px; justify-content:center; }
+.garden-header>div:last-child>div { border-color:#fff5cf; background:#fff8dd; box-shadow:0 3px 0 #d5ae62; }
+.garden-header button,.garden-care-actions button,.garden-footer>button { border:2px solid #ffffffbb; border-radius:19px; min-height:44px; box-shadow:inset 0 2px 0 #ffffff66,0 5px 0 var(--button-base,#b27426),0 7px 12px #33596f25; transition:transform .18s,box-shadow .18s,filter .18s; }
+.garden-header button { padding:8px 12px; font-size:13px; }
+.garden-header button[title*="Đổi tên bé"] { background:linear-gradient(#ffdc6d,#ffba4b); color:#70421e; --button-base:#cf8b35; }
+.garden-header .garden-english-button { background:linear-gradient(#aa85ec,#7757c9); color:white; --button-base:#57379b; }
+.garden-header button[title*="tủ đồ"] { background:linear-gradient(#ff92bc,#ec619d); --button-base:#b8437d; }
+.garden-header button[title*="khác"] { background:linear-gradient(#86dfd8,#4cbeb8); color:#174c56; --button-base:#278e96; }
+.garden-header button[title*="khác"] span { display:inline; }
+@media(hover:hover) { .garden-header button:hover,.garden-care-actions button:hover,.garden-footer>button:hover { transform:translateY(-2px) scale(1.04); filter:brightness(1.04); } }
+.garden-header button:active,.garden-care-actions button:active,.garden-footer>button:active { transform:translateY(4px) scale(.98); box-shadow:inset 0 2px 4px #00000015,0 1px 0 var(--button-base,#b27426); }
+.garden-main { gap:16px; padding-top:8px; }
+.garden-message { background:#fffdf5; border:3px solid white; color:var(--fairy-ink); box-shadow:0 5px 0 #b2d9cb; animation:none; border-radius:24px; }
+.garden-pet { height:clamp(180px,29dvh,300px); min-height:180px; margin-bottom:12px; }
+.fairy-pet-platform { position:absolute; bottom:-3px; width:clamp(210px,32vw,350px); height:60px; border-radius:50%; background:radial-gradient(ellipse at 50% 15%,#d9f4a1 0%,#a7de78 45%,#64b97a 72%); border:4px solid #dcf9b3; box-shadow:0 9px 0 #438f65,0 17px 0 #306e5733,0 27px 20px #22585125,inset 0 -7px 0 #69b26f; }
+.garden-pet>div[title] { position:relative; z-index:1; animation:fairy-pet-bob 3.8s ease-in-out infinite; filter:drop-shadow(0 10px 5px #32775925); }
+.fairy-pet-eyes { transform-box:fill-box; transform-origin:center; animation:fairy-blink 5.4s infinite; }
+.fairy-pet-sparkles { position:absolute; width:clamp(240px,38vw,400px); height:100%; pointer-events:none; color:#fff7ba; font-size:32px; text-shadow:0 2px 0 #d2a341; }
+.fairy-pet-sparkles span { position:absolute; animation:fairy-sparkle 4s ease-in-out infinite; }
+.fairy-pet-sparkles span:nth-child(1) { left:8%; top:22%; }.fairy-pet-sparkles span:nth-child(2) { right:7%; top:45%; color:#ff89b2; animation-delay:-1s; }.fairy-pet-sparkles span:nth-child(3) { right:15%; top:5%; animation-delay:-2s; }.fairy-pet-sparkles span:nth-child(4) { left:15%; bottom:12%; font-size:22px; animation-delay:-3s; }
+.garden-stats { width:100%; max-width:720px; padding:16px; background:linear-gradient(145deg,#fffef6,#fff7df); border:3px solid white; border-radius:28px; box-shadow:0 7px 0 #a4c78d,0 12px 24px #21594522; }
+.garden-stats-heading { border:0; padding-bottom:8px; margin-bottom:8px; }
+.garden-stats-heading>span:first-child { font-size:13px; color:#596346; letter-spacing:.04em; }
+.garden-stat-bars>div { animation:none; border:2px solid #f3dbaa; background:#fffaf0; border-radius:19px; padding:10px; }
+.garden-stat-bars>div:nth-child(2) { background:#f0fbff; border-color:#b7e4ed; }
+.fairy-meter { height:22px; padding:3px; border:1px solid #dfd6b7; background:#e7e8ce; box-shadow:inset 0 2px 4px #81744e26; }
+.fairy-meter>div { position:relative; background:linear-gradient(#ffcf60,#f5a63a); box-shadow:inset 0 -3px 0 #d9872c55; }
+.fairy-meter-water>div { background:linear-gradient(#74e3eb,#37b9db); box-shadow:inset 0 -3px 0 #218eb455; }
+.fairy-meter>div::after { content:''; position:absolute; top:2px; left:5px; right:5px; height:4px; background:#ffffff80; border-radius:20px; }
+.garden-care-actions { padding-top:12px; gap:12px; }
+.garden-care-actions button { background:linear-gradient(#ffdf74,#ffb54f); color:#754416; font-size:14px; padding:12px 8px; }
+.garden-care-actions button:nth-child(2) { background:linear-gradient(#8ce5e8,#51c8d9); color:#145463; --button-base:#2497b1; }
+.garden-footer>button { background:linear-gradient(#ffb766,#f98b55); --button-base:#c26336; font-size:18px; }
+.garden-copyright { color:#164f3b; }
+/* Matching toy-like panels and tactile controls throughout the learning rooms. */
+.math-panel,.english-dialog,.wardrobe-panel { border:4px solid #fff3ca; border-radius:28px; box-shadow:0 10px 0 #49445c33,0 28px 70px #20394d45; background:linear-gradient(145deg,#fffdf3,#fff7e6); }
+.math-header { background:linear-gradient(120deg,#31bca7,#218c91); border-bottom:4px solid #85e2c8; }
+.english-header { background:linear-gradient(120deg,#9a79de,#7056b7); border-bottom:4px solid #c5b1ed; }
+.wardrobe-panel>div:first-child { background:linear-gradient(120deg,#c783db,#ee8aaa); }
+.bank-scene,.math-scene { border:2px solid #f6e7c6; border-radius:24px; background:radial-gradient(ellipse at top,#fffdf1,white 70%); }
+.bank-answers button,.math-choices button,.english-cards button,.english-options button { border:3px solid #e4c799; background:linear-gradient(#fff,#fffbef); border-radius:22px; box-shadow:0 5px 0 #d7bc8d; transition:transform .18s,box-shadow .18s,border-color .18s; }
+.bank-answers,.math-choices,.english-options,.english-cards { padding-bottom:6px; }
+@media(hover:hover) { .bank-answers button:hover,.math-choices button:hover,.english-cards button:hover,.english-options button:not(:disabled):hover { transform:translateY(-3px); border-color:#b79cde; } }
+.bank-answers button:active,.english-options button:not(:disabled):active,.english-cards button:active { transform:translateY(3px); box-shadow:0 1px 0 #d7bc8d; }
+.english-options .is-correct { background:linear-gradient(#e0f8c9,#bce9b1); border-color:#64bc7a; box-shadow:0 5px 0 #479b64; }
+.result-actions button,.english-next,.english-menu button,.wardrobe-panel button,.garden-dialog-card button { border-radius:18px; box-shadow:inset 0 2px 0 #ffffff55,0 4px 0 #74589533; transition:transform .18s; }
+.english-menu button { background:linear-gradient(#fff,#f0e6ff); border-color:#cfb4ed; }
+.english-menu button:last-child { background:linear-gradient(#fff1b8,#ffde88); }
+.english-footer,.math-footer { background:#f1f8e9; color:#386755; }
+.english-topics button { border:2px solid #d5c4ea; background:#f8f1ff; }
+.english-topics button[aria-pressed=true] { background:linear-gradient(#aa85df,#7956bc); color:white; }
+.fairy-confetti { position:absolute; inset:0; width:100%; height:100%; z-index:100; pointer-events:none; }
+@keyframes fairy-drift { from { transform:translateX(-20px); } to { transform:translateX(45px); } }
+@keyframes fairy-turn { to { transform:rotate(360deg); } }
+@keyframes fairy-glow { 50% { filter:drop-shadow(0 0 35px #ffe79c); } }
+@keyframes fairy-sway { to { transform:rotate(7deg); } }
+@keyframes fairy-flutter { 0%,100% { transform:translate(0,0) rotate(-8deg); } 35% { transform:translate(35px,-24px) rotate(9deg); } 70% { transform:translate(-15px,-40px) rotate(-5deg); } }
+@keyframes fairy-pet-bob { 0%,100% { transform:translateY(0) rotate(-1deg); } 50% { transform:translateY(-8px) rotate(1deg); } }
+@keyframes fairy-blink { 0%,43%,47%,100% { transform:scaleY(1); } 45% { transform:scaleY(.08); } }
+@keyframes fairy-sparkle { 0%,100% { opacity:.3; transform:translateY(5px) scale(.7); } 50% { opacity:1; transform:translateY(-8px) scale(1); } }
+@media(max-width:600px) {
+  .garden-screen { gap:10px; }.garden-header { flex-direction:column; align-items:stretch; }
+  .garden-header>div:last-child { flex-wrap:wrap; gap:8px; }.garden-header button { font-size:12px; padding:7px 10px; }
+  .garden-main { padding-inline:0; gap:12px; }.garden-message { font-size:12px; }
+  .garden-pet { height:200px; min-height:200px; }.garden-pet>div[title] { max-height:200px; }
+  .garden-pet>button { right:1%; }.garden-stats { padding:11px; border-radius:24px; }
+  .garden-care-actions button { font-size:12px; }.garden-stats-heading>span:first-child { font-size:11px; }
+  .fairy-tree { left:-65px; opacity:.8; }.fairy-rainbow { width:220px; height:220px; right:-110px; }
+  .fairy-sun { top:170px; left:-20px; width:120px; }.fairy-butterfly-1 { right:3%; }
+  .garden-footer { padding-inline:0; }.garden-footer>button { width:100%; font-size:15px; }
+  .fairy-mushroom-2 { display:none; }.fairy-flowerbeds>span { font-size:35px; }
+}
+@media(max-height:500px) and (min-width:601px) { .garden-header { flex-wrap:wrap; }.garden-pet { height:190px; }.garden-main { flex-direction:row; align-items:center; }.garden-message { display:none; }.garden-pet { width:40%; }.garden-stats { width:60%; }.fairy-pet-platform { width:210px; } }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }
+.fairy-welcome { background:radial-gradient(ellipse at 50% 10%,#f1fcf4,transparent 65%),linear-gradient(#91ddeb,#d8f2ce); }
+.fairy-welcome button { border-radius:18px; box-shadow:inset 0 2px 0 #ffffff77,0 4px 0 #83613b26; transition:transform .18s; }
+.fairy-welcome button:active { transform:translateY(3px); box-shadow:inset 0 2px 0 #ffffff55; }
+.fairy-welcome input { background:#fffdf4; border:2px solid #e2c897; border-radius:18px; box-shadow:inset 0 3px 5px #ba9a6b12; }
+@media(max-width:400px) {
+  .garden-header>div:last-child { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+  .garden-header>div:last-child>div { justify-content:center; padding:5px; }
+  .garden-header button[title*="Đổi tên bé"],.garden-header .garden-english-button { grid-column:span 2; }
+  .garden-header button { padding:6px 4px; justify-content:center; min-width:0; font-size:11px; }
+}

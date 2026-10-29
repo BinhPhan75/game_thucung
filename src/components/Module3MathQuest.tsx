@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
-import confetti from 'canvas-confetti';
+import { celebrateStars } from '../utils/celebrate';
 import { PetState, QuestTarget } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
 import { Question } from '../data/mathQuestions';
@@ -64,7 +64,7 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
     setFeedback('correct'); setMessage(line);
     if (!isMuted) playCelebrationSound();
     speakVietnamese(line);
-    confetti({ particleCount: 45, spread: 65, origin: { y: 0.5 } });
+    celebrateStars();
     onUpdatePet(questReward(pet, target, costume));
   };
   const full = target === 'food' ? pet.hunger >= 100 : pet.thirst >= 100;

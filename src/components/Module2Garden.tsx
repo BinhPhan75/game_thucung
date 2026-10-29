@@ -20,6 +20,7 @@ import {
   Edit3,
   X
 } from 'lucide-react';
+import { FairyGarden } from './FairyGarden';
 import { GamePicture } from './GamePicture';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
@@ -141,6 +142,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
     playCelebrationSound();
     confetti({
       particleCount: 100,
+      shapes: ['star'], disableForReducedMotion: true,
       spread: 80,
       origin: { y: 0.5 },
       colors: ['#F59E0B', '#10B981', '#EC4899', '#6366F1', '#3B82F6'],
@@ -258,6 +260,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
     confetti({
       particleCount: 40,
+      shapes: ['star'], disableForReducedMotion: true,
       spread: 60,
       origin: { y: 0.65 },
       colors: ['#F59E0B', '#10B981', '#38BDF8'],
@@ -271,59 +274,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   return (
     <div className="garden-screen relative min-h-screen w-full p-2 md:p-4 flex flex-col justify-between bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
       
-      {/* Cartoon Sky & Garden Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Smiling Sun with animated rays */}
-        <div className="absolute top-4 left-6 md:top-8 md:left-12 flex items-center justify-center">
-          <div className="w-24 h-24 md:w-32 md:h-32 bg-amber-300 rounded-full shadow-[0_0_50px_rgba(251,191,36,0.7)] flex items-center justify-center">
-            <div className="flex flex-col items-center">
-              <div className="flex gap-4">
-                <div className="w-2.5 h-2.5 bg-amber-900 rounded-full" />
-                <div className="w-2.5 h-2.5 bg-amber-900 rounded-full" />
-              </div>
-              <div className="w-6 h-3 border-b-3 border-amber-900 rounded-full mt-1" />
-            </div>
-          </div>
-          <div className="absolute w-32 h-32 md:w-40 md:h-40 border-4 border-dashed border-amber-300/50 rounded-full animate-[spin_30s_linear_infinite]" />
-        </div>
-
-        {/* Floating Clouds */}
-        <div className="absolute top-10 left-[22%] w-40 h-14 bg-white/95 rounded-full blur-[1px] animate-[float_7s_ease-in-out_infinite]" />
-        <div className="absolute top-16 right-[18%] w-48 h-16 bg-white/90 rounded-full blur-[1px] animate-[float_9s_ease-in-out_infinite_reverse]" />
-
-        {/* Lush Apple Tree */}
-        <div className="absolute bottom-24 -left-6 md:left-4 z-0 pointer-events-auto">
-          <div className="w-10 md:w-14 h-36 bg-amber-800 rounded-lg mx-auto shadow-inner" />
-          <div className="absolute -top-20 -left-12 md:-left-10 w-44 md:w-56 h-44 md:h-56 bg-emerald-500 rounded-full shadow-[0_10px_20px_rgba(5,150,105,0.3)] border-4 border-emerald-600 flex items-center justify-center">
-            <button
-              onClick={() => handleOpenQuest('food')}
-              title="Quả táo đỏ - Bấm để giải toán"
-              className="absolute top-8 left-10 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            ><GamePicture symbol="🍎"/></button>
-            <button
-              onClick={() => handleOpenQuest('food')}
-              title="Quả táo đỏ - Bấm để giải toán"
-              className="absolute top-16 right-10 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            ><GamePicture symbol="🍎"/></button>
-            <button
-              onClick={() => handleOpenQuest('food')}
-              title="Quả táo đỏ - Bấm để giải toán"
-              className="absolute bottom-10 left-16 text-2xl hover:scale-125 active:scale-95 transition-transform cursor-pointer"
-            ><GamePicture symbol="🍎"/></button>
-          </div>
-        </div>
-
-        {/* Rolling Grass Hills */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-emerald-400 rounded-[50%_50%_0_0/20%_20%_0_0] scale-x-125 translate-y-12" />
-        <div className="absolute bottom-0 left-0 right-0 h-36 bg-emerald-500 rounded-[50%_50%_0_0/25%_25%_0_0] scale-x-110 translate-y-6" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-emerald-600 rounded-[50%_50%_0_0/30%_30%_0_0]" />
-
-        {/* Flowers & Butterflies */}
-        <div className="absolute bottom-8 left-[30%] text-2xl animate-[float_4s_ease-in-out_infinite]"><GamePicture symbol="🦋"/></div>
-        <div className="absolute bottom-6 left-[45%] text-2xl"><GamePicture symbol="🌼"/></div>
-        <div className="absolute bottom-10 right-[35%] text-2xl"><GamePicture symbol="🌻"/></div>
-        <div className="absolute bottom-5 right-[10%] text-2xl"><GamePicture symbol="🌸"/></div>
-      </div>
+      <FairyGarden onPickApple={() => handleOpenQuest('food')}/>
 
       {/* TOP HEADER: Pet Status & Navigation & Wardrobe Button */}
       <header className="garden-header relative z-20 w-full max-w-5xl mx-auto px-4 pt-3 md:pt-4 flex flex-wrap items-center justify-between gap-2.5">
@@ -501,11 +452,13 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
           )}
 
           {/* Grass patch */}
-          <div className="absolute -bottom-4 w-52 md:w-64 h-12 bg-emerald-600/30 rounded-full blur-[2px]" />
+          <div className="fairy-pet-platform" />
 
-          {/* Pet Avatar with Stage scaling and equipped costume */}
+          <div className="fairy-pet-sparkles" aria-hidden="true"><span>✦</span><span>♡</span><span>✧</span><span>✦</span></div>{/* Pet Avatar with Stage scaling and equipped costume */}
           <div
             onClick={handlePetClick}
+            role="button" tabIndex={0} aria-label="Chạm vào thú cưng để chăm sóc"
+            onKeyDown={event=>{if(event.key==='Enter' || event.key===' '){event.preventDefault();handlePetClick();}}}
             title="Chạm vào mình để chăm sóc nhé!"
             className="cursor-pointer transition-transform duration-300 hover:scale-105 active:scale-95"
           >
@@ -587,7 +540,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 </div>
               </div>
 
-              <div className="w-full bg-white rounded-full h-3.5 overflow-hidden p-0.5 border border-amber-200 shadow-inner">
+              <div role="progressbar" aria-label="Độ no" aria-valuenow={pet.hunger} aria-valuemin={0} aria-valuemax={100} className="fairy-meter fairy-meter-food w-full bg-white rounded-full h-3.5 overflow-hidden p-0.5 border border-amber-200 shadow-inner">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     pet.hunger >= 100
@@ -635,7 +588,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
                 </div>
               </div>
 
-              <div className="w-full bg-white rounded-full h-3.5 overflow-hidden p-0.5 border border-sky-200 shadow-inner">
+              <div role="progressbar" aria-label="Nước uống" aria-valuenow={pet.thirst} aria-valuemin={0} aria-valuemax={100} className="fairy-meter fairy-meter-water w-full bg-white rounded-full h-3.5 overflow-hidden p-0.5 border border-sky-200 shadow-inner">
                 <div
                   className={`h-full rounded-full transition-all duration-500 ${
                     pet.thirst >= 100
