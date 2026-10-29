@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GamePicture } from './GamePicture';
 
 /** Lightweight vector scenery, independent of viewport size and device emoji fonts. */
 export function FairyGarden({ onPickApple }: { onPickApple: () => void }) {
-  return <div className="fairy-scenery">
+  const [moving,setMoving] = useState(true);
+  return <div className="fairy-scenery" data-motion={moving?'running':'paused'}>
+    <button className="fairy-motion-toggle" aria-pressed={moving} aria-label={moving?'Tạm dừng chuyển động phong cảnh':'Bật chuyển động phong cảnh'} onClick={()=>setMoving(value=>!value)}>{moving?'⏸ Cảnh động':'▶ Cảnh động'}</button>
     <div className="fairy-sky absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
       <svg className="fairy-sun" viewBox="0 0 180 180">
         <g className="fairy-sun-rays" stroke="#ffdc68" strokeWidth="7" strokeLinecap="round">{Array.from({length:12},(_,i)=><path key={i} d="M90 10V22" transform={`rotate(${i*30} 90 90)`}/>)}</g>
