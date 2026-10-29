@@ -274,7 +274,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   };
 
   return (
-    <div className="garden-screen relative min-h-screen w-full p-2 md:p-4 flex flex-col justify-between bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
+    <div className="garden-screen relative w-full p-2 md:p-4 flex flex-col overflow-hidden bg-gradient-to-b from-sky-300 via-sky-200 to-emerald-300 text-slate-800 select-none">
       
       <FairyGarden onPickApple={() => handleOpenQuest('food')}/>
 

@@ -99,7 +99,7 @@ export default function App() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-sky-200">
+      <div className="app-shell w-full flex flex-col items-center justify-center bg-sky-200">
         <div className="text-xl font-bold text-sky-800 animate-pulse">
           Đang tải Nông Trại Học Toán...
         </div>
@@ -111,7 +111,7 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full font-sans select-none">
+    <div className="app-shell relative w-full flex flex-col overflow-hidden font-sans select-none">
       {/* Floating Audio Controls in Top-Right Corner */}
       <div className="fixed top-3 right-3 z-50">
         <AudioControls
