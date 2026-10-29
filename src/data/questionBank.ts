@@ -13,6 +13,7 @@ export interface BankEntry {
     position?: string; reference?: string; scene?: number; operation?: string;
     targetIndex?: number; displaySeconds?: number; symbol?: string;
     activity?: ThinkingActivity;
+    selection?: 'missing' | 'single';
   };
 }
 
@@ -28,6 +29,7 @@ export const QUESTION_BANK = [...new Map(
   [...source as BankEntry[], ...EXTRA_QUESTIONS, ...THINKING_QUESTIONS].map(entry=>[questionIdentity(entry),entry]),
 ).values()];
 export function bankQuestion(entry: BankEntry): Question {
+  entry = clarifyOddQuestion(entry);
   const options = [...new Set(entry.options.map(String))];
   if (options.length < 3 && entry.visual.type === 'color') {
     const colors = ['đỏ','xanh dương','vàng','xanh lá','tím','hồng','cam'];
@@ -49,6 +51,30 @@ export function bankQuestion(entry: BankEntry): Question {
   }
   return { kind: 'bank', bank: entry, prompt, answer: String(entry.correctAnswer),
     choices: options.map(label => ({ id: label, label })) };
+}
+
+// These prompts ask different things: derive the answer from the visible sequence.
+export function clarifyOddQuestion(entry: BankEntry, variant?: number): BankEntry {
+  if (entry.visual.type !== 'odd_or_match') return entry;
+  const items = entry.visual.items ?? [];
+  const options = [...new Set(entry.options.map(String))];
+  const singles = [...new Set(items)].filter(item => items.filter(value=>value===item).length===1);
+  const missing = options.filter(option=>!items.includes(option));
+  const prompts = [
+    'Hình nào dưới đây chưa xuất hiện ở trên?',
+    'Bé xem hình nào không có ở dãy phía trên nhé!',
+    'Trong các hình trên, hình nào chỉ xuất hiện 1 lần?',
+    'Trong dãy phía trên, hình nào xuất hiện ít hơn các hình còn lại?',
+    'Bé tìm hình khác loại trong ba hình trên nhé!',
+  ];
+  const index = variant ?? [...entry.id].reduce((sum,char)=>sum+char.charCodeAt(0),0)%prompts.length;
+  const wantsMissing = index < 2;
+  const candidates = wantsMissing ? missing : singles.filter(item=>options.includes(item));
+  if (candidates.length !== 1) return entry;
+  const answer = candidates[0];
+  return {...entry, question:prompts[index], correctAnswer:answer,
+    explanation: wantsMissing ? `${answer} không có trong dãy phía trên.` : `${answer} chỉ xuất hiện một lần trong dãy phía trên.`,
+    visual:{...entry.visual,selection:wantsMissing?'missing':'single'}};
 }
 
 export function createBankPicker(random: () => number = Math.random) {

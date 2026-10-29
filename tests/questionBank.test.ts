@@ -47,3 +47,25 @@ test('shuffle consumes all bank IDs before repeating', () => {
     assert.equal(ids.size,QUESTION_BANK.length);
   }
 });
+
+test('odd-picture prompts and answers agree for all five requested phrasings',async()=>{
+  const {clarifyOddQuestion}=await import('../src/data/questionBank');
+  const entries=QUESTION_BANK.filter(e=>e.visual.type==='odd_or_match');
+  for(const entry of entries) {
+    for(let variant=0;variant<5;variant++) {
+      const revised=clarifyOddQuestion(entry,variant);
+      const items=revised.visual.items!;
+      const matches=[...new Set(revised.options.map(String))].filter(option=>variant<2 ? !items.includes(option) : items.filter(item=>item===option).length===1);
+      assert.equal(matches.length,1,entry.id);
+      assert.equal(revised.correctAnswer,matches[0],entry.id);
+      assert.equal(revised.visual.selection,variant<2?'missing':'single');
+      assert.ok(!revised.question.includes(String(revised.correctAnswer)),entry.id);
+    }
+    const question=bankQuestion(entry);
+    assert.equal(question.answer,String(question.bank!.correctAnswer));
+    assert.equal(question.prompt,question.bank!.question);
+  }
+  const screenshot=entries.find(e=>e.id==='T11_EXTRA_008')!;
+  assert.equal(clarifyOddQuestion(screenshot,0).correctAnswer,'quả dứa');
+  assert.equal(clarifyOddQuestion(screenshot,2).correctAnswer,'quả lê');
+});
