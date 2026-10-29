@@ -40,7 +40,7 @@ test('number and alphabet lessons are complete, ordered, and pronounceable',()=>
   assert.deepEqual(numbers.map(englishPronunciation),['One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten']);
   const letters=englishWords.filter(w=>w.topic==='alphabet');
   assert.equal(letters.map(w=>w.letter).join(''),'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-  for(const letter of letters) assert.equal(englishPronunciation(letter),`The letter ${letter.letter}.`);
+  for(const letter of letters) assert.equal(englishPronunciation(letter),letter.letter);
   for(const topic of ['numbers','alphabet']) {
     const pick=createEnglishPicker(()=>.23,topic);
     const size=topic==='numbers'?10:26;

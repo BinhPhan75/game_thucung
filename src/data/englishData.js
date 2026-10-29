@@ -34,8 +34,7 @@ export const englishWords = [
 ];
 
 export function englishPronunciation(word) {
-  // A sentence makes the TTS read the letter name, rather than the article “a”.
-  return word.topic==='alphabet' ? `The letter ${word.word}.` : word.word;
+  return word.word;
 }
 
 function shuffle(items, random) {
