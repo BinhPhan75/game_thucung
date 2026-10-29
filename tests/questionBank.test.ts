@@ -1,3 +1,4 @@
+import { THINKING_QUESTIONS } from '../src/data/thinkingQuestions';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { QUESTION_BANK, EXTRA_QUESTIONS, questionIdentity, bankQuestion, createBankPicker } from '../src/data/questionBank';
@@ -12,14 +13,15 @@ test('adds ten new questions per category and removes duplicate playable content
   const oldKeys=new Set(original.map(questionIdentity));
   for(const entry of EXTRA_QUESTIONS) assert.ok(!oldKeys.has(questionIdentity(entry)),entry.id);
   assert.equal(new Set(EXTRA_QUESTIONS.map(questionIdentity)).size,150);
-  assert.equal(QUESTION_BANK.length,oldKeys.size+150);
+  assert.equal(QUESTION_BANK.length,oldKeys.size+150+THINKING_QUESTIONS.length);
   assert.equal(new Set(QUESTION_BANK.map(questionIdentity)).size,QUESTION_BANK.length);
 });
 test('all playable entries have one unambiguous answer button and correct arithmetic', () => {
   assert.equal(new Set(QUESTION_BANK.map(e=>e.id)).size,QUESTION_BANK.length);
-  assert.equal(new Set(QUESTION_BANK.map(e=>e.category)).size,15);
+  assert.equal(new Set(QUESTION_BANK.map(e=>e.category)).size,18);
   for (const entry of QUESTION_BANK) {
     const q=bankQuestion(entry),v=entry.visual;
+    if(v.activity) { assert.equal(q.answer,'complete'); assert.equal(q.choices.length,0); continue; }
     assert.equal(q.choices.filter(c=>c.id===q.answer).length,1,entry.id);
     assert.equal(q.choices.length,3,entry.id);
     let expected: string | number | undefined;

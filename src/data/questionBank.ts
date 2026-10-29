@@ -1,5 +1,6 @@
 import source from './importedQuestions.json';
 import extra from './extraQuestions.json';
+import { THINKING_QUESTIONS, type ThinkingActivity } from './thinkingQuestions';
 import type { Question } from './mathQuestions';
 
 export interface BankEntry {
@@ -11,6 +12,7 @@ export interface BankEntry {
     color?: string; sequence?: string[]; items?: string[]; relation?: string;
     position?: string; reference?: string; scene?: number; operation?: string;
     targetIndex?: number; displaySeconds?: number; symbol?: string;
+    activity?: ThinkingActivity;
   };
 }
 
@@ -23,7 +25,7 @@ export function questionIdentity(entry: BankEntry): string {
     Object.entries(visual).sort(([a],[b])=>a.localeCompare(b)), String(entry.correctAnswer)]);
 }
 export const QUESTION_BANK = [...new Map(
-  [...source as BankEntry[], ...EXTRA_QUESTIONS].map(entry=>[questionIdentity(entry),entry]),
+  [...source as BankEntry[], ...EXTRA_QUESTIONS, ...THINKING_QUESTIONS].map(entry=>[questionIdentity(entry),entry]),
 ).values()];
 export function bankQuestion(entry: BankEntry): Question {
   const options = [...new Set(entry.options.map(String))];

@@ -29,7 +29,8 @@ import { EnglishLearning } from './EnglishLearning';
 import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
 import { type Question } from '../data/mathQuestions';
-import { makePlayableQuestion } from '../data/questionBank';
+import { makePlayableQuestion, bankQuestion } from '../data/questionBank';
+import { THINKING_QUESTIONS } from '../data/thinkingQuestions';
 import { 
   playPopSound, 
   playChimeSound, 
@@ -59,8 +60,9 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [isMathQuestOpen, setIsMathQuestOpen] = useState(false);
   const [isEnglishOpen, setIsEnglishOpen] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState<Question>();
-  const openMathQuestion = () => {
-    const question = makePlayableQuestion();
+  const openMathQuestion = (category?: string) => {
+    const activities = THINKING_QUESTIONS.filter(entry=>entry.category===category);
+    const question = activities.length ? bankQuestion(activities[Math.floor(Math.random()*activities.length)]) : makePlayableQuestion();
     setInitialQuestion(question);
     stopSpeech();
     speakVietnamese(question.prompt);
@@ -632,6 +634,11 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
             </button>
           </div>
         </div>
+        <nav className="thinking-shortcuts" aria-label="Toán tư duy tương tác">
+          {[['T16','✏️ Nối số'],['T17','🧩 Ghép tranh'],['T18','🧺 Phân loại']].map(([category,label])=><button key={category} onClick={()=>{
+            setQuestTarget(pet.hunger<=pet.thirst?'food':'water');setTargetCostumeId(undefined);openMathQuestion(category);
+          }}>{label}</button>)}
+        </nav>
       </main>
 
       {/* BOTTOM ACTION BAR */}

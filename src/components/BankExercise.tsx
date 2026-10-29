@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { BankEntry } from '../data/questionBank';
 import type { Question } from '../data/mathQuestions';
 import { GamePicture, pictureUrl } from './GamePicture';
+import { ThinkingExercise } from './ThinkingExercise';
 
 const pictures: Record<string, string> = {
   'quả lê':'🍐','quả dâu':'🍓','quả dứa':'🍍','con rùa':'🐢','con bướm':'🦋',
@@ -68,6 +69,7 @@ export function BankExercise({ question, selected, wrong, onAnswer }: { question
     const timer=setTimeout(()=>setRemembering(false),(v.displaySeconds ?? 5)*1000);
     return ()=>clearTimeout(timer);
   },[memory,remembering,v.displaySeconds]);
+  if(v.activity) return <ThinkingExercise activity={v.activity} disabled={wrong} onAnswer={onAnswer}/>;
   const pictureAnswers = v.type === 'shape' || (v.type === 'color' && typeof entry.correctAnswer === 'string');
   const subtraction = v.type === 'subtract' || (v.type === 'grouping' && v.operation === 'subtract');
   const addition = v.type === 'add' || v.type === 'story' || (v.type === 'grouping' && v.operation === 'add');
