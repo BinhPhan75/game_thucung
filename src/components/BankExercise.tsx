@@ -53,10 +53,10 @@ function PositionScene({ visual }: { visual: BankEntry['visual'] }) {
     {visual.position !== 'trong' && <image href={pictureUrl(emoji(visual.object!))} x={x-24} y={y-24} width="48" height="48"/>}
   </svg>;
 }
-function SizeScene({ items }: { items: string[] }) {
-  return <div className="bank-size">{items.map(name=><div key={name}>
+function SizeScene({ items, onAnswer, disabled }: { items: string[]; onAnswer: (id:string)=>void; disabled: boolean }) {
+  return <div className="bank-size">{items.map(name=><button type="button" className="bank-scene-choice" key={name} disabled={disabled} aria-label={`Chọn ${name}`} onClick={()=>onAnswer(name)}>
     {name.startsWith('dây') ? <svg viewBox="0 0 120 80"><path d={name === 'dây dài' ? 'M5 40Q30 10 60 40T115 40' : 'M40 40Q60 20 80 40'} stroke="#f97316" strokeWidth="7" fill="none"/></svg> : <span style={{fontSize: /nhỏ|thấp|chuột|^thỏ$/.test(name) ? '32px' : '70px'}}><GamePicture symbol={emoji(pictures[name] ? name : name.replace(/ (lớn|nhỏ)$/,''))}/></span>}
-    <small>{name}</small></div>)}</div>;
+    <small>{name}</small></button>)}</div>;
 }
 
 export function BankExercise({ question, selected, wrong, onAnswer }: { question: Question; selected: string; wrong: boolean; onAnswer: (id:string)=>void }) {
@@ -76,16 +76,16 @@ export function BankExercise({ question, selected, wrong, onAnswer }: { question
       {v.type === 'count' && <Items name={v.object!} count={v.count!}/>}
       {subtraction && <div><Items name={v.object!} count={v.start ?? v.groups![0]} removed={v.removed ?? v.groups![1]}/><small>Hình gạch chéo là phần đã bớt đi.</small></div>}
       {addition && <div className="bank-groups"><Items name={v.object!} count={v.groups![0]}/><b>+</b><Items name={v.object!} count={v.groups![1]}/></div>}
-      {v.type === 'compare' && <div className="bank-groups">{v.groups!.map((count,i)=><div key={i}><small>Nhóm {i === 0 ? 'A' : 'B'}</small><Items name={v.object!} count={count}/></div>)}</div>}
+      {v.type === 'compare' && <div className="bank-groups">{v.groups!.map((count,i)=>{ const label=`Nhóm ${i === 0 ? 'A' : 'B'}`; return question.choices.some(c=>c.id===label) ? <button type="button" className="bank-scene-choice" key={i} disabled={wrong} aria-label={`Chọn ${label}`} onClick={()=>onAnswer(label)}><small>{label}</small><Items name={v.object!} count={count}/></button> : <div key={i}><small>{label}</small><Items name={v.object!} count={count}/></div>; })}</div>}
       {v.type === 'color' && <div className="bank-color-count">{Array.from({length:5},(_,i)=><ColoredObject key={i} name={v.object!} color={i<3 ? v.color! : Object.keys(colors).find(c=>c!==v.color)!}/>)}</div>}
       {v.type === 'position' && <PositionScene visual={v}/>}
-      {v.type === 'size' && <SizeScene items={v.items!}/>}
-      {(v.type === 'pattern' || v.type === 'odd_or_match') && <div className="bank-sequence">{(v.sequence ?? v.items)!.map((name,i)=><span key={i}><GamePicture symbol={emoji(name)}/></span>)}{v.type === 'pattern' && <span><GamePicture symbol="❓"/></span>}</div>}
+      {v.type === 'size' && <SizeScene items={v.items!} onAnswer={onAnswer} disabled={wrong}/>}
+      {(v.type === 'pattern' || v.type === 'odd_or_match') && <div className="bank-sequence">{(v.sequence ?? v.items)!.map((name,i)=>v.type === 'odd_or_match' && question.choices.some(c=>c.id===name) ? <button type="button" className="bank-scene-choice" key={i} disabled={wrong} aria-label={`Chọn ${name}`} onClick={()=>onAnswer(name)}><span><GamePicture symbol={emoji(name)}/></span></button> : <span key={i}><GamePicture symbol={emoji(name)}/></span>)}{v.type === 'pattern' && <span><GamePicture symbol="❓"/></span>}</div>}
       {v.type === 'logic' && <span className="bank-logic"><GamePicture symbol={v.symbol ?? ['🌅','🌧️','🌱','🌊','🚦','⏰','💧','🌧️'][v.scene!]}/></span>}
-      {memory && <div><div className="bank-sequence">{v.sequence!.map((name,i)=><div key={i}><span><GamePicture symbol={remembering ? emoji(name) : '❓'}/></span><small>{i+1}</small></div>)}</div><button className="bank-remember" disabled={remembering} onClick={()=>setRemembering(true)}>{remembering ? 'Nhìn và nhớ trong 5 giây nhé!' : '👀 Xem lại hình'}</button></div>}
+      {memory && <div><div className="bank-sequence">{v.sequence!.map((name,i)=><div key={i}><span><GamePicture symbol={remembering ? emoji(name) : '❓'}/></span><small>{i+1}</small></div>)}</div><button className="bank-remember" disabled={remembering || wrong} onClick={()=>setRemembering(true)}>{remembering ? 'Nhìn và nhớ trong 5 giây nhé!' : '👀 Xem lại hình'}</button></div>}
     </div>}
     <div className={`bank-answers ${pictureAnswers ? 'bank-picture-answers' : ''}`}>
-      {question.choices.map(choice=><button key={choice.id} disabled={remembering} aria-label={choice.label} className={wrong && selected===choice.id ? 'try-again' : ''} onClick={()=>onAnswer(choice.id)}>
+      {question.choices.map(choice=><button key={choice.id} disabled={remembering || wrong} aria-label={choice.label} className={wrong && selected===choice.id ? 'try-again' : ''} onClick={()=>onAnswer(choice.id)}>
         {v.type === 'shape' ? <ShapePicture name={choice.label}/> : pictureAnswers ? <ColoredObject name={choice.label.includes(' màu ') ? choice.label.split(' màu ')[0] : v.object!} color={choice.label.includes(' màu ') ? choice.label.split(' màu ')[1] : choice.label}/> : <>
           {pictures[choice.label] && <span className="bank-option-icon"><GamePicture symbol={pictures[choice.label]}/></span>}<span>{/\p{Extended_Pictographic}/u.test(choice.label) ? <GamePicture symbol={choice.label}/> : choice.label}</span>
         </>}

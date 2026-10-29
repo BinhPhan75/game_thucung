@@ -27,6 +27,16 @@ export const QUESTION_BANK = [...new Map(
 ).values()];
 export function bankQuestion(entry: BankEntry): Question {
   const options = [...new Set(entry.options.map(String))];
+  if (options.length < 3 && entry.visual.type === 'color') {
+    const colors = ['đỏ','xanh dương','vàng','xanh lá','tím','hồng','cam'];
+    for (const color of colors) {
+      const label = String(entry.correctAnswer).includes(' màu ')
+        ? `${entry.visual.object} màu ${color}` : color;
+      if (!options.includes(label)) options.push(label);
+      if (options.length === 3) break;
+    }
+  }
+  if (options.length < 3 && entry.visual.type === 'size') options.push('Bằng nhau');
   let prompt = entry.question;
   if (entry.visual.type === 'color' && String(entry.correctAnswer).includes(' màu ')) {
     prompt = `Bé chọn vật giống cả hình dạng và màu sắc với ${entry.visual.object} màu ${entry.visual.color} nhé!`;

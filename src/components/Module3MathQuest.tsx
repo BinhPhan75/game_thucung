@@ -28,6 +28,7 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
   const [message, setMessage] = useState('');
   const [selected, setSelected] = useState('');
   const answered = useRef(false);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const speech = getGoogleSpeechPlayer();
   const speechStatus = useSyncExternalStore(speech.subscribe, speech.getStatus);
   const costume = COSTUME_LIST.find(c => c.id === targetCostumeId);
@@ -35,7 +36,7 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
   useEffect(() => {
     const overflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = overflow; stopSpeech(); };
+    return () => { clearTimeout(advanceTimer.current); document.body.style.overflow = overflow; stopSpeech(); };
   }, []);
   useEffect(() => {
     if (spokenQuestion.current === question) return;
@@ -54,10 +55,16 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
     if (answered.current) return;
     setSelected(id); stopSpeech();
     if (id !== question.answer) {
-      const line = pickVoiceLine('wrong', pet);
+      answered.current = true;
+      const line = 'Chưa đúng rồi. Mình thử câu mới nhé!';
       setFeedback('wrong'); setMessage(line);
       if (!isMuted) playEncouragingSound();
-      speakVietnamese(line); return;
+      speakVietnamese(line);
+      advanceTimer.current = setTimeout(() => {
+        answered.current = false;
+        changeQuestion();
+      }, 2800);
+      return;
     }
     answered.current = true;
     const line = pickVoiceLine('correct', pet);
@@ -89,7 +96,7 @@ export const Module3MathQuest: React.FC<Props> = ({ pet, onUpdatePet, onClose, o
       <div className="math-prompt"><h3>{question.prompt}</h3><button disabled={isMuted} onClick={() => { stopSpeech(); speakVietnamese(question.prompt); }} aria-label="Nghe lại câu hỏi">🔊</button></div>
       {question.bank ? <BankExercise key={question.bank.id} question={question} selected={selected} wrong={feedback === 'wrong'} onAnswer={answer}/> : <div className={`math-workspace ${choicePictures ? 'picture-answers' : ''}`}>
         {!choicePictures && <div className="math-scene">{question.kind === 'space' ? <SpatialPicture question={question} /> : question.kind === 'addition' ? <div className="addition-scene"><CountPictures emoji={question.emoji!} count={question.addends![0]} /><b>+</b><CountPictures emoji={question.emoji!} count={question.addends![1]} /><b>= ?</b></div> : <CountPictures emoji={question.emoji!} count={question.count!} />}</div>}
-        <div className={`math-choices choices-${question.choices.length}`}>{question.choices.map((choice, index) => <button key={choice.id} aria-label={choicePictures ? `${choice.label}, lựa chọn ${index+1}` : choice.label} className={feedback === 'wrong' && selected === choice.id ? 'try-again' : ''} onClick={() => answer(choice.id)}>{choicePictures ? <>{choice.count !== undefined ? <CountPictures emoji={choice.emoji!} count={choice.count} /> : <ObjectPicture choice={choice} />}<span className="choice-badge">{index+1}</span></> : choice.label}</button>)}</div>
+        <div className={`math-choices choices-${question.choices.length}`}>{question.choices.map((choice, index) => <button key={choice.id} disabled={feedback === 'wrong'} aria-label={choicePictures ? `${choice.label}, lựa chọn ${index+1}` : choice.label} className={feedback === 'wrong' && selected === choice.id ? 'try-again' : ''} onClick={() => answer(choice.id)}>{choicePictures ? <>{choice.count !== undefined ? <CountPictures emoji={choice.emoji!} count={choice.count} /> : <ObjectPicture choice={choice} />}<span className="choice-badge">{index+1}</span></> : choice.label}</button>)}</div>
       </div>}<p className="math-feedback" role="status">{feedback === 'wrong' ? message : 'Chạm vào đáp án bé chọn nhé!'}</p>
     </>}
     <footer className="math-footer">{(speechStatus === 'blocked' || speechStatus === 'error') && !isMuted ? <button onClick={speech.retry}>🔊 {speechStatus === 'blocked' ? 'Chạm để nghe' : 'Chưa tải được giọng. Thử lại'}</button> : <span>{isMuted ? '🔇 Đã tắt giọng đọc' : speechStatus === 'loading' ? 'Đang tải giọng đọc…' : speechStatus === 'playing' ? '🔊 Đang đọc…' : '🌼 Mỗi lần thử là một lần học thêm!'}</span>}<small className="math-copyright">Bản quyền thuộc về HoangMy@2026</small></footer>

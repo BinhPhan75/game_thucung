@@ -38,3 +38,14 @@ test('every logic answer has an illustration, including distractors',()=>{
     assert.equal((html.match(/class="bank-option-icon"/g)??[]).length,new Set(entry.options).size,entry.id);
   }
 });
+
+test('selectable scene pictures mirror answer IDs while keeping the answer row',()=>{
+  for(const type of ['size','compare','odd_or_match']) {
+    const entry=QUESTION_BANK.find(e=>e.visual.type===type && (type!=='compare' || e.options.includes('Nhóm A')))!;
+    const html=renderToStaticMarkup(<BankExercise question={bankQuestion(entry)} selected="" wrong={false} onAnswer={()=>{}}/>);
+    assert.match(html,/class="bank-scene-choice"/,type);
+    assert.match(html,/class="bank-answers /,type);
+    const locked=renderToStaticMarkup(<BankExercise question={bankQuestion(entry)} selected="" wrong={true} onAnswer={()=>{}}/>);
+    for(const button of locked.matchAll(/<button\b([^>]*)>/g)) assert.match(button[1],/disabled/,type);
+  }
+});

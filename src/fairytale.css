@@ -110,3 +110,14 @@ button:focus-visible { outline:3px solid #5534a5; outline-offset:4px; }
   .garden-header button[title*="Đổi tên bé"],.garden-header .garden-english-button { grid-column:span 2; }
   .garden-header button { padding:6px 4px; justify-content:center; min-width:0; font-size:11px; }
 }
+/* Illustration shortcuts mirror the answer row, without changing the question. */
+.bank-scene-choice { border:2px dashed #dfc593; border-radius:18px; padding:8px; background:#fffdf6; cursor:pointer; min-width:44px; min-height:44px; }
+.bank-scene-choice:focus-visible { outline:3px solid #7c3aed; outline-offset:2px; }
+.bank-scene-choice:not(:disabled):hover { background:#fff3ce; border-color:#ac8bd5; }
+.bank-scene-choice:disabled { cursor:default; }
+.bank-size>button { flex:1; min-width:0; }
+.bank-size>button>span { font-size:clamp(80px,14vh,140px); }
+.bank-size>button>span[style*="32px"] { font-size:clamp(40px,7vh,70px)!important; }
+.bank-size>button>span[style*="70px"] { font-size:clamp(80px,14vh,140px)!important; }
+@media(max-width:600px) { .bank-size>button>span[style*="70px"] { font-size:80px!important; } .bank-size>button>span[style*="32px"] { font-size:40px!important; } }
+@media(max-height:450px) { .bank-size>button>span[style*="70px"] { font-size:56px!important; } .bank-size>button>span[style*="32px"] { font-size:28px!important; } }

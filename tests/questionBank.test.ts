@@ -21,7 +21,7 @@ test('all playable entries have one unambiguous answer button and correct arithm
   for (const entry of QUESTION_BANK) {
     const q=bankQuestion(entry),v=entry.visual;
     assert.equal(q.choices.filter(c=>c.id===q.answer).length,1,entry.id);
-    assert.ok(q.choices.length>=2 && q.choices.length<=3,entry.id);
+    assert.equal(q.choices.length,3,entry.id);
     let expected: string | number | undefined;
     if (v.type==='count') expected=v.count;
     if (v.type==='add' || v.type==='story' || (v.type==='grouping' && v.operation==='add')) expected=v.groups![0]+v.groups![1];
