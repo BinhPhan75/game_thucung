@@ -129,6 +129,27 @@ function Maze({onComplete,onSuccess,level}:GameProps & {level:number}) {
   const [message,setMessage]=useState(required?'Nhặt đủ cà rốt để mở cửa nhà nhé!':'Nhặt đủ cà rốt để nhận 3 sao nhé!');
   const [spark,setSpark]=useState(0);
   const done=useRef(false),dragging=useRef(false);
+  const board=useRef<HTMLDivElement>(null);
+  const keyboardMove=useRef<(cell:number)=>void>(()=>{});
+  // Keep the mounted listener connected to current reward/audio callbacks.
+  useEffect(()=>{keyboardMove.current=move;});
+  useEffect(()=>{
+    const node=board.current;
+    if(!(document.activeElement instanceof HTMLSelectElement))node?.focus({preventScroll:true});
+    const onKeyDown=(event:KeyboardEvent)=>{
+      if(event.altKey||event.ctrlKey||event.metaKey||event.isComposing)return;
+      const target=event.target;
+      if(target instanceof HTMLElement && (target.closest('input,textarea,select')||target.isContentEditable))return;
+      if(!node?.closest('dialog[open]')||node.closest('[inert]')||done.current)return;
+      const offsets:Record<string,number>={ArrowUp:-n,KeyW:-n,ArrowDown:n,KeyS:n,ArrowLeft:-1,KeyA:-1,ArrowRight:1,KeyD:1};
+      const offset=offsets[event.code]??offsets[event.key];
+      if(offset===undefined)return;
+      event.preventDefault();
+      keyboardMove.current(positionRef.current+offset);
+    };
+    window.addEventListener('keydown',onKeyDown);
+    return ()=>window.removeEventListener('keydown',onKeyDown);
+  },[n]);
   function move(cell:number) {
     if(done.current||cell===positionRef.current)return;
     if(!canMove(maze,positionRef.current,cell)){setMessage('Có bụi cây chắn rồi. Bé thử lối khác nhé!');return;}
@@ -143,7 +164,7 @@ function Maze({onComplete,onSuccess,level}:GameProps & {level:number}) {
   function slide(cell:number) {for(const step of traceMazeMove(maze,positionRef.current,cell)) {const previous=positionRef.current;move(step);if(positionRef.current===previous||done.current)break;}}
   return <div className="mini-game maze-game"><p className="mini-progress" role="status">Chặng {level+1}/10 · 🥕 {carrots.length}/{treats.length} · {required?'Nhặt đủ để về nhà':'Nhặt đủ = ⭐⭐⭐'}<br/>{message}</p>
     <div className="maze-stage">
-    <div className="maze-board" style={{gridTemplateColumns:`repeat(${n},1fr)`,gridTemplateRows:`repeat(${n},1fr)`}} onPointerDown={event=>{dragging.current=true;const cell=(event.target as HTMLElement).closest<HTMLElement>('[data-maze-cell]');if(cell)move(Number(cell.dataset.mazeCell));event.currentTarget.setPointerCapture(event.pointerId);}}
+    <div ref={board} tabIndex={0} aria-label="Mê cung: dùng phím mũi tên hoặc W A S D để di chuyển" className="maze-board" style={{gridTemplateColumns:`repeat(${n},1fr)`,gridTemplateRows:`repeat(${n},1fr)`}} onPointerDown={event=>{dragging.current=true;const cell=(event.target as HTMLElement).closest<HTMLElement>('[data-maze-cell]');if(cell)move(Number(cell.dataset.mazeCell));event.currentTarget.setPointerCapture(event.pointerId);}}
       onPointerUp={()=>{dragging.current=false;}} onPointerCancel={()=>{dragging.current=false;}}
       onPointerMove={event=>{if(!dragging.current)return;const node=document.elementFromPoint(event.clientX,event.clientY)?.closest<HTMLElement>('[data-maze-cell]');if(node&&event.currentTarget.contains(node))slide(Number(node.dataset.mazeCell));}}>
       {maze.flatMap((row,y)=>[...row].map((cell,x)=>{const id=y*n+x;return <button key={id} data-maze-cell={id} className={`maze-cell ${cell==='#'?'hedge':''} ${visited.includes(id)?'visited':''} ${traps.includes(id)?'mud-trap':''}`} disabled={cell==='#'} aria-label={`Ô đường hàng ${y+1}, cột ${x+1}${id===goal?', ngôi nhà':''}${id===position?', thỏ đang ở đây':''}`} onClick={()=>move(id)}>{id===goal?<GamePicture symbol="🏡"/>:treats.includes(id)&&!carrots.includes(id)?<GamePicture symbol="🥕"/>:traps.includes(id)?<span aria-hidden="true">≈</span>:visited.includes(id)?<span aria-hidden="true">·</span>:null}</button>;}))}
