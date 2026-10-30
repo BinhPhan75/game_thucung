@@ -3,6 +3,7 @@ import type { ThinkingActivity, SortItem } from '../data/thinkingQuestions';
 import { shuffledPieces } from '../data/thinkingQuestions';
 import { GamePicture, pictureUrl } from './GamePicture';
 
+import { celebrateStars } from '../utils/celebrate';
 import { isSpeechMuted, playPopSound } from '../utils/audio';
 
 type Props = {activity:ThinkingActivity; disabled:boolean; onAnswer:(answer:string)=>void};
@@ -11,6 +12,7 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const [selected,setSelected]=useState<number|null>(null);
   const [order]=useState(()=>shuffledPieces(activity.kind==='puzzle'?activity.rows*activity.columns:activity.kind==='sort'?activity.items.length:10));
   const locked=useRef(false);
+  const surface=useRef<HTMLDivElement>(null);
   const dragged=useRef<number|null>(null);
   const total=activity.kind==='connect'?10:activity.kind==='puzzle'?activity.rows*activity.columns:activity.items.length;
   const complete=placed.length===total;
@@ -19,7 +21,7 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const drop=(target:number|string,item=selected)=>{
     if(disabled || locked.current || complete || item===null || placed.includes(item))return;
     const correct=activity.kind==='puzzle'?item===target:activity.kind==='sort'?activity.items[item].group===target:false;
-    if(correct){place(item);if(activity.kind==='puzzle'&&!isSpeechMuted())playPopSound();}else fail();
+    if(correct){place(item);if(activity.kind==='puzzle'){if(!isSpeechMuted())playPopSound();if(placed.length+1===total)celebrateStars(surface.current?.closest<HTMLElement>('.math-panel'));}}else fail();
   };
   const dragProps=(item:number)=>({draggable:!disabled&&!complete,onDragStart:(event:React.DragEvent)=>{
     dragged.current=item;setSelected(item);event.dataTransfer.setData('text/plain',String(item));event.dataTransfer.effectAllowed='move';
@@ -27,7 +29,7 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const dropProps=(target:number|string)=>({onDragOver:(event:React.DragEvent)=>{event.preventDefault();},onDrop:(event:React.DragEvent)=>{
     event.preventDefault();drop(target,dragged.current);dragged.current=null;
   }});
-  return <div className={`thinking-exercise ${activity.kind==='puzzle'?'puzzle-exercise':''}`}>
+  return <div ref={surface} className={`thinking-exercise ${activity.kind==='puzzle'?'puzzle-exercise':''}`}>
     <p className="thinking-instruction">{activity.kind==='connect'?'Chạm các số theo thứ tự từ 1 đến 10.':activity.kind==='puzzle'?'Chạm một mảnh, rồi chạm ô cần ghép. Bé cũng có thể kéo thả!':'Chạm một đồ vật, rồi chạm nhóm phù hợp. Bé cũng có thể kéo thả!'}</p>
     <p className="thinking-progress" role="status">{complete?'Hoàn thành rồi! Bé nhận thưởng nhé!':`Đã làm đúng ${placed.length}/${total}${activity.kind==='connect'?` · Số tiếp theo: ${placed.length+1}`:''}`}</p>
     {activity.kind==='connect' && <div className="connect-board">
