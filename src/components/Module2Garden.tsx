@@ -25,6 +25,7 @@ import { GamePicture } from './GamePicture';
 import { PetAvatar } from './PetAvatar';
 import { Module3MathQuest } from './Module3MathQuest';
 import { Module5Wardrobe } from './Module5Wardrobe';
+import { MiniGames } from './MiniGames';
 import { EnglishLearning } from './EnglishLearning';
 import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
@@ -59,6 +60,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [showHeartBurst, setShowHeartBurst] = useState(false);
   const [isMathQuestOpen, setIsMathQuestOpen] = useState(false);
   const [isEnglishOpen, setIsEnglishOpen] = useState(false);
+  const [isMiniGamesOpen, setIsMiniGamesOpen] = useState(false);
   const [initialQuestion, setInitialQuestion] = useState<Question>();
   const openMathQuestion = (category?: string) => {
     const activities = THINKING_QUESTIONS.filter(entry=>entry.category===category);
@@ -134,10 +136,10 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
 
   // Check for 100% hunger & thirst EVOLUTION TRIGGER
   useEffect(() => {
-    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal && !isMathQuestOpen && !isEnglishOpen) {
+    if (pet.hunger >= 100 && pet.thirst >= 100 && !showEvolutionModal && !isMathQuestOpen && !isEnglishOpen && !isMiniGamesOpen) {
       triggerEvolution();
     }
-  }, [pet.hunger, pet.thirst, isMathQuestOpen, isEnglishOpen]);
+  }, [pet.hunger, pet.thirst, isMathQuestOpen, isEnglishOpen, isMiniGamesOpen]);
 
   // Trigger Evolution and Level Up
   const triggerEvolution = () => {
@@ -640,6 +642,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       {/* BOTTOM ACTION BAR */}
       <footer className="garden-footer relative z-20 w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
         <nav className="thinking-shortcuts" aria-label="Toán tư duy tương tác">
+          <button onClick={()=>setIsMiniGamesOpen(true)}>🌈 Trò chơi vui</button>
           {[['T16','✏️ Nối số'],['T17','🧩 Ghép tranh'],['T18','🧺 Phân loại']].map(([category,label])=><button key={category} onClick={()=>{
             setQuestTarget(pet.hunger<=pet.thirst?'food':'water');setTargetCostumeId(undefined);openMathQuestion(category);
           }}>{label}</button>)}
@@ -714,6 +717,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
       </div>
 
       {/* MODULE 3: MATH QUEST POPUP */}
+      {isMiniGamesOpen && <MiniGames pet={pet} onUpdatePet={onUpdatePet} isMuted={isMuted} onToggleSound={onToggleSound} onClose={()=>setIsMiniGamesOpen(false)}/>}
       {isEnglishOpen && <EnglishLearning pet={pet} onUpdatePet={onUpdatePet} isMuted={isMuted} onToggleSound={onToggleSound} onClose={()=>setIsEnglishOpen(false)}/>}
       {isMathQuestOpen && (
         <Module3MathQuest initialQuestion={initialQuestion}
