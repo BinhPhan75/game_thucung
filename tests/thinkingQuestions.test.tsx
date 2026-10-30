@@ -2,12 +2,12 @@ import React from 'react';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {THINKING_QUESTIONS,shuffledPieces} from '../src/data/thinkingQuestions';
+import {THINKING_QUESTIONS,shuffledPieces,createPuzzlePicker} from '../src/data/thinkingQuestions';
 import {ThinkingExercise} from '../src/components/ThinkingExercise';
 import {existsSync,readFileSync} from 'node:fs';
 const assets=JSON.parse(readFileSync(new URL('../src/data/pictureAssets.json',import.meta.url),'utf8'));
 test('all thinking activities have valid coordinates, pieces, categories and local art',()=>{
-  assert.equal(THINKING_QUESTIONS.length,16);
+  assert.equal(THINKING_QUESTIONS.length,48);
   const sizes=new Set();
   for(const entry of THINKING_QUESTIONS){
     const a=entry.visual.activity!;
@@ -43,4 +43,12 @@ test('puzzle tray shuffles without losing or duplicating pieces',()=>{
     assert.notDeepEqual(result,Array.from({length:count},(_,i)=>i));
     assert.deepEqual([...result].sort((a,b)=>a-b),Array.from({length:count},(_,i)=>i));
   }
+});
+
+test('puzzle picker visits ten different pictures before repeating',()=>{
+  const pick=createPuzzlePicker(()=>.42);
+  const symbols=Array.from({length:20},()=>{const a=pick().visual.activity!;assert.equal(a.kind,'puzzle');return a.kind==='puzzle'?a.symbol:'';});
+  assert.equal(new Set(symbols.slice(0,10)).size,10);
+  assert.equal(new Set(symbols.slice(10)).size,10);
+  assert.notEqual(symbols[9],symbols[10]);
 });

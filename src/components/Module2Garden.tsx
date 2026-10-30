@@ -30,7 +30,7 @@ import { PetState, QuestTarget, PetStage } from '../types/game';
 import { COSTUME_LIST } from '../data/costumes';
 import { type Question } from '../data/mathQuestions';
 import { makePlayableQuestion, bankQuestion } from '../data/questionBank';
-import { THINKING_QUESTIONS } from '../data/thinkingQuestions';
+import { THINKING_QUESTIONS, pickPuzzleQuestion } from '../data/thinkingQuestions';
 import { 
   playPopSound, 
   playChimeSound, 
@@ -62,7 +62,7 @@ export const Module2Garden: React.FC<Module2GardenProps> = ({
   const [initialQuestion, setInitialQuestion] = useState<Question>();
   const openMathQuestion = (category?: string) => {
     const activities = THINKING_QUESTIONS.filter(entry=>entry.category===category);
-    const question = activities.length ? bankQuestion(activities[Math.floor(Math.random()*activities.length)]) : makePlayableQuestion();
+    const question = category==='T17' ? bankQuestion(pickPuzzleQuestion()) : activities.length ? bankQuestion(activities[Math.floor(Math.random()*activities.length)]) : makePlayableQuestion();
     setInitialQuestion(question);
     stopSpeech();
     speakVietnamese(question.prompt);

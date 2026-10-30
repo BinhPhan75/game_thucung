@@ -3,6 +3,8 @@ import type { ThinkingActivity, SortItem } from '../data/thinkingQuestions';
 import { shuffledPieces } from '../data/thinkingQuestions';
 import { GamePicture, pictureUrl } from './GamePicture';
 
+import { isSpeechMuted, playPopSound } from '../utils/audio';
+
 type Props = {activity:ThinkingActivity; disabled:boolean; onAnswer:(answer:string)=>void};
 export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const [placed,setPlaced]=useState<number[]>([]);
@@ -17,7 +19,7 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const drop=(target:number|string,item=selected)=>{
     if(disabled || locked.current || complete || item===null || placed.includes(item))return;
     const correct=activity.kind==='puzzle'?item===target:activity.kind==='sort'?activity.items[item].group===target:false;
-    if(correct)place(item);else fail();
+    if(correct){place(item);if(activity.kind==='puzzle'&&!isSpeechMuted())playPopSound();}else fail();
   };
   const dragProps=(item:number)=>({draggable:!disabled&&!complete,onDragStart:(event:React.DragEvent)=>{
     dragged.current=item;setSelected(item);event.dataTransfer.setData('text/plain',String(item));event.dataTransfer.effectAllowed='move';
@@ -25,7 +27,7 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
   const dropProps=(target:number|string)=>({onDragOver:(event:React.DragEvent)=>{event.preventDefault();},onDrop:(event:React.DragEvent)=>{
     event.preventDefault();drop(target,dragged.current);dragged.current=null;
   }});
-  return <div className="thinking-exercise">
+  return <div className={`thinking-exercise ${activity.kind==='puzzle'?'puzzle-exercise':''}`}>
     <p className="thinking-instruction">{activity.kind==='connect'?'Chạm các số theo thứ tự từ 1 đến 10.':activity.kind==='puzzle'?'Chạm một mảnh, rồi chạm ô cần ghép. Bé cũng có thể kéo thả!':'Chạm một đồ vật, rồi chạm nhóm phù hợp. Bé cũng có thể kéo thả!'}</p>
     <p className="thinking-progress" role="status">{complete?'Hoàn thành rồi! Bé nhận thưởng nhé!':`Đã làm đúng ${placed.length}/${total}${activity.kind==='connect'?` · Số tiếp theo: ${placed.length+1}`:''}`}</p>
     {activity.kind==='connect' && <div className="connect-board">
@@ -39,9 +41,9 @@ export function ThinkingExercise({activity,disabled,onAnswer}:Props) {
     {activity.kind==='puzzle' && <>
       <div className="puzzle-reference"><span>Tranh mẫu: {activity.name}</span><GamePicture symbol={activity.symbol}/></div>
       <div className="puzzle-layout">
-        <div className="puzzle-board" style={{gridTemplateColumns:`repeat(${activity.columns},1fr)`}}>
-          {Array.from({length:total},(_,i)=><button key={i} aria-label={`Ô ghép hàng ${Math.floor(i/activity.columns)+1}, cột ${i%activity.columns+1}`} disabled={disabled||placed.includes(i)} {...dropProps(i)} onClick={()=>drop(i)}>
-            <div style={{opacity:placed.includes(i)?1:.2}}><PuzzlePiece activity={activity} index={i}/></div>
+        <div className="puzzle-board" aria-label="Bảng ghép — chạm ô có hình mờ" style={{gridTemplateColumns:`repeat(${activity.columns},1fr)`}}>
+          {Array.from({length:total},(_,i)=><button key={i} className={placed.includes(i)?'puzzle-slot filled':'puzzle-slot empty'} aria-label={`Ô ghép hàng ${Math.floor(i/activity.columns)+1}, cột ${i%activity.columns+1}`} disabled={disabled||placed.includes(i)} {...dropProps(i)} onClick={()=>drop(i)}>
+            <div className="puzzle-slot-picture"><PuzzlePiece activity={activity} index={i}/></div>
           </button>)}
         </div>
         <div className="puzzle-tray" aria-label="Các mảnh rời" style={{gridTemplateColumns:`repeat(${activity.columns},1fr)`}}>

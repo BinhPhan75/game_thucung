@@ -15,8 +15,13 @@ const outlines: {name:string; points:[number,number][]; color:string}[] = [
 const activities: {question:string; activity:ThinkingActivity}[] = outlines.map(outline=>({
   question:`Bé nối các số từ 1 đến 10 để vẽ ${outline.name} nhé!`,activity:{kind:'connect',...outline},
 }));
+export const PUZZLE_PICTURES = [
+  ['chú mèo','🐱'], ['bông hoa','🌸'], ['chú thỏ','🐰'], ['chú cún','🐶'],
+  ['gà con','🐥'], ['ô tô','🚗'], ['ngôi nhà','🏡'], ['cây xanh','🌳'],
+  ['gấu bông','🧸'], ['chú cá','🐟'],
+] as const;
 for (const [rows,columns] of [[2,2],[2,3],[3,3],[3,4]]) {
-  for (const [name,symbol] of [['chú mèo','🐱'],['bông hoa','🌸']]) activities.push({
+  for (const [name,symbol] of PUZZLE_PICTURES) activities.push({
     question:`Bé ghép ${rows*columns} mảnh thành tranh ${name} nhé!`,activity:{kind:'puzzle',name,symbol,rows,columns},
   });
 }
@@ -53,3 +58,17 @@ export function shuffledPieces(count:number,random:()=>number=Math.random) {
   if(order.every((value,i)=>value===i)) order.push(order.shift()!);
   return order;
 }
+
+// Exhaust the picture bag before repeating; also avoid repeats at cycle boundaries.
+export function createPuzzlePicker(random:()=>number=Math.random) {
+  let remaining:string[]=[];
+  let last='';
+  return ()=>{
+    if(!remaining.length) remaining=shuffledPieces(PUZZLE_PICTURES.length,random).map(i=>PUZZLE_PICTURES[i][1]);
+    const index=Math.max(0,remaining.findIndex(symbol=>symbol!==last));
+    last=remaining.splice(index,1)[0];
+    const choices=THINKING_QUESTIONS.filter(entry=>entry.visual.activity?.kind==='puzzle' && entry.visual.activity.symbol===last);
+    return choices[Math.floor(random()*choices.length)];
+  };
+}
+export const pickPuzzleQuestion=createPuzzlePicker();
