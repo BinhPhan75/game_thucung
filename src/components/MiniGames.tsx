@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GamePicture, pictureUrl } from './GamePicture';
-import { MAZES, MAZE_NAMES, MEMORY_THEMES, DIFFERENCE_THEMES, pickDifferenceScene, canMove, makeMemoryDeck } from '../data/miniGames';
+import { MAZES, MAZE_LEVELS, traceMazeMove, MAZE_NAMES, MEMORY_THEMES, DIFFERENCE_THEMES, pickDifferenceScene, canMove, makeMemoryDeck } from '../data/miniGames';
 import { playPopSound, playCelebrationSound, speakVietnamese, stopSpeech } from '../utils/audio';
 import { celebrateStars } from '../utils/celebrate';
 import { questReward } from '../utils/questReward';
@@ -14,7 +14,7 @@ const MODES: {id: Mode; title: string; icon: string; instruction: string}[] = [
   {id:'maze', title:'Mê cung tìm đường', icon:'🥕', instruction:'Đưa thỏ về nhà, nhặt cà rốt trên đường. Chạm ô bên cạnh hoặc kéo thỏ nhé!'},
 ];
 type Props = {pet:PetState; onUpdatePet:(pet:PetState)=>void; onClose:()=>void; isMuted:boolean; onToggleSound:()=>void};
-type GameProps = {onComplete:()=>void; onSuccess:()=>void};
+type GameProps = {onComplete:(stars?:number)=>void; onSuccess:()=>void};
 
 export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props) {
   const dialog=useRef<HTMLDialogElement>(null);
@@ -24,6 +24,7 @@ export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props)
   const [mazeLevel,setMazeLevel]=useState(0);
   const nextMaze=useRef(0);
   const [complete,setComplete]=useState(false);
+  const [earnedStars,setEarnedStars]=useState(1);
   const info=MODES.find(item=>item.id===mode);
   useEffect(()=>{
     const node=dialog.current; node?.showModal();
@@ -34,11 +35,12 @@ export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props)
     stopSpeech();awarded.current=false;setComplete(false);setMode(next);setRound(value=>value+1);
     if(!isMuted)speakVietnamese(MODES.find(item=>item.id===next)!.instruction);
   }
-  function finish() {
+  function finish(stars=1) {
     if(awarded.current)return;
-    awarded.current=true;setComplete(true);
+    awarded.current=true;setComplete(true);setEarnedStars(stars);
     if(mode==='maze')nextMaze.current=(mazeLevel+1)%MAZES.length;
-    onUpdatePet(questReward(pet,pet.hunger<=pet.thirst?'food':'water'));
+    const rewarded=questReward(pet,pet.hunger<=pet.thirst?'food':'water');
+    onUpdatePet({...rewarded,stars:pet.stars+stars});
     celebrateStars(dialog.current);
     if(!isMuted){playCelebrationSound();speakVietnamese('Hoan hô! Bé đã hoàn thành rồi! Bé giỏi quá!');}
   }
@@ -53,6 +55,7 @@ export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props)
       </header>
       {!mode ? <div className="mini-menu">{MODES.map(item=><button key={item.id} onClick={()=>start(item.id)}><span>{item.icon}</span><strong>{item.title}</strong><small>Chạm để chơi →</small></button>)}</div> : <>
         <p className="mini-instruction">{info!.instruction}</p>
+        {mode==='maze'&&<label className="maze-selector">Chọn chặng <select aria-label="Chọn chặng mê cung" value={mazeLevel} disabled={complete} onChange={event=>{const level=Number(event.target.value);nextMaze.current=level;setMazeLevel(level);awarded.current=false;setRound(value=>value+1);}}>{MAZE_NAMES.map((name,i)=><option key={name} value={i}>{i+1}/10 · {name} ({MAZES[i].length}×{MAZES[i].length})</option>)}</select></label>}
         <div className="mini-play" key={`${mode}-${round}`} inert={complete}>
           {mode==='differences'&&<Differences {...gameProps}/>}
           {mode==='memory'&&<Memory {...gameProps}/>}
@@ -60,7 +63,7 @@ export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props)
         </div>
       </>}
       {complete&&<div className="mini-celebration" role="dialog" aria-modal="true" aria-label="Hoàn thành trò chơi">
-        <div><span className="mini-trophy">🌟</span><h3>Bé làm được rồi!</h3><p>+10 xu · +25 EXP · +1 sao</p><p>Thú cưng được chăm sóc thêm nhé!</p>
+        <div><span className="mini-trophy">🌟</span><h3>Bé làm được rồi!</h3><p>+10 xu · +25 EXP · +{earnedStars} sao</p><p>Thú cưng được chăm sóc thêm nhé!</p>
           <button autoFocus onClick={()=>start(mode!)}>{mode==='maze'?'Mê cung tiếp theo 🥕':'Chơi tiếp 🎉'}</button>
           <button onClick={()=>{setMode(null);setComplete(false);}}>Chọn trò chơi khác</button>
         </div>
@@ -117,27 +120,38 @@ function Memory({onComplete,onSuccess}:GameProps) {
 }
 
 function Maze({onComplete,onSuccess,level}:GameProps & {level:number}) {
-  const maze=MAZES[level];
-  const n=maze.length, goal=n*n-1;
+  const {maze,carrots:treats,traps,required}=MAZE_LEVELS[level];
+  const n=maze.length,goal=n*n-1;
   const [carrots,setCarrots]=useState<number[]>([]);
-  const treats=maze.flatMap((row,y)=>[...row].flatMap((cell,x)=>cell!=='#'&&(x+y)%4===2?[y*n+x]:[])).slice(0,3);
-  const [position,setPosition]=useState(0);
-  const positionRef=useRef(0);
+  const collected=useRef(new Set<number>());
+  const [position,setPosition]=useState(0),positionRef=useRef(0);
   const [visited,setVisited]=useState([0]);
-  const [message,setMessage]=useState('Bông Bông muốn về nhà!');
-  const dragging=useRef(false);
+  const [message,setMessage]=useState(required?'Nhặt đủ cà rốt để mở cửa nhà nhé!':'Nhặt đủ cà rốt để nhận 3 sao nhé!');
+  const [spark,setSpark]=useState(0);
+  const done=useRef(false),dragging=useRef(false);
   function move(cell:number) {
-    if(positionRef.current===goal||cell===positionRef.current)return;
-    if(!canMove(maze,positionRef.current,cell)){setMessage('Bé chọn ô đường ngay bên cạnh thỏ nhé!');return;}
+    if(done.current||cell===positionRef.current)return;
+    if(!canMove(maze,positionRef.current,cell)){setMessage('Có bụi cây chắn rồi. Bé thử lối khác nhé!');return;}
+    if(cell===goal&&required&&collected.current.size<treats.length){setMessage('Cửa nhà cần đủ cà rốt! Bé quay lại tìm thêm nhé 🥕');return;}
     positionRef.current=cell;setPosition(cell);setVisited(previous=>previous.includes(cell)?previous:[...previous,cell]);
-    if(treats.includes(cell)&&!carrots.includes(cell)){setCarrots(previous=>[...previous,cell]);setMessage('Nhặt được cà rốt rồi! Giỏi quá! 🥕');}else setMessage('Đúng đường rồi! Đi tiếp nào 🥕');onSuccess();if(cell===goal)onComplete();
+    if(treats.includes(cell)&&!collected.current.has(cell)) {
+      collected.current.add(cell);setCarrots([...collected.current]);setSpark(value=>value+1);setMessage('Ting! Thêm một củ cà rốt! 🥕');onSuccess();
+    } else if(traps.includes(cell))setMessage('Ô bùn ở đường cụt! Bé quay lại lối vừa đi nhé 💛');
+    else setMessage('Bông Bông đi cùng bé!');
+    if(cell===goal){done.current=true;onComplete(collected.current.size===treats.length?3:collected.current.size?2:1);}
   }
-  return <div className="mini-game maze-game"><p className="mini-progress" role="status">Chặng {level+1}/5 · {MAZE_NAMES[level]} · 🥕 {carrots.length}/{treats.length}<br/>{message}</p>
+  function slide(cell:number) {for(const step of traceMazeMove(maze,positionRef.current,cell)) {const previous=positionRef.current;move(step);if(positionRef.current===previous||done.current)break;}}
+  return <div className="mini-game maze-game"><p className="mini-progress" role="status">Chặng {level+1}/10 · 🥕 {carrots.length}/{treats.length} · {required?'Nhặt đủ để về nhà':'Nhặt đủ = ⭐⭐⭐'}<br/>{message}</p>
+    <div className="maze-stage">
     <div className="maze-board" style={{gridTemplateColumns:`repeat(${n},1fr)`,gridTemplateRows:`repeat(${n},1fr)`}} onPointerDown={event=>{dragging.current=true;const cell=(event.target as HTMLElement).closest<HTMLElement>('[data-maze-cell]');if(cell)move(Number(cell.dataset.mazeCell));event.currentTarget.setPointerCapture(event.pointerId);}}
       onPointerUp={()=>{dragging.current=false;}} onPointerCancel={()=>{dragging.current=false;}}
-      onPointerMove={event=>{if(!dragging.current)return;const node=document.elementFromPoint(event.clientX,event.clientY)?.closest<HTMLElement>('[data-maze-cell]');if(node&&event.currentTarget.contains(node))move(Number(node.dataset.mazeCell));}}>
-      {maze.flatMap((row,y)=>[...row].map((cell,x)=>{const id=y*n+x;return <button key={id} data-maze-cell={id} className={`maze-cell ${cell==='#'?'hedge':''} ${visited.includes(id)?'visited':''}`} disabled={cell==='#'} aria-label={`Ô đường hàng ${y+1}, cột ${x+1}${id===goal?', ngôi nhà':''}${id===position?', thỏ đang ở đây':''}`} onClick={()=>move(id)}>{id===goal?<GamePicture symbol="🏡"/>:treats.includes(id)&&!carrots.includes(id)?<GamePicture symbol="🥕"/>:cell==='#'?<span aria-hidden="true">✿</span>:visited.includes(id)?<span aria-hidden="true">·</span>:null}</button>;}))}
-      <div className="maze-bunny" aria-hidden="true" style={{width:`${100/n}%`,height:`${100/n}%`,left:`${position%n*100/n}%`,top:`${Math.floor(position/n)*100/n}%`}}><GamePicture symbol="🐰"/></div>
+      onPointerMove={event=>{if(!dragging.current)return;const node=document.elementFromPoint(event.clientX,event.clientY)?.closest<HTMLElement>('[data-maze-cell]');if(node&&event.currentTarget.contains(node))slide(Number(node.dataset.mazeCell));}}>
+      {maze.flatMap((row,y)=>[...row].map((cell,x)=>{const id=y*n+x;return <button key={id} data-maze-cell={id} className={`maze-cell ${cell==='#'?'hedge':''} ${visited.includes(id)?'visited':''} ${traps.includes(id)?'mud-trap':''}`} disabled={cell==='#'} aria-label={`Ô đường hàng ${y+1}, cột ${x+1}${id===goal?', ngôi nhà':''}${id===position?', thỏ đang ở đây':''}`} onClick={()=>move(id)}>{id===goal?<GamePicture symbol="🏡"/>:treats.includes(id)&&!carrots.includes(id)?<GamePicture symbol="🥕"/>:traps.includes(id)?<span aria-hidden="true">≈</span>:visited.includes(id)?<span aria-hidden="true">·</span>:null}</button>;}))}
+      <div className="maze-bunny" aria-hidden="true" style={{width:`${100/n}%`,height:`${100/n}%`,left:`${position%n*100/n}%`,top:`${Math.floor(position/n)*100/n}%`}}><GamePicture symbol="🐰"/>{spark>0&&<span key={spark} className="carrot-spark">+🥕</span>}</div>
+    </div>
+    <div className="maze-directions" role="group" aria-label="Nút di chuyển cho bé">
+      {[[-n,'↑','Đi lên'],[-1,'←','Sang trái'],[n,'↓','Đi xuống'],[1,'→','Sang phải']].map(([offset,icon,label])=><button key={label} aria-label={String(label)} onClick={()=>move(positionRef.current+Number(offset))}>{icon}</button>)}
+    </div>
     </div>
   </div>;
 }

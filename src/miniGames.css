@@ -63,3 +63,22 @@
 @keyframes storybook-sticker { 50% { transform:translateY(-5px) rotate(10deg); } }
 @media(max-height:450px) and (min-width:601px) { .maze-board { width:min(100%,calc(100dvh - 150px)); }.mini-progress { padding:2px 8px; } }
 @media(prefers-reduced-motion:reduce) { .mini-menu button::after { animation:none; }.puzzle-slot.filled::after { display:none; } }
+.maze-selector { display:flex; justify-content:center; align-items:center; gap:6px; padding:3px 8px; flex-shrink:0; font-size:12px; font-weight:800; }
+.maze-selector select { min-width:0; max-width:75%; border:2px solid #c7b1e5; border-radius:12px; background:#fffaf0; padding:5px; color:#58447b; }
+.maze-stage { flex:1; min-height:0; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.maze-stage .maze-board { width:min(100%,530px,calc(100dvh - 310px)); flex-shrink:0; }
+.maze-directions { display:flex; justify-content:center; gap:8px; flex-shrink:0; }
+.maze-directions button { width:48px; height:44px; border:2px solid white; border-radius:14px; background:linear-gradient(#e9ddff,#c8b9ec); box-shadow:0 3px 0 #9a83bd; font-size:26px; font-weight:900; }
+.maze-directions button:active { transform:translateY(2px); }
+.maze-cell.hedge { border-width:1px; border-radius:25%; box-shadow:inset 0 2px 0 #ffffff44; }
+.maze-cell { border-color:#e8dcae80; overflow:hidden; }
+.maze-cell.mud-trap { background:radial-gradient(ellipse,#b99d7e,#ead8b5); color:#947450; }
+.carrot-spark { position:absolute; left:0; top:0; font-size:22px; white-space:nowrap; animation:carrot-cheer .8s ease-out forwards; pointer-events:none; z-index:2; }
+@keyframes carrot-cheer { from {opacity:1;transform:translateY(0) scale(.8);} to {opacity:0;transform:translateY(-30px) scale(1.2);} }
+@media(min-width:601px) and (max-height:500px) {
+ .maze-stage { flex-direction:row; gap:18px; }
+ .maze-stage .maze-board { width:min(100%,calc(100dvh - 205px)); }
+ .maze-directions { display:grid; grid-template-columns:repeat(2,48px); }
+ .maze-selector { padding:1px; }.maze-selector select { padding:2px; }
+}
+@media(prefers-reduced-motion:reduce) { .carrot-spark { animation:none; display:none; } }
