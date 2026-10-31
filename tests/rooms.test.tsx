@@ -6,8 +6,8 @@ import {FURNITURE,ROOMS,fitItem,restoreRooms,emptyRooms,sortedRoom,reorderItem,t
 import {FurnitureArt,RoomBackground} from '../src/components/RoomArt';
 import {HEALTH_INTERVAL,restorePlaytime,addPlaytime} from '../src/utils/playtime';
 
-test('all rooms and 18 furniture illustrations render self-contained SVGs',()=>{
-  assert.equal(FURNITURE.length,18);
+test('all rooms and 32 furniture illustrations render self-contained SVGs',()=>{
+  assert.equal(FURNITURE.length,32);
   for(const furniture of FURNITURE){const svg=renderToStaticMarkup(<FurnitureArt kind={furniture.id}/>);assert.match(svg,/viewBox="0 0 120 100"/);assert.doesNotMatch(svg,/NaN|undefined|https?:\/\/(?!www.w3.org)/);}
   for(const room of ROOMS){assert.ok(FURNITURE.filter(f=>f.rooms?.includes(room.id)).length>=4);assert.match(renderToStaticMarkup(<svg><RoomBackground room={room.id}/></svg>),/pattern/);}
 });

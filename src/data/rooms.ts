@@ -4,7 +4,7 @@ export const ROOMS: {id:RoomKind;name:string;color:string;accent:string}[] = [
   {id:'kitchen',name:'Phòng bếp',color:'#fff0cc',accent:'#89b9b5'},
   {id:'bedroom',name:'Phòng ngủ',color:'#e6dff4',accent:'#ac97ca'},
 ];
-export type FurnitureKind = 'sofa'|'chair'|'table'|'cabinet'|'shelf'|'fridge'|'stove'|'sink'|'bed'|'nightstand'|'rug'|'art'|'lamp'|'plant'|'bear'|'clock'|'dishes'|'books';
+export type FurnitureKind = 'sofa'|'chair'|'table'|'cabinet'|'shelf'|'fridge'|'stove'|'sink'|'bed'|'nightstand'|'rug'|'art'|'lamp'|'plant'|'bear'|'clock'|'dishes'|'books'|'desk'|'wardrobe'|'tvstand'|'diningchair'|'kettle'|'microwave'|'toaster'|'fruit'|'vase'|'pillow'|'basket'|'mirror'|'toycar'|'radio';
 export type Furniture = {id:FurnitureKind;name:string;width:number;color:string;rooms?:RoomKind[];layer:number};
 export const FURNITURE:Furniture[] = [
   {id:'sofa',name:'Sofa êm',width:260,color:'#de9c8e',rooms:['living'],layer:20},
@@ -25,6 +25,21 @@ export const FURNITURE:Furniture[] = [
   {id:'clock',name:'Đồng hồ',width:85,color:'#b5a5cd',layer:30},
   {id:'dishes',name:'Bộ bát đĩa',width:90,color:'#b2d3d2',layer:30},
   {id:'books',name:'Sách màu',width:85,color:'#b5a1c8',layer:30},
+  {id:'desk',name:'Bàn học',width:210,color:'#a8c6c2',rooms:['bedroom','living'],layer:20},
+  {id:'wardrobe',name:'Tủ quần áo',width:205,color:'#d2b8c7',rooms:['bedroom'],layer:20},
+  {id:'tvstand',name:'Kệ ti vi',width:235,color:'#c6a47f',rooms:['living'],layer:20},
+  {id:'diningchair',name:'Ghế ăn',width:110,color:'#b5cbaa',rooms:['kitchen'],layer:20},
+  {id:'kettle',name:'Ấm trà',width:85,color:'#e3b4a3',layer:30},
+  {id:'microwave',name:'Lò vi sóng',width:130,color:'#abc9c8',layer:30},
+  {id:'toaster',name:'Máy nướng bánh',width:90,color:'#e9c18b',layer:30},
+  {id:'fruit',name:'Giỏ trái cây',width:105,color:'#d3ad77',layer:30},
+  {id:'vase',name:'Bình hoa',width:100,color:'#e5bbc9',layer:30},
+  {id:'pillow',name:'Gối tựa',width:100,color:'#c5b7dc',layer:30},
+  {id:'basket',name:'Giỏ đựng đồ',width:100,color:'#cda67b',layer:30},
+  {id:'mirror',name:'Gương xinh',width:115,color:'#dbbd92',layer:10},
+  {id:'toycar',name:'Ô tô đồ chơi',width:80,color:'#a6c4dd',layer:30},
+  {id:'radio',name:'Đài nghe nhạc',width:100,color:'#b7c9aa',layer:30},
+
 ];
 export type PlacedItem = {uid:string;kind:FurnitureKind;x:number;y:number;angle:number;flip:boolean;depth?:number};
 export type RoomSave = {items:PlacedItem[];rewarded:boolean};
