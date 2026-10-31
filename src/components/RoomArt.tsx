@@ -9,6 +9,7 @@ export function FurnitureArt({kind}:{kind:FurnitureKind}) {
     <defs>
       <linearGradient id={`${id}-paint`} x2=".3" y2="1"><stop stopColor="#fff6e8"/><stop offset=".22" stopColor={f.color}/><stop offset="1" stopColor={f.color}/></linearGradient>
       <linearGradient id={`${id}-wood`} x2="0" y2="1"><stop stopColor="#edcfa7"/><stop offset="1" stopColor="#bf926a"/></linearGradient>
+      <pattern id={`${id}-texture`} width="16" height="8" patternUnits="userSpaceOnUse"><path d="M0 2q8-3 16 0M3 7h9" fill="none" stroke="#815b3d" strokeOpacity=".12" strokeWidth=".5"/></pattern>
     </defs>
     <ellipse cx="61" cy="91" rx="49" ry="6" fill="#51443e" opacity=".12"/>
     <g stroke="#67534b" strokeOpacity=".28" strokeWidth="1.1" strokeLinejoin="round">
@@ -42,6 +43,8 @@ export function FurnitureArt({kind}:{kind:FurnitureKind}) {
     {kind==='clock'&&<><circle cx="60" cy="46" r="38" fill={paint}/><circle cx="60" cy="46" r="30" fill="#fff8e7"/><path d="M60 25v21l15 8" stroke="#796b88" strokeWidth="3" fill="none"/><path d="M60 19v4m0 47v4m-27-28h4m47 0h4" stroke="#b9aaca" strokeWidth="2"/></>}
     {kind==='dishes'&&<><ellipse cx="60" cy="76" rx="46" ry="12" fill={paint}/><ellipse cx="60" cy="72" rx="42" ry="10" fill="#f4f4e4"/><path d="M26 38h60q0 38-30 38T26 38Z" fill={paint}/><ellipse cx="56" cy="38" rx="30" ry="8" fill="#edf4df"/><path d="M85 45q29-7 15 18l-19 4" stroke={f.color} strokeWidth="7" fill="none"/></>}
     {kind==='books'&&<><path d="M15 67 80 52l25 13-65 16Z" fill="#c3948c"/><path d="M15 67v10l25 15 65-17V65L40 81Z" fill="#eadcc6"/><path d="M22 48 81 35l19 12-59 15Z" fill="#8db6ad"/><path d="M22 48v11l19 14 59-16V47L41 62Z" fill="#e8e0c7"/><path d="m28 31 51-11 17 11-51 14Z" fill={paint}/><path d="M28 31v10l17 15 51-15V31L45 45Z" fill="#eee2cb"/></>}
+    {['table','cabinet','nightstand','shelf'].includes(kind)&&<path d={kind==='table'?'M8 38 83 25 113 43 38 61Z':'M17 22h74v65H17Z'} fill={`url(#${id}-texture)`} stroke="none"/>}
+    {['sofa','chair','bed'].includes(kind)&&<path d={kind==='bed'?'M37 55 92 49M48 79l54-12':'M29 29q29-7 60 0M29 72h60'} stroke="#fff8eb" strokeOpacity=".55" strokeWidth="1.5" fill="none"/>}
     </g>
   </svg>;
 }
@@ -56,10 +59,17 @@ export function RoomBackground({room}:{room:RoomKind}) {
       <pattern id={`${id}-grain`} width="110" height="42" patternUnits="userSpaceOnUse"><path d="M0 41h110M1 1v40M7 32q30-6 80 0" fill="none" stroke="#b9926d" strokeOpacity=".16"/></pattern>
     </defs>
     <rect width="800" height="600" fill={`url(#${id}-wall)`}/>
+    <g fill="none" stroke="#a5b9b3" strokeOpacity=".24" strokeWidth="2">
+      {[115,220,535,640].map(x=><rect key={x} x={x} y="86" width="72" height="225" rx="3"/>)}
+      <path d="M90 330h620M90 338h620"/>
+    </g>
     <path d="M0 0 90 42v335L0 435Z" fill={theme.color}/><path d="M800 0 710 42v335l90 58Z" fill={theme.color}/>
     <path d="M0 435 90 377h620l90 58v165H0Z" fill={`url(#${id}-floor)`}/><path d="M0 435 90 377h620l90 58v165H0Z" fill={`url(#${id}-grain)`}/>
-    <path d="M0 429 90 369h620l90 60" fill="none" stroke="#fff7e8" strokeWidth="14"/>
+    <path d="M0 429 90 369h620l90 60" fill="none" stroke="#b78e6a" strokeWidth="17"/>
+    <path d="M0 422 90 362h620l90 60" fill="none" stroke="#efdabd" strokeWidth="6"/>
     <path d="M90 42h620" stroke="#ffffffb0" strokeWidth="8"/>
+    <path d="M0 4 90 46h620l90-42M90 52h620" fill="none" stroke="#c6b9a5" strokeOpacity=".35" strokeWidth="3"/>
+    <path d="M0 0 90 36h620l90-36" fill="none" stroke="#fff9ea" strokeWidth="10"/>
     <rect x="302" y="76" width="196" height="219" rx="8" fill="#9cbcb9" opacity=".2"/>
     <rect x="294" y="68" width="196" height="219" rx="8" fill="#fff9ec"/>
     <rect x="306" y="80" width="172" height="195" rx="3" fill="#bcdedb"/>
@@ -70,6 +80,7 @@ export function RoomBackground({room}:{room:RoomKind}) {
     <path d="M283 79q10 82-4 183m214-183q-10 82 4 183" stroke="#ffffff50" strokeWidth="4" fill="none"/>
     <rect x="283" y="278" width="218" height="12" rx="4" fill="#f9efdc"/>
     <ellipse cx="402" cy="375" rx="300" ry="250" fill={`url(#${id}-light)`} pointerEvents="none"/>
+    <path d="M308 284h170l178 264H192Z" fill="#fff5cd" opacity=".12" pointerEvents="none"/>
     {room==='kitchen'&&<path d="M118 311h140m-140 22h140m-140 22h140M140 300v64m35-64v64m35-64v64m35-64v64" stroke="#fffaf0" strokeWidth="3" opacity=".6"/>}
   </g>;
 }

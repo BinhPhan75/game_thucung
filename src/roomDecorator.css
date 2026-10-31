@@ -44,3 +44,8 @@
  .room-tray>div { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:repeat(2,minmax(0,1fr)); }
  .room-tray button>svg { max-height:55px; }.room-tray .tray-more { min-height:25px; }
 }
+.room-edit-controls { flex-wrap:wrap; gap:5px; }
+.room-edit-controls button { transition:transform .15s,background .15s; }
+.room-edit-controls button:not(:disabled):hover { background:#ffe6ae; transform:translateY(-2px); }
+.room-edit-controls button:not(:disabled):active { transform:translateY(1px); }
+@media(max-width:600px) { .room-edit-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }.room-edit-controls button { min-height:34px; padding:3px; font-size:10px; } }

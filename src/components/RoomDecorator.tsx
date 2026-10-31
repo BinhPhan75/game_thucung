@@ -1,5 +1,5 @@
 import React,{useEffect,useRef,useState} from 'react';
-import {FURNITURE,ROOMS,ROOM_STORAGE_KEY,emptyRooms,restoreRooms,fitItem,sortedRoom,type Furniture,type PlacedItem,type RoomKind} from '../data/rooms';
+import {FURNITURE,ROOMS,ROOM_STORAGE_KEY,emptyRooms,restoreRooms,fitItem,sortedRoom,reorderItem,type Furniture,type PlacedItem,type RoomKind} from '../data/rooms';
 import {FurnitureArt,RoomBackground} from './RoomArt';
 import {celebrateStars} from '../utils/celebrate';
 import {isSpeechMuted,playPopSound} from '../utils/audio';
@@ -94,8 +94,8 @@ export function RoomDecorator({onReward}:{onReward:()=>void}) {
             const delta:Record<string,[number,number]>={ArrowUp:[0,-8],ArrowDown:[0,8],ArrowLeft:[-8,0],ArrowRight:[8,0]};
             if(delta[event.key]){event.preventDefault();const [dx,dy]=delta[event.key];changeItems(previous=>previous.map(old=>old.uid===item.uid?fitItem({...old,x:old.x+dx,y:old.y+dy}):old));}
           }}>
-            <g transform={`scale(${item.flip?-1:1} 1)`}><svg x={-w/2} y={-h/2} width={w} height={h}><FurnitureArt kind={item.kind}/></svg></g>
-            {selected===item.uid&&<rect data-selection="true" x={-w/2} y={-h/2} width={w} height={h} rx="14" fill="none" stroke="#f0a747" strokeWidth="4" strokeDasharray="8 5" pointerEvents="none"/>}
+            <g style={{filter:'drop-shadow(0px 8px 6px rgba(48,36,28,.25))'}} transform={`scale(${item.flip?-1:1} 1)`}><svg x={-w/2} y={-h/2} width={w} height={h}><FurnitureArt kind={item.kind}/></svg></g>
+            {selected===item.uid&&<g data-selection="true" pointerEvents="none"><rect x={-w/2} y={-h/2} width={w} height={h} rx="14" fill="none" stroke="#f0a747" strokeWidth="4" strokeDasharray="8 5"/>{[[-w/2,-h/2],[w/2,-h/2],[-w/2,h/2],[w/2,h/2]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="6" fill="#fff9e6" stroke="#e9a449" strokeWidth="3"/>)}</g>}
           </g>;})}
         </svg>
         {flash>0&&<div key={flash} className="room-flash" aria-hidden="true">✦</div>}
@@ -104,6 +104,9 @@ export function RoomDecorator({onReward}:{onReward:()=>void}) {
     </div>
     <div className="room-edit-controls" aria-label="Chỉnh đồ vật" inert={clearConfirm}>
       <span>{active?FURNITURE.find(f=>f.id===active.kind)!.name:'Chạm đồ để sửa'}</span>
+      <button disabled={!active} onClick={()=>changeItems(previous=>reorderItem(previous,selected!,true))}>↑ Ra trước</button>
+      <button disabled={!active} onClick={()=>changeItems(previous=>reorderItem(previous,selected!,false))}>↓ Ra sau</button>
+      <button disabled={!active} onClick={()=>edit(({depth,...item})=>item)}>✦ Tự động</button>
       <button disabled={!active} onClick={()=>edit(item=>({...item,flip:!item.flip}))}>↔ Lật</button>
       <button disabled={!active} onClick={()=>edit(item=>({...item,angle:(item.angle+15)%360}))}>↻ Xoay</button>
       <button disabled={!active} onClick={()=>{changeItems(previous=>previous.filter(item=>item.uid!==selected));setSelected(null);}}>🗑 Cất đồ</button>

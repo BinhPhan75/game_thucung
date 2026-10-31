@@ -2,7 +2,7 @@ import React from 'react';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {FURNITURE,ROOMS,fitItem,restoreRooms,emptyRooms,sortedRoom,type PlacedItem} from '../src/data/rooms';
+import {FURNITURE,ROOMS,fitItem,restoreRooms,emptyRooms,sortedRoom,reorderItem,type PlacedItem} from '../src/data/rooms';
 import {FurnitureArt,RoomBackground} from '../src/components/RoomArt';
 import {HEALTH_INTERVAL,restorePlaytime,addPlaytime} from '../src/utils/playtime';
 
@@ -33,4 +33,23 @@ test('shared playtime advances only while visible and clamps at sixty minutes',(
   assert.equal(addPlaytime(1000,5000,false),1000);assert.equal(addPlaytime(1000,5000,true),6000);
   assert.equal(addPlaytime(HEALTH_INTERVAL-1,2000,true),HEALTH_INTERVAL);
   assert.equal(restorePlaytime('not a number'),0);assert.equal(restorePlaytime('-1'),0);assert.equal(restorePlaytime(String(HEALTH_INTERVAL+100)),HEALTH_INTERVAL);
+});
+
+test('tabletop objects render above furniture even when higher on screen',()=>{
+ const base:PlacedItem={uid:'table',kind:'table',x:400,y:450,angle:0,flip:false};
+ for(const kind of ['lamp','plant','dishes','books','clock','bear'] as const){
+  const accessory={...base,uid:'top',kind,y:350};
+  assert.deepEqual(sortedRoom([accessory,base]).map(i=>i.uid),['table','top']);
+ }
+});
+test('manual front/back overrides survive saving and can return to automatic order',()=>{
+ const table:PlacedItem={uid:'table',kind:'table',x:400,y:450,angle:0,flip:false};
+ const cup:PlacedItem={...table,uid:'cup',kind:'dishes',y:350};
+ const behind=reorderItem([table,cup],'cup',false);
+ assert.deepEqual(sortedRoom(behind).map(i=>i.uid),['cup','table']);
+ const records=emptyRooms();records.living.items=behind;
+ const restored=restoreRooms(JSON.parse(JSON.stringify(records))).living.items;
+ assert.deepEqual(sortedRoom(restored).map(i=>i.uid),['cup','table']);
+ assert.deepEqual(sortedRoom(reorderItem(restored,'cup',true)).map(i=>i.uid),['table','cup']);
+ assert.deepEqual(sortedRoom(restored.map(({depth,...item})=>item)).map(i=>i.uid),['table','cup']);
 });
