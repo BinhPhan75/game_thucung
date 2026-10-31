@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { RoomDecorator } from './RoomDecorator';
 import { GamePicture, pictureUrl } from './GamePicture';
 import { MAZES, MAZE_LEVELS, traceMazeMove, MAZE_NAMES, MEMORY_THEMES, DIFFERENCE_THEMES, pickDifferenceScene, canMove, makeMemoryDeck } from '../data/miniGames';
 import { playPopSound, playCelebrationSound, speakVietnamese, stopSpeech } from '../utils/audio';
@@ -7,8 +8,9 @@ import { questReward } from '../utils/questReward';
 import type { PetState } from '../types/game';
 import '../miniGames.css';
 
-type Mode = 'differences' | 'memory' | 'maze';
+type Mode = 'differences' | 'memory' | 'maze' | 'room';
 const MODES: {id: Mode; title: string; icon: string; instruction: string}[] = [
+  {id:'room',title:'Trang trí phòng',icon:'🏡',instruction:'Bé chọn phòng rồi kéo đồ vào để trang trí nhé!'},
   {id:'differences', title:'Tìm điểm khác biệt', icon:'🔍', instruction:'Bé chạm vào bốn điểm khác nhau ở hai bức tranh nhé!'},
   {id:'memory', title:'Lật thẻ tìm cặp', icon:'🃏', instruction:'Bé lật hai thẻ để tìm hai hình giống nhau nhé!'},
   {id:'maze', title:'Mê cung tìm đường', icon:'🥕', instruction:'Đưa thỏ về nhà, nhặt cà rốt trên đường. Chạm ô bên cạnh hoặc kéo thỏ nhé!'},
@@ -54,9 +56,10 @@ export function MiniGames({pet,onUpdatePet,onClose,isMuted,onToggleSound}:Props)
         <button aria-label="Đóng trò chơi" onClick={onClose}>×</button>
       </header>
       {!mode ? <div className="mini-menu">{MODES.map(item=><button key={item.id} onClick={()=>start(item.id)}><span>{item.icon}</span><strong>{item.title}</strong><small>Chạm để chơi →</small></button>)}</div> : <>
-        <p className="mini-instruction">{info!.instruction}</p>
+        {mode!=='room'&&<p className="mini-instruction">{info!.instruction}</p>}
         {mode==='maze'&&<label className="maze-selector">Chọn chặng <select aria-label="Chọn chặng mê cung" value={mazeLevel} disabled={complete} onChange={event=>{const level=Number(event.target.value);nextMaze.current=level;setMazeLevel(level);awarded.current=false;setRound(value=>value+1);}}>{MAZE_NAMES.map((name,i)=><option key={name} value={i}>{i+1}/10 · {name} ({MAZES[i].length}×{MAZES[i].length})</option>)}</select></label>}
         <div className="mini-play" key={`${mode}-${round}`} inert={complete}>
+          {mode==='room'&&<RoomDecorator onReward={()=>onUpdatePet({...pet,stars:pet.stars+1})}/>}
           {mode==='differences'&&<Differences {...gameProps}/>}
           {mode==='memory'&&<Memory {...gameProps}/>}
           {mode==='maze'&&<Maze {...gameProps} level={mazeLevel}/>}

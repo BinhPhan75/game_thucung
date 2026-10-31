@@ -8,6 +8,7 @@ import { restorePet } from './utils/storage';
 import { PetState, GameScreen } from './types/game';
 import { Module1Welcome } from './components/Module1Welcome';
 import { Module2Garden } from './components/Module2Garden';
+import { HealthReminder } from './components/HealthReminder';
 import { AudioControls } from './components/AudioControls';
 import { 
   startBackgroundMusic, 
@@ -123,6 +124,7 @@ export default function App() {
         />
       </div>
 
+      <HealthReminder />
       {/* Screen Routing */}
       {screen === 'welcome' && (
         <Module1Welcome

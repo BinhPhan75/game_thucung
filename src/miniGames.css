@@ -82,3 +82,8 @@
  .maze-selector { padding:1px; }.maze-selector select { padding:2px; }
 }
 @media(prefers-reduced-motion:reduce) { .carrot-spark { animation:none; display:none; } }
+.mini-menu { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.mini-menu button { padding:12px; gap:7px; }
+.mini-menu button>span { font-size:clamp(32px,6vw,58px); }
+@media(max-width:600px) { .mini-menu { grid-template-columns:1fr; gap:10px; }.mini-menu button { padding:9px; } }
+@media(max-height:450px) and (min-width:601px) { .mini-menu { grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }.mini-menu button { padding:8px; }.mini-menu strong { font-size:14px; } }
